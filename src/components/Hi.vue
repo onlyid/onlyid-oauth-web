@@ -1,0 +1,96 @@
+<template>
+  <div>
+    <div>
+      <el-button @click="storage">html5 storage</el-button>
+      <el-form ref="form" :model="form" @submit.native.prevent="onSubmit">
+        <el-form-item label="活动名称">
+          <el-input v-model="form.name" @keyup.enter.native="onSubmit"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        </el-form-item>
+      </el-form>
+      <!--<el-input name="input2" v-validate="'required|email'" :class="{'is-danger': errors.has('input2')}" @keyup.enter="handleClick" v-model="input2"></el-input>-->
+      <!--<el-input name="input3" v-validate="'required|email'" :class="{'is-danger': errors.has('input3')}"></el-input>-->
+      <!--<p>{{ errors.all() }}</p>-->
+      <!--<p style="color: #eb9e05">{{ fields }}</p>-->
+    </div>
+    <form action="http://oauth.onlyid.net:3001/hi" method="post">
+      <input type="checkbox" name="checkbox1" value="banana" id="checkbox1"/><label for="checkbox1">香蕉</label><br/>
+      <input type="radio" name="sex" id="male" value="male"/><label for="male">男</label><br/>
+      <input type="radio" name="sex" id="female" value="female"/><label for="female">女</label><br/>
+      <label for="input1">input1</label>
+      <input id="input1" name="input1"/>
+      <input type="submit" value="submit"/>
+    </form>
+    <h1>{{ msg }}</h1>
+    <el-button @click="validator">async-validator</el-button>
+  </div>
+</template>
+
+<script>
+  import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
+  import ElInput from '../../node_modules/element-ui/packages/input/src/input.vue'
+  import ElForm from '../../node_modules/element-ui/packages/form/src/form.vue'
+  import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
+  import Validator from 'async-validator'
+
+  export default {
+    components: {
+      ElFormItem,
+      ElForm,
+      ElInput,
+      ElButton},
+    data () {
+      return {
+        msg: 'hi',
+        p1: true,
+        form: {
+          name: '活动名称',
+          sex: 'male'
+        },
+        input2: 'mobile'
+      }
+    },
+    watch: {
+      input2 (val1, val2) {
+        console.log(val1 + ' ' + val2)
+      }
+    },
+    methods: {
+      storage () {
+//        localStorage.name = 'ltb'
+        console.log(localStorage.name)
+      },
+      onSubmit () {
+        console.log('here')
+      },
+      validator () {
+        var descriptor = {
+          name: {type: 'number', required: true}
+        }
+        var validator = new Validator(descriptor)
+        validator.validate({name: 123}, (errors, fields) => {
+          if (errors) {
+            // validation failed, errors is an array of all errors
+            // fields is an object keyed by field name with an array of
+            // errors per field
+//            return handleErrors(errors, fields);
+            console.log('errors: ' + errors)
+            console.log('fields: ' + fields)
+            return
+          }
+          // validation passed
+          console.log('passed')
+        })
+      }
+    }
+  }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+  /*.is-danger {*/
+    /*color: #fa5555;*/
+  /*}*/
+</style>
