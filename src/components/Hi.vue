@@ -1,10 +1,11 @@
 <template>
   <div>
     <div>
+      <el-button @click="focus">focus</el-button>
       <el-button @click="storage">html5 storage</el-button>
       <el-form ref="form" :model="form" @submit.native.prevent="onSubmit">
         <el-form-item label="活动名称">
-          <el-input v-model="form.name" @keyup.enter.native="onSubmit"></el-input>
+          <el-input v-model="form.name" @keyup.enter.native="onSubmit" ref="input1"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -67,22 +68,31 @@
       },
       validator () {
         var descriptor = {
-          name: {type: 'number', required: true}
+          password: {required: true, min: 6, max: 16},
+          smsCode: {required: true, pattern: /^[0-9]{4}$/},
+          nickname: {required: true, max: 20}
         }
         var validator = new Validator(descriptor)
-        validator.validate({name: 123}, (errors, fields) => {
+        validator.validate({smsCode: '1234'}, (errors, fields) => {
           if (errors) {
             // validation failed, errors is an array of all errors
             // fields is an object keyed by field name with an array of
             // errors per field
 //            return handleErrors(errors, fields);
-            console.log('errors: ' + errors)
-            console.log('fields: ' + fields)
+            for (let x in errors) {
+              console.log(x)
+            }
+//            console.log('errors: ' + errors)
+//            console.log('fields: ' + fields)
             return
           }
           // validation passed
           console.log('passed')
         })
+      },
+      focus () {
+        console.log('focus' + this.$refs.input1.$el)
+        this.$refs.input1.focus()
       }
     }
   }

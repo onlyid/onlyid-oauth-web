@@ -2,7 +2,7 @@
   <div>
     <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent="submit">
       <el-form-item prop="mobile">
-        <el-input placeholder="手机号" v-model="form.mobile"></el-input>
+        <el-input placeholder="手机号" v-model="form.mobile" ref="mobile"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">下一步</el-button>
@@ -20,7 +20,7 @@
   import Hi from './Hi.vue'
   import ElForm from '../../node_modules/element-ui/packages/form/src/form.vue'
   import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
-  import common from '../common'
+  import common from 'onlyid-frontend-common'
 
   export default {
     components: {
@@ -36,13 +36,7 @@
         form: {
           mobile: ''
         },
-        rules: {
-          mobile: [
-            { required: true, message: '请输入手机号', trigger: 'blur' },
-            { len: 11, message: '请输入正确手机号', trigger: 'blur' },
-            { pattern: /^[0-9]+$/, message: '请输入正确手机号', trigger: 'blur' }
-          ]
-        }
+        rules: common.rules
       }
     },
     methods: {
@@ -53,7 +47,9 @@
             return
           }
 
-          this.$axiosOAuth.post('/user/check-new', {
+          sessionStorage.setItem('mobile', this.form.mobile)
+
+          this.$axios.post('/user/check-new', {
             mobile: this.form.mobile
           }).then((res) => {
             let route = '/login/'
@@ -61,9 +57,10 @@
               route = '/signup/'
             }
             this.$router.push(route + this.form.mobile +
-              '/' + this.$route.query.client_id +
-              '/' + this.$route.query.state +
-              '/' + encodeURIComponent(this.$route.query.redirect_uri))
+              '/' + this.$route.params.clientId +
+              '/' + this.$route.params.state +
+              // 这个encode是必须的 否则跳到下个路由url又变回没转义的了
+              '/' + encodeURIComponent(this.$route.params.redirectUri))
           }).catch((err) => {
             console.log(err)
           })
@@ -71,21 +68,18 @@
       }
     },
     created () {
-      this.$axiosOAuth.get('/client', {
-        params: {
-          client_id: this.$route.query.client_id
+      this.$axios.get('/clients/' + this.$route.params.clientId).then((res) => {
+        if (res.data.client.redirectUris[0] !== this.$route.params.redirectUri) {
+          this.$message.error('redirect uri错误')
         }
-      }).then((res) => {
-        // do nothing
       }).catch((err) => {
         console.log(err)
       })
 
-      // 先检查client
-      const user = common.getUser()
-      // 已经登录 直接请求code
-      if (user) {
-      }
+      this.form.mobile = sessionStorage.getItem('mobile')
+    },
+    mounted () {
+      this.$refs.mobile.focus()
     }
   }
 </script>

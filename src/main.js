@@ -8,26 +8,21 @@ import 'element-ui/lib/theme-chalk/index.css'
 // import VeeValidate from 'vee-validate'
 import App from './App'
 import router from './router'
-import VueBus from './vue-bus'
+import { VueBus, Focus } from 'onlyid-frontend-common'
 import AxiosUtil from './axios-util'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueBus)
 Vue.use(AxiosUtil)
+Vue.use(Focus)
 // const config = {
 //   events: 'blur'
 // }
 // Vue.use(VeeValidate, config)
 
-Vue.directive('focus', {
-  inserted: function (el) {
-
-  }
-})
-
 /* eslint-disable no-new */
-new Vue({
+window.vue = new Vue({
   el: '#app',
   router,
   template: '<App/>',

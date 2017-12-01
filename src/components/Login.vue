@@ -3,11 +3,10 @@
     <p>{{ mobile }}</p>
     <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent="submit">
       <el-form-item prop="password" v-if="loginType === 'password'" key="password">
-        <el-input v-model="form.password" :placeholder="placeholder" type="password"></el-input>
+        <password-input v-model="form.password" ref="password"></password-input>
       </el-form-item>
-      <el-form-item style="position: relative" prop="smsCode" v-else key="smsCode">
-        <el-input v-model="form.smsCode" :placeholder="placeholder"></el-input>
-        <el-button id="send-sms-code" type="text" @click="sendSmsCode" :disabled="sendSmsCodeDisabled">{{ sendSmsCodeText }}</el-button>
+      <el-form-item prop="smsCode" v-else key="smsCode">
+        <sms-code-input :mobile="mobile" v-model="form.smsCode"></sms-code-input>
       </el-form-item>
       <el-form-item>
         <el-row :gutter="10">
@@ -32,6 +31,10 @@
   import ElTag from '../../node_modules/element-ui/packages/tag/src/tag.vue'
   import ElForm from '../../node_modules/element-ui/packages/form/src/form.vue'
   import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
+  import SmsCodeInput from '../common/SmsCodeInput.vue'
+  import PasswordInput from '../common/PasswordInput.vue'
+  import common from 'onlyid-frontend-common'
+  import config from '../config'
 
   export default {
     components: {
@@ -41,8 +44,10 @@
       ElCol,
       ElRow,
       ElButton,
-      ElInput},
-    name: 'Login',
+      ElInput,
+      SmsCodeInput,
+      PasswordInput
+    },
     data () {
       return {
         loginType: 'password',
@@ -51,25 +56,10 @@
           password: '',
           smsCode: ''
         },
-        rules: {
-          password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, message: '请输入正确密码', trigger: 'blur' }
-          ],
-          smsCode: [
-            { required: true, message: '请输入验证码', trigger: 'blur' },
-            { len: 4, message: '请输入正确验证码', trigger: 'blur' },
-            { pattern: /^[0-9]+$/, message: '请输入正确验证码', trigger: 'blur' }
-          ]
-        },
-        sendSmsCodeDisabled: false,
-        sendSmsCodeText: '发送验证码'
+        rules: common.rules
       }
     },
     computed: {
-      placeholder () {
-        return this.loginType === 'password' ? '密码' : '验证码'
-      },
       toggleLoginText () {
         return this.loginType === 'password' ? '短信登录' : '密码登录'
       }
@@ -83,26 +73,6 @@
       back () {
         this.$router.back()
       },
-      sendSmsCode () {
-        this.$axios.post('/sms_code/send', {
-          mobile: this.mobile
-        }).then((res) => {
-          let countDown = 60
-          this.sendSmsCodeDisabled = true
-          this.sendSmsCodeText = countDown
-          let h = setInterval(() => {
-            countDown -= 1
-            this.sendSmsCodeText = countDown
-          }, 1000)
-          setTimeout(() => {
-            clearInterval(h)
-            this.sendSmsCodeDisabled = false
-            this.sendSmsCodeText = '发送验证码'
-          }, countDown * 1000)
-        }).catch((err) => {
-          console.log(err)
-        })
-      },
       submit () {
         this.$refs['form'].validate((valid) => {
           if (!valid) {
@@ -110,31 +80,26 @@
             return
           }
 
-          console.log(this.$route.params.redirectUri)
-
           let body = { mobile: this.mobile }
           if (this.loginType === 'password') {
             body.password = this.form.password
           } else {
             body.smsCode = this.form.smsCode
           }
-          this.$axiosOAuth.post('/login', body).then((res) => {
+          this.$axios.post('/login', body).then((res) => {
             // 登录成功，请求code
-            return this.$axiosOAuth.get('/authorize', {
-              params: {
-                response_type: 'code',
-                client_id: this.$route.params.clientId,
-                state: this.$route.params.state,
-                redirect_uri: decodeURIComponent(this.$route.params.redirectUri)
-              }
-            })
-          }).then((res) => {
-            console.log(res)
+            location.assign(config.authorizeUrl +
+              '&client_id=' + this.$route.params.clientId +
+              '&state=' + this.$route.params.state +
+              '&redirect_uri=' + encodeURIComponent(this.$route.params.redirectUri))
           }).catch((err) => {
             console.log(err)
           })
         })
       }
+    },
+    mounted () {
+      this.$refs.password.focus()
     }
   }
 </script>
@@ -145,12 +110,5 @@
     font-size: 17px;
     width: auto;
     margin-top: 40px;
-  }
-  #send-sms-code {
-    padding-top: 10px;
-    position: absolute;
-    top: 0px;
-    right: 10px;
-    width: auto;
   }
 </style>

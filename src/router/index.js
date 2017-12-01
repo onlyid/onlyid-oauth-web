@@ -13,7 +13,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/authorize',
+      path: '/authorize/:clientId/:state/:redirectUri',
       component: Authorize
     },
     {
