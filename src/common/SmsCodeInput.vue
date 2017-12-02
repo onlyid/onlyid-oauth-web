@@ -1,12 +1,11 @@
 <template>
   <div>
-    <el-input placeholder="验证码" v-model="smsCode" ref="smsCode"></el-input>
+    <el-input placeholder="验证码" v-model="smsCode" ref="smsCode" type="number"></el-input>
     <el-button id="send-sms-code" type="text" @click="sendSmsCode" :disabled="sendSmsCodeDisabled">{{ sendSmsCodeText }}</el-button>
   </div>
 </template>
 
 <script>
-  import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
   import axios from 'axios'
   import common from 'onlyid-frontend-common'
   import Validator from 'async-validator'
@@ -31,7 +30,6 @@
   })
 
   export default {
-    components: {ElFormItem},
     props: ['value', 'mobile'],
     data () {
       return {

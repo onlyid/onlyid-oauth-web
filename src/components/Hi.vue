@@ -30,18 +30,9 @@
 </template>
 
 <script>
-  import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
-  import ElInput from '../../node_modules/element-ui/packages/input/src/input.vue'
-  import ElForm from '../../node_modules/element-ui/packages/form/src/form.vue'
-  import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
   import Validator from 'async-validator'
 
   export default {
-    components: {
-      ElFormItem,
-      ElForm,
-      ElInput,
-      ElButton},
     data () {
       return {
         msg: 'hi',

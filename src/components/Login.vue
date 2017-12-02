@@ -24,13 +24,6 @@
 </template>
 
 <script>
-  import ElInput from '../../node_modules/element-ui/packages/input/src/input.vue'
-  import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
-  import ElRow from 'element-ui/packages/row/src/row'
-  import ElCol from 'element-ui/packages/col/src/col'
-  import ElTag from '../../node_modules/element-ui/packages/tag/src/tag.vue'
-  import ElForm from '../../node_modules/element-ui/packages/form/src/form.vue'
-  import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
   import SmsCodeInput from '../common/SmsCodeInput.vue'
   import PasswordInput from '../common/PasswordInput.vue'
   import common from 'onlyid-frontend-common'
@@ -38,13 +31,6 @@
 
   export default {
     components: {
-      ElFormItem,
-      ElForm,
-      ElTag,
-      ElCol,
-      ElRow,
-      ElButton,
-      ElInput,
       SmsCodeInput,
       PasswordInput
     },

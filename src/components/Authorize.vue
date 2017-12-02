@@ -2,7 +2,7 @@
   <div>
     <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent="submit">
       <el-form-item prop="mobile">
-        <el-input placeholder="手机号" v-model="form.mobile" ref="mobile"></el-input>
+        <el-input placeholder="手机号" v-model="form.mobile" ref="mobile" type="tel"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">下一步</el-button>
@@ -15,21 +15,9 @@
 </template>
 
 <script>
-  import ElInput from '../../node_modules/element-ui/packages/input/src/input.vue'
-  import ElButton from '../../node_modules/element-ui/packages/button/src/button.vue'
-  import Hi from './Hi.vue'
-  import ElForm from '../../node_modules/element-ui/packages/form/src/form.vue'
-  import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item.vue'
   import common from 'onlyid-frontend-common'
 
   export default {
-    components: {
-      ElFormItem,
-      ElForm,
-      ElButton,
-      ElInput,
-      Hi
-    },
     name: 'Authorize',
     data () {
       return {
