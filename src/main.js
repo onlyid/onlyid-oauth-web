@@ -6,7 +6,6 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-// import VeeValidate from 'vee-validate'
 import App from './App'
 import router from './router'
 import { VueBus, Focus } from 'onlyid-frontend-common'
@@ -17,10 +16,6 @@ Vue.use(ElementUI)
 Vue.use(VueBus)
 Vue.use(AxiosUtil)
 Vue.use(Focus)
-// const config = {
-//   events: 'blur'
-// }
-// Vue.use(VeeValidate, config)
 
 /* eslint-disable no-new */
 window.vue = new Vue({

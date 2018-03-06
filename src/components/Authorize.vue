@@ -1,15 +1,15 @@
 <template>
   <div>
-    <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent="submit">
+    <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent>
       <el-form-item prop="mobile">
-        <el-input placeholder="手机号" v-model="form.mobile" ref="mobile" type="tel"></el-input>
+        <el-input placeholder="手机号" v-model="form.mobile" ref="mobile" type="tel" @keyup.native.enter="submit"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">下一步</el-button>
       </el-form-item>
     </el-form>
     <div id="footer">
-      <img src="../assets/logo1.png" width="100px"/>
+      <router-link to="/about"><img src="../assets/logo1.png" width="100px"/></router-link>
     </div>
   </div>
 </template>

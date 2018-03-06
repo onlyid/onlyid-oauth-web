@@ -8,6 +8,7 @@
       <el-form-item prop="nickname">
         <el-input placeholder="昵称" v-model="form.nickname"></el-input>
       </el-form-item>
+      <input type="text" :value="mobile" v-show="false"/>
       <el-form-item prop="password">
         <password-input v-model="form.password"></password-input>
       </el-form-item>
@@ -26,8 +27,8 @@
 </template>
 
 <script>
-  import SmsCodeInput from '../common/SmsCodeInput.vue'
-  import PasswordInput from '../common/PasswordInput.vue'
+  import SmsCodeInput from './SmsCodeInput.vue'
+  import PasswordInput from './PasswordInput.vue'
   import common from 'onlyid-frontend-common'
   import config from '../config'
 

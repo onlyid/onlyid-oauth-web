@@ -54,4 +54,8 @@
     word-wrap: break-word;
     word-break:break-all;
   }
+  .gradient-hr {
+    background:linear-gradient( to right, rgba(220,220,220,0) 0%, rgba(220,220,220,1) 10%, rgba(220,220,220,1) 90%, rgba(220,220,220,0) 100% );
+    height:1px;
+  }
 </style>

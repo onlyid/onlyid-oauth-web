@@ -1,12 +1,13 @@
 <template>
   <div>
     <p>{{ mobile }}</p>
-    <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent="submit">
+    <el-form ref="form" :model="form" :rules="rules">
+      <input type="text" :value="mobile" v-show="false"/>
       <el-form-item prop="password" v-if="loginType === 'password'" key="password">
-        <password-input v-model="form.password" ref="password"></password-input>
+        <password-input v-model="form.password" ref="password" @keyup.native.enter="submit"></password-input>
       </el-form-item>
       <el-form-item prop="smsCode" v-else key="smsCode">
-        <sms-code-input :mobile="mobile" v-model="form.smsCode"></sms-code-input>
+        <sms-code-input :mobile="mobile" v-model="form.smsCode" @keyup.native.enter="submit"></sms-code-input>
       </el-form-item>
       <el-form-item>
         <el-row :gutter="10">
@@ -24,8 +25,8 @@
 </template>
 
 <script>
-  import SmsCodeInput from '../common/SmsCodeInput.vue'
-  import PasswordInput from '../common/PasswordInput.vue'
+  import SmsCodeInput from './SmsCodeInput.vue'
+  import PasswordInput from './PasswordInput.vue'
   import common from 'onlyid-frontend-common'
   import config from '../config'
 

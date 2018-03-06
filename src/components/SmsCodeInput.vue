@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-input placeholder="验证码" v-model="smsCode" ref="smsCode" type="number"></el-input>
+    <el-input placeholder="验证码" v-model="smsCode" ref="smsCode" type="tel"></el-input>
     <el-button id="send-sms-code" type="text" @click="sendSmsCode" :disabled="sendSmsCodeDisabled">{{ sendSmsCodeText }}</el-button>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
-  import common from 'onlyid-frontend-common'
+  import common from '../../../onlyid-frontend-common/lib/index'
   import Validator from 'async-validator'
 
   const instance = axios.create({

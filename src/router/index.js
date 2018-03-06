@@ -2,10 +2,10 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Authorize from '@/components/Authorize'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
+import About from '@/components/About'
 import Hi from '@/components/Hi'
 
 Vue.use(Router)
@@ -25,8 +25,8 @@ export default new Router({
       component: Signup
     },
     {
-      path: '/hello',
-      component: HelloWorld
+      path: '/about',
+      component: About
     },
     {
       path: '/hi',

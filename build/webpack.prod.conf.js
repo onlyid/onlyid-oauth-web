@@ -31,15 +31,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    // UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
     new UglifyJsPlugin({
       sourceMap: true,
       parallel: true,
-      uglifyOptions: {
-        mangle: {
-          safari10: true
-        }
-      }
     }),
     // extract css into its own file
     new ExtractTextPlugin({
@@ -67,7 +61,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'dependency',
+      favicon: 'static/favicon.png'
     }),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),

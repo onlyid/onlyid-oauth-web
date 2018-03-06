@@ -3,15 +3,15 @@
     ["env", {
       "modules": false,
       "targets": {
-        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
-      }
-    }],
-    "stage-2"
+        "browsers": ["> 1%"]
+      },
+      "useBuiltIns": true
+    }]
   ],
-  "plugins": ["transform-runtime"],
+  "plugins": [],
   "env": {
     "test": {
-      "presets": ["env", "stage-2"],
+      "presets": ["env"],
       "plugins": ["istanbul"]
     }
   }
