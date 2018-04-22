@@ -39,9 +39,9 @@
 <style scoped>
   .show-password {
     position: absolute;
-    right: 20px;
-    top: 5px;
-    font-size: 30px;
+    right: 12px;
+    top: 10px;
+    font-size: 2.2rem;
     color: #7f7f7f;
     cursor: pointer;
   }

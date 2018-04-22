@@ -1,0 +1,18 @@
+body {
+  background-color: #4b5046;
+  color: white;
+}
+.el-card {
+  background-color: #4b5046;
+  color: white;
+  border: #303133;
+}
+#footer {
+  color: #C0C4CC;
+}
+.color-note {
+  color: #DCDFE6;
+}
+.logo {
+  background-image: url('./logo-dark.png');
+}

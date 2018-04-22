@@ -6,28 +6,8 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import common from '../../../onlyid-frontend-common/lib/index'
+  import config from '../config'
   import Validator from 'async-validator'
-
-  const instance = axios.create({
-    baseURL: common.baseUrl
-  })
-
-  instance.interceptors.response.use((response) => {
-    if (response.data.code !== 0) {
-      let message = response.data.message
-      if (message.constructor === {}.constructor) {
-        message = JSON.stringify(message)
-      }
-      window.vue.$message.error(message)
-      return Promise.reject(new Error(JSON.stringify(response.data)))
-    }
-    return response
-  }, (error) => {
-    window.vue.$message.error(error.message)
-    return Promise.reject(error)
-  })
 
   export default {
     props: ['value', 'mobile'],
@@ -39,16 +19,17 @@
     },
     methods: {
       sendSmsCode () {
-        const descriptor = {mobile: common.rules.mobile}
+        const descriptor = {mobile: config.rules.mobile}
         const validator = new Validator(descriptor)
-        validator.validate({mobile: this.mobile}, {first: true}, (errors, fields) => {
-          if (errors) {
-            return
-          }
+        validator.validate({mobile: this.mobile}, {first: true}, async (errors, fields) => {
+          try {
+            if (errors) {
+              return
+            }
 
-          instance.post('/sms-code/send', {
-            mobile: this.mobile
-          }).then((res) => {
+            await this.$axios.post('/sms-code/send', {
+              mobile: this.mobile
+            })
             this.$refs.smsCode.focus()
 
             let countDown = 60
@@ -63,9 +44,9 @@
               this.sendSmsCodeDisabled = false
               this.sendSmsCodeText = '发送验证码'
             }, countDown * 1000)
-          }).catch((err) => {
-            console.log(err)
-          })
+          } catch (err) {
+            console.error(err)
+          }
         })
       }
     },

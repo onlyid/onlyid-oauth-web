@@ -1,0 +1,118 @@
+html {
+  /*把全局字体设成10px*/
+  font-size: 62.5%;
+}
+body {
+  font-family: PingFangSC-Light,"Microsoft YaHei",sans-serif;
+  text-align: center;
+  background-image: url('../assets/mask.png');
+  background-size: 3000px;
+  background-position: center top;
+  background-repeat: no-repeat;
+  padding-top: 100px;
+  margin: 0;
+}
+#footer {
+  margin-top: 70px;
+  color: #909399;
+}
+.color-note {
+  color: #7f7f7f;
+}
+.logo {
+  width: 66px;
+  height: 33px;
+  margin: 0 auto;
+  background-image: url('./logo.png');
+  background-size: contain;
+  cursor: pointer
+}
+/*适配笔记本*/
+@media screen and (max-height: 750px) {
+  body {
+    padding-top: 40px;
+  }
+  #footer {
+    margin-top: 40px;
+  }
+}
+/*适配手机*/
+@media screen and (max-width: 600px) {
+  .el-card {
+    box-shadow: none;
+    border: none;
+  }
+  body {
+    padding-top: 0;
+    background-image: none;
+  }
+  #footer {
+    display: none;
+  }
+}
+.el-input, .el-button {
+  font-size: 1.6rem;
+}
+.el-form-item__error {
+  font-size: 1.4rem;
+}
+.el-button {
+  width: 100%;
+}
+.gradient-hr {
+  background:linear-gradient( to right, rgba(220,220,220,0) 0%, rgba(220,220,220,1) 10%, rgba(220,220,220,1) 90%, rgba(220,220,220,0) 100% );
+  height:1px;
+}
+
+/* font start */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url(./MaterialIcons-Regular.woff2) format('woff2'),
+  url(./MaterialIcons-Regular.woff) format('woff'),
+  url(./MaterialIcons-Regular.ttf) format('truetype');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 48px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+@font-face {
+  font-family: 'iconfont';  /* project id 545468 */
+  src: url('//at.alicdn.com/t/font_545468_w42pd0m6l84cxr.eot');
+  src: url('//at.alicdn.com/t/font_545468_w42pd0m6l84cxr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_545468_w42pd0m6l84cxr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_545468_w42pd0m6l84cxr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_545468_w42pd0m6l84cxr.svg#iconfont') format('svg');
+}
+.iconfont{
+  font-family:"iconfont";
+  font-size:24px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* font end */

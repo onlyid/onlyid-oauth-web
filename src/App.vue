@@ -1,61 +1,85 @@
 <template>
   <div id="app">
-    <router-view/>
+    <el-card class="card">
+      <div v-if="showIcon" style="margin-top: 20px">
+        <img :src="iconUrl" width="64" class="icon"/>
+        <p style="margin-top: 5px; font-size: 1.4rem">{{ client.name }}</p>
+      </div>
+      <router-view :client="client"/>
+      <div style="margin-top: 50px" v-if="showLogo">
+        <div class="logo" @click="goAbout"></div>
+        <p style="cursor: pointer; font-size: 1.4rem; margin-top: 5px" class="color-note" @click="goAbout">手机号验证服务</p>
+      </div>
+    </el-card>
+    <div id="footer">
+      <p>onlyid.net &nbsp; © &nbsp; {{ currentYear }}</p>
+      <p>深圳市友全科技有限公司 </p>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'app'
+    data () {
+      return {
+        currentYear: new Date().getFullYear(),
+        client: '',
+        iconUrl: ''
+      }
+    },
+    methods: {
+      goAbout () {
+        this.$router.push('/about')
+      }
+    },
+    async mounted (data) {
+      try {
+        const res = await this.$axios.get('/clients/' + this.$route.params.clientId)
+        this.client = res.data.client
+        if (this.client.redirectUris[0] !== this.$route.params.redirectUri) {
+          this.$message.error('redirect uri错误')
+        }
+
+        this.iconUrl = this.client.iconUrl + '?' + Date.now()
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    created () {
+      if (this.$route.params.viewZoomed === 'true') {
+        require.ensure([], (require) => {
+          require('./assets/style-zoomed.css')
+        })
+      }
+      if (this.$route.params.themeDark === 'true') {
+        require.ensure([], (require) => {
+          require('./assets/style-dark.css')
+        })
+      }
+    },
+    computed: {
+      showIcon () {
+        return this.$route.path !== '/about'
+      },
+      showLogo () {
+        return this.$route.path !== '/about'
+      }
+    }
   }
 </script>
 
-<style>
-  body {
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-    background-color: #7f7f7f;
+<style scoped>
+  #app {
     width: 320px;
     margin: 0 auto;
-    color: white;
-    text-align: center;
-    font-size: 22px;
   }
-  #app {
-    margin-top: 50px;
+  #footer {
+    font-size: 1.3rem;
   }
-  .el-message__content,
-  .el-input {
-    font-size: 22px;
+  .card {
+    padding: 10px;
   }
-  .el-button {
-    font-size: 22px;
-    width: 100%;
-  }
-  .el-form-item__error {
-    font-size: 17px;
-    color: #ffda00;
-  }
-  .el-form-item.is-error .el-input__inner, .el-form-item.is-error .el-input__inner:focus {
-    border-color: #ffda00;
-  }
-  @media screen and (min-height: 740px) {
-    body {
-      padding-top: 150px;
-    }
-  }
-  button {
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* ios safari 去掉灰色点击效果 */
-  }
-  .el-message {
-    width: 320px;
-    min-width: 320px;
-  }
-  .el-message__content {
-    word-wrap: break-word;
-    word-break:break-all;
-  }
-  .gradient-hr {
-    background:linear-gradient( to right, rgba(220,220,220,0) 0%, rgba(220,220,220,1) 10%, rgba(220,220,220,1) 90%, rgba(220,220,220,0) 100% );
-    height:1px;
+  .icon {
+    border-radius: 5px;
   }
 </style>
