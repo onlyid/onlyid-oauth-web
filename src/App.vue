@@ -62,7 +62,8 @@
         return this.$route.path !== '/about'
       },
       showLogo () {
-        return this.$route.path !== '/about'
+        const path = this.$route.path
+        return path !== '/about' && path !== '/demo'
       }
     }
   }
@@ -75,9 +76,6 @@
   }
   #footer {
     font-size: 1.3rem;
-  }
-  .card {
-    padding: 10px;
   }
   .icon {
     border-radius: 5px;

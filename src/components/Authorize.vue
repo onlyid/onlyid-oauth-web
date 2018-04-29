@@ -13,7 +13,7 @@
     </p>
     <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent style="margin-top: 50px">
       <el-form-item prop="mobile">
-        <el-input placeholder="手机号" v-model="form.mobile" ref="mobile" type="tel" @keyup.native.enter="submit" :disabled="isDisable" el-input/>
+        <el-input placeholder="手机号" v-model="form.mobile" ref="mobile" type="tel" @keyup.native.enter="submit" :disabled="isDisable" clearable el-input/>
       </el-form-item>
       <p style="margin: 20px 0 10px; text-align: left; font-size: 1.4rem" class="color-note">{{ client.name }}使用唯ID的技术来帮助你验证手机号。此操作不会产生短信或其他费用。</p>
       <el-form-item>

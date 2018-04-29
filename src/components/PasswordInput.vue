@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-input :placeholder="placeholder1" :type="showPassword ? 'text' : 'password'" v-model="password" ref="password"></el-input>
+    <el-input :placeholder="placeholder1" :type="showPassword ? 'text' : 'password'" v-model="password" ref="password" :auto-complete="autoComplete || 'off'"></el-input>
     <i class="el-icon-view show-password" :class="{'show-password-active': showPassword}" @click="toggleShowPassword"></i>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['value', 'placeholder'],
+    props: ['value', 'placeholder', 'autoComplete'],
     data () {
       return {
         placeholder1: this.placeholder || '密码',

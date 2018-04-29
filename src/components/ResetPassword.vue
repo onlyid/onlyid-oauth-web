@@ -3,11 +3,11 @@
     <el-button style="margin-top: 5px" icon="el-icon-edit" type="text" @click="$router.go(-2)">{{ mobile }}</el-button>
     <el-form ref="form" :model="form" :rules="rules" style="margin-top: 15px">
       <el-form-item prop="smsCode">
-        <sms-code-input :mobile="mobile" v-model="form.smsCode" sms-code-input/>
+        <sms-code-input :mobile="mobile" v-model="form.smsCode" />
       </el-form-item>
       <input type="text" :value="mobile" v-show="false"/>
       <el-form-item prop="password">
-        <password-input v-model="form.password" placeholder="新密码" password-input/>
+        <password-input v-model="form.password" placeholder="新密码" auto-complete="new-password" />
       </el-form-item>
       <el-form-item>
         <el-row :gutter="20">
