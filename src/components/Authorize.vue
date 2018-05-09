@@ -44,7 +44,7 @@
             return
           }
 
-          sessionStorage.setItem('mobile', this.form.mobile)
+          localStorage.setItem('mobile', this.form.mobile)
 
           this.$axios.post('/user/check-new', {
             mobile: this.form.mobile
@@ -65,7 +65,7 @@
       }
     },
     mounted () {
-      this.form.mobile = sessionStorage.getItem('mobile')
+      this.form.mobile = localStorage.getItem('mobile')
       this.$nextTick(() => {
         this.$refs.mobile.focus()
 
