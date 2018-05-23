@@ -68,10 +68,6 @@
       this.form.mobile = localStorage.getItem('mobile')
       this.$nextTick(() => {
         this.$refs.mobile.focus()
-
-        // 记录统计
-        // 如果不放nextTick的话 会报 Cannot read property '$axios' of undefined
-        this.$logStats(this.$route.params.clientId, null, 'request', null)
       })
     },
     computed: {

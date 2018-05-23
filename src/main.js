@@ -11,14 +11,14 @@ import App from './App'
 import router from './router'
 import { VueBus, Focus } from 'onlyid-frontend-common'
 import AxiosUtil from './axios-util'
-import StatisticPlugin from './statistic-plugin'
+import StatsPlugin from './stats-plugin'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(VueBus)
 Vue.use(AxiosUtil)
 Vue.use(Focus)
-Vue.use(StatisticPlugin)
+Vue.use(StatsPlugin)
 
 /* eslint-disable no-new */
 window.vue = new Vue({

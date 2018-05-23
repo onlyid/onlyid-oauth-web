@@ -46,6 +46,7 @@
       }
     },
     created () {
+      console.log('app created')
       if (this.$route.params.viewZoomed === 'true') {
         require.ensure([], (require) => {
           require('./assets/style-zoomed.css')
@@ -56,10 +57,17 @@
           require('./assets/style-dark.css')
         })
       }
+
+      // 记录统计
+      // 如果不放nextTick的话 会报 Cannot read property '$axios' of undefined
+      this.$nextTick(() => {
+        this.$logStats(this.$route.params.clientId, null, 'request', null)
+      })
     },
     computed: {
       showIcon () {
-        return this.$route.path !== '/about'
+        const path = this.$route.path
+        return path !== '/about' && path !== '/demo'
       },
       showLogo () {
         const path = this.$route.path
