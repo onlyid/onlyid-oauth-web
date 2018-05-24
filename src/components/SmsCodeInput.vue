@@ -28,7 +28,8 @@
             }
 
             await this.$axios.post('/sms-code/send', {
-              mobile: this.mobile
+              mobile: this.mobile,
+              client: this.$route.params.clientId
             })
             this.$refs.smsCode.focus()
 
@@ -36,14 +37,15 @@
             this.sendSmsCodeDisabled = true
             this.sendSmsCodeText = countDown
             const h = setInterval(() => {
-              countDown -= 1
-              this.sendSmsCodeText = countDown
+              countDown--
+              if (countDown === 0) {
+                clearInterval(h)
+                this.sendSmsCodeDisabled = false
+                this.sendSmsCodeText = '发送验证码'
+              } else {
+                this.sendSmsCodeText = countDown
+              }
             }, 1000)
-            setTimeout(() => {
-              clearInterval(h)
-              this.sendSmsCodeDisabled = false
-              this.sendSmsCodeText = '发送验证码'
-            }, countDown * 1000)
           } catch (err) {
             console.error(err)
           }
