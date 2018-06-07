@@ -72,35 +72,13 @@
     },
     computed: {
       isShowTip () {
-        if (!this.client) {
-          return false
-        }
-
-        if (this.client.review.status === 'dev' || this.client.review.status === 'rejected' || this.expired) {
-          return true
-        } else {
-          return false
-        }
+        return this.client.review.status === 'dev' || this.client.review.status === 'rejected' || this.expired
       },
       isDisable () {
-        if (!this.client) {
-          return false
-        }
-        if (this.client.review.status === 'rejected' || this.expired) {
-          return true
-        } else {
-          return false
-        }
+        return this.client.review.status === 'rejected' || this.expired
       },
       expired () {
-        if (!this.client) {
-          return false
-        }
-        if (new Date(this.client.developer.expires) < new Date()) {
-          return true
-        }
-
-        return false
+        return new Date(this.client.developer.expires) < new Date()
       }
     }
   }

@@ -23,7 +23,7 @@
     data () {
       return {
         currentYear: new Date().getFullYear(),
-        client: '',
+        client: { review: '', developer: '' }, // 设置初始值 否则会报错
         iconUrl: ''
       }
     },
