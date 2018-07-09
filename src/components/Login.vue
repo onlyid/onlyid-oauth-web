@@ -1,28 +1,25 @@
 <template>
   <div>
     <el-button style="margin-top: 5px" icon="el-icon-edit" type="text" @click="$router.back()">{{ mobile }}</el-button>
-    <el-form ref="form" :model="form" :rules="rules" style="margin-top: 15px">
+    <div style="margin-top: 15px">
       <input type="text" :value="mobile" v-show="false"/>
-      <el-form-item prop="password" v-if="loginType === 'password'" key="password">
-        <password-input v-model="form.password" ref="password" @keyup.native.enter="submit" password-input/>
-      </el-form-item>
-      <el-form-item prop="smsCode" v-else key="smsCode">
-        <sms-code-input :mobile="mobile" v-model="form.smsCode" @keyup.native.enter="submit" sms-code-input/>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submit">下一步</el-button>
-      </el-form-item>
-    </el-form>
-    <div style="margin-top: 40px">
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-button type="primary" @click="toggleLogin" size="medium" round class="small-button" plain>{{ toggleLoginText }}</el-button>
-        </el-col>
-        <el-col :span="12">
-          <el-button @click="resetPassword" size="medium" round class="small-button" plain>重设密码</el-button>
-        </el-col>
-      </el-row>
+      <password-input v-model="form.password" @keyup.native.enter="submit" v-if="loginType === 'password'" ref="password"/>
+      <sms-code-input :mobile="mobile" v-model="form.smsCode" @keyup.native.enter="submit" v-else/>
+      <el-button type="primary" @click="submit" style="margin-top: 20px;">
+        <template v-if="scene === 'login'">登 录</template>
+        <template v-else-if="scene === 'bind'">绑 定</template>
+        <template v-else-if="scene === 'change'">更 换</template>
+        <template v-else-if="scene === 'auth'">验 证</template>
+      </el-button>
     </div>
+    <el-row :gutter="20" style="margin-top: 30px">
+      <el-col :span="12">
+        <el-button @click="toggleLogin" size="medium" round class="small-button">{{ toggleLoginText }}</el-button>
+      </el-col>
+      <el-col :span="12">
+        <el-button @click="resetPassword" size="medium" round class="small-button">重设密码</el-button>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -44,7 +41,7 @@
           password: '',
           smsCode: ''
         },
-        rules: config.rules
+        scene: ''
       }
     },
     computed: {
@@ -58,42 +55,34 @@
         this.form.password = ''
         this.form.smsCode = ''
       },
-      submit () {
-        this.$refs['form'].validate(async (valid) => {
-          try {
-            if (!valid) {
-              console.log('not valid')
-              return
-            }
-
-            const body = {mobile: this.mobile}
-            if (this.loginType === 'password') {
-              body.password = this.form.password
-            } else {
-              body.smsCode = this.form.smsCode
-            }
-            await this.$axios.post('/login', body)
-            await this.$logStats(this.$route.params.clientId, this.mobile, 'login', true)
-            // 登录成功，请求code
-            location.assign(config.authorizeUrl +
-              '&client_id=' + this.$route.params.clientId +
-              '&state=' + this.$route.params.state +
-              '&redirect_uri=' + encodeURIComponent(this.$route.params.redirectUri))
-          } catch (err) {
-            console.error(err)
-            this.$logStats(this.$route.params.clientId, this.mobile, 'login', false)
+      async submit () {
+        const params = this.$route.params
+        try {
+          const body = {mobile: this.mobile}
+          if (this.loginType === 'password') {
+            body.password = this.form.password
+          } else {
+            body.smsCode = this.form.smsCode
           }
-        })
+          await this.$axios.post('/login', body)
+          await this.$logStats(params.clientId, this.mobile, 'login', true)
+          // 登录成功，请求code
+          location.assign(config.authorizeUrl + '&client_id=' + params.clientId + '&state=' + params.state +
+            '&redirect_uri=' + encodeURIComponent(params.redirectUri))
+        } catch (err) {
+          console.error(err)
+          this.$logStats(params.clientId, this.mobile, 'login', false)
+        }
       },
       resetPassword () {
-        this.$router.push('/reset-password/' + this.$route.params.mobile +
-          '/' + this.$route.params.clientId +
-          '/' + this.$route.params.state +
-          // 这个encode是必须的 否则跳到下个路由url又变回没转义的了
-          '/' + encodeURIComponent(this.$route.params.redirectUri))
+        const params = this.$route.params
+        // encode是必须的 否则跳到下个路由url又变回没转义的了
+        this.$router.push('/reset-password/' + params.mobile + '/' + params.clientId + '/' + params.state + '/' +
+          encodeURIComponent(params.redirectUri))
       }
     },
     mounted () {
+      this.scene = this.$route.params.scene
       this.$refs.password.focus()
     }
   }

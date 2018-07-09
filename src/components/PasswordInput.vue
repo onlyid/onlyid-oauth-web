@@ -1,23 +1,19 @@
 <template>
-  <div>
-    <el-input :placeholder="placeholder1" :type="showPassword ? 'text' : 'password'" v-model="password" ref="password" :auto-complete="autoComplete || 'off'"></el-input>
-    <i class="el-icon-view show-password" :class="{'show-password-active': showPassword}" @click="toggleShowPassword"></i>
-  </div>
+  <el-input placeholder="请填写密码" :type="showPassword ? 'text' : 'password'" v-model="password" :auto-complete="autoComplete || 'off'" ref="password">
+    <i slot="suffix" class="el-icon-view show-password" :class="{'show-password-active': showPassword}" @click="showPassword = !showPassword"></i>
+    <template slot="prepend">{{this.label || '密码'}}</template>
+  </el-input>
 </template>
 
 <script>
   export default {
-    props: ['value', 'placeholder', 'autoComplete'],
+    props: ['value', 'label', 'autoComplete'],
     data () {
       return {
-        placeholder1: this.placeholder || '密码',
         showPassword: false
       }
     },
     methods: {
-      toggleShowPassword () {
-        this.showPassword = !this.showPassword
-      },
       focus () {
         this.$refs.password.focus()
       }
@@ -38,12 +34,11 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .show-password {
-    position: absolute;
-    right: 12px;
-    top: 10px;
-    font-size: 2.2rem;
+    font-size: 1.8rem;
+    margin-right: 5px;
     color: #7f7f7f;
     cursor: pointer;
+    margin-top: 12px;
   }
   .show-password-active {
     color: #409EFF;

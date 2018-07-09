@@ -1,5 +1,10 @@
 <template>
   <div>
+    <el-input suffix-icon="el-icon-view">
+    </el-input>
+    <el-input>
+      <i slot="suffix" class="el-icon-view"></i>
+    </el-input>
     <!--<div>-->
       <!--<el-button @click="focus">focus</el-button>-->
       <!--<el-button @click="storage">html5 storage</el-button>-->
@@ -16,13 +21,13 @@
       <!--&lt;!&ndash;<p>{{ errors.all() }}</p>&ndash;&gt;-->
       <!--&lt;!&ndash;<p style="color: #eb9e05">{{ fields }}</p>&ndash;&gt;-->
     <!--</div>-->
-    <form action="http://oauth.onlyid.net:3001/hi" method="post">
-      <input type="checkbox" name="checkbox1" value="banana" id="checkbox1"/><label for="checkbox1">香蕉</label><br/>
-      <input type="radio" name="sex" id="male" value="male"/><label for="male">男</label><br/>
-      <input type="radio" name="sex" id="female" value="female"/><label for="female">女</label><br/>
-      <label for="input1">input1</label><input id="input1" name="input1"/>
-      <input type="submit" value="submit"/>
-    </form>
+    <!--<form action="http://oauth.onlyid.net:3001/hi" method="post">-->
+      <!--<input type="checkbox" name="checkbox1" value="banana" id="checkbox1"/><label for="checkbox1">香蕉</label><br/>-->
+      <!--<input type="radio" name="sex" id="male" value="male"/><label for="male">男</label><br/>-->
+      <!--<input type="radio" name="sex" id="female" value="female"/><label for="female">女</label><br/>-->
+      <!--<label for="input1">input1</label><input id="input1" name="input1"/>-->
+      <!--<input type="submit" value="submit"/>-->
+    <!--</form>-->
   </div>
 </template>
 

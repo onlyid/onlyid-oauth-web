@@ -8,22 +8,22 @@ import Signup from '@/components/Signup'
 import ResetPassword from '@/components/ResetPassword'
 import About from '@/components/About'
 import Demo from '@/components/Demo'
-import Hi from '@/components/Hi'
+import Playground from '@/components/Playground'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/authorize/:clientId/:state/:redirectUri/:themeDark/:viewZoomed',
+      path: '/authorize/:clientId/:state/:redirectUri/:themeDark/:viewZoomed/:scene',
       component: Authorize
     },
     {
-      path: '/login/:mobile/:clientId/:state/:redirectUri',
+      path: '/login/:mobile/:clientId/:state/:redirectUri/:scene',
       component: Login
     },
     {
-      path: '/signup/:mobile/:clientId/:state/:redirectUri',
+      path: '/signup/:mobile/:clientId/:state/:redirectUri/:scene',
       component: Signup
     },
     {
@@ -39,8 +39,8 @@ export default new Router({
       component: Demo
     },
     {
-      path: '/hi',
-      component: Hi
+      path: '/playground',
+      component: Playground
     }
   ]
 })

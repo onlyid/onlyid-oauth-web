@@ -1,55 +1,42 @@
 <template>
-  <div>
-    <el-input placeholder="验证码" v-model="smsCode" ref="smsCode" type="tel"></el-input>
-    <el-button id="send-sms-code" type="text" @click="sendSmsCode" :disabled="sendSmsCodeDisabled">{{ sendSmsCodeText }}</el-button>
-  </div>
+  <el-input placeholder="请填写验证码" v-model="smsCode" type="tel" ref="smsCode">
+    <el-button slot="suffix" type="text" @click="sendSmsCode" style="padding-right: 5px;" :disabled="sent">
+      {{sent ? countDown + '秒后重试' : '发送验证码'}}</el-button>
+    <template slot="prepend">验证码</template>
+  </el-input>
 </template>
 
 <script>
-  import config from '../config'
-  import Validator from 'async-validator'
-
   export default {
     props: ['value', 'mobile'],
     data () {
       return {
-        sendSmsCodeDisabled: false,
-        sendSmsCodeText: '发送验证码'
+        sent: false,
+        countDown: 60
       }
     },
     methods: {
-      sendSmsCode () {
-        const descriptor = {mobile: config.rules.mobile}
-        const validator = new Validator(descriptor)
-        validator.validate({mobile: this.mobile}, {first: true}, async (errors, fields) => {
-          try {
-            if (errors) {
-              return
+      async sendSmsCode () {
+        try {
+          await this.$axios.post('/sms-code/send', {
+            mobile: this.mobile,
+            client: this.$route.params.clientId
+          })
+
+          this.$refs.smsCode.focus()
+
+          this.countDown = 60
+          this.sent = true
+          const h = setInterval(() => {
+            this.countDown--
+            if (this.countDown === 0) {
+              clearInterval(h)
+              this.sent = false
             }
-
-            await this.$axios.post('/sms-code/send', {
-              mobile: this.mobile,
-              client: this.$route.params.clientId
-            })
-            this.$refs.smsCode.focus()
-
-            let countDown = 60
-            this.sendSmsCodeDisabled = true
-            this.sendSmsCodeText = countDown
-            const h = setInterval(() => {
-              countDown--
-              if (countDown === 0) {
-                clearInterval(h)
-                this.sendSmsCodeDisabled = false
-                this.sendSmsCodeText = '发送验证码'
-              } else {
-                this.sendSmsCodeText = countDown
-              }
-            }, 1000)
-          } catch (err) {
-            console.error(err)
-          }
-        })
+          }, 1000)
+        } catch (err) {
+          console.error(err)
+        }
       }
     },
     computed: {
@@ -61,17 +48,13 @@
           this.$emit('input', val)
         }
       }
+    },
+    created () {
+      // this.sendSmsCode()
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #send-sms-code {
-    padding-top: 10px;
-    position: absolute;
-    top: 0px;
-    right: 10px;
-    width: auto;
-  }
 </style>

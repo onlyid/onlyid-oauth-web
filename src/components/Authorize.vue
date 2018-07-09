@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <p style="text-align: left; font-size: 1.4rem; margin-bottom: -20px; margin-top: 20px" v-if="isShowTip">
+  <div style="padding-bottom: 30px">
+    <p style="text-align: left; font-size: 1.4rem; margin-bottom: -25px; margin-top: 25px" v-if="isShowTip">
       <template v-if="expired">
-        <span style="color: #E6A23C;">【已过期】</span>该{{ client.type === 'app' ? 'app' : '网站' }}的开发者账号已过期，请及时续费
+        <span style="color: #E6A23C;">【已过期】</span>该{{ client.type === 'app' ? 'app' : '网站' }}的唯ID服务已过期，请续费
       </template>
       <template v-else-if="client.review && client.review.status === 'dev'">
         <span style="color: #E6A23C;">【开发中】</span>该{{ client.type === 'app' ? 'app' : '网站' }}未经审核，请注意风险
@@ -11,21 +11,30 @@
         <span style="color: #F56C6C;">【审核未通过】</span>该{{ client.type === 'app' ? 'app' : '网站' }}存在违法违规行为
       </template>
     </p>
-    <el-form ref="form" :model="form" :rules="rules" @submit.native.prevent style="margin-top: 50px">
-      <el-form-item prop="mobile">
-        <el-input placeholder="手机号" v-model="form.mobile" ref="mobile" type="tel" @keyup.native.enter="submit" :disabled="isDisable" clearable el-input/>
-      </el-form-item>
-      <p style="margin: 20px 0 10px; text-align: left; font-size: 1.4rem" class="color-note">{{ client.name }}使用唯ID的技术来帮助你验证手机号。此操作不会产生短信或其他费用。</p>
-      <el-form-item>
-        <el-button type="primary" @click="submit" :disabled="isDisable">下一步</el-button>
-      </el-form-item>
-    </el-form>
+    <div style="margin-top: 50px">
+      <el-input placeholder="请填写手机号" v-model="form.mobile" @keyup.native.enter="submit" :disabled="isDisable" clearable ref="mobile">
+        <template slot="prepend">手机号</template>
+      </el-input>
+      <p class="color-note note">
+        <template v-if="scene === 'login'">
+          你正在登录{{client.name}}，点击“下一步”继续
+        </template>
+        <template v-else-if="scene === 'bind'">
+          你正在绑定手机号，点击“下一步”继续
+        </template>
+        <template v-else-if="scene === 'change'">
+          你正在更换手机号，点击“下一步”继续
+        </template>
+        <template v-else-if="scene === 'auth'">
+          你正在验证手机号，点击“下一步”继续
+        </template>
+      </p>
+      <el-button type="primary" @click="submit" :disabled="isDisable">下 一 步</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-  import config from '../config'
-
   export default {
     props: ['client'],
     data () {
@@ -33,42 +42,34 @@
         form: {
           mobile: ''
         },
-        rules: config.rules
+        scene: ''
       }
     },
     methods: {
-      submit () {
-        this.$refs['form'].validate((valid) => {
-          if (!valid) {
-            console.log('not valid')
-            return
+      async submit () {
+        localStorage.setItem('mobile', this.form.mobile)
+
+        this.$axios.post('/user/check-new', {
+          mobile: this.form.mobile
+        }).then((res) => {
+          let route = '/login/'
+          if (res.data.userType === 'new') {
+            route = '/signup/'
           }
 
-          localStorage.setItem('mobile', this.form.mobile)
-
-          this.$axios.post('/user/check-new', {
-            mobile: this.form.mobile
-          }).then((res) => {
-            let route = '/login/'
-            if (res.data.userType === 'new') {
-              route = '/signup/'
-            }
-            this.$router.push(route + this.form.mobile +
-              '/' + this.$route.params.clientId +
-              '/' + this.$route.params.state +
-              // 这个encode是必须的 否则跳到下个路由url又变回没转义的了
-              '/' + encodeURIComponent(this.$route.params.redirectUri))
-          }).catch((err) => {
-            console.log(err)
-          })
+          const params = this.$route.params
+          this.$router.push(route + this.form.mobile + '/' + params.clientId + '/' + params.state +
+            // 这个encode是必须的 否则跳到下个路由url又变回没转义的了
+            '/' + encodeURIComponent(params.redirectUri) + '/' + params.scene)
+        }).catch((err) => {
+          console.log(err)
         })
       }
     },
     mounted () {
       this.form.mobile = localStorage.getItem('mobile')
-      this.$nextTick(() => {
-        this.$refs.mobile.focus()
-      })
+      this.scene = this.$route.params.scene
+      this.$refs.mobile.focus()
     },
     computed: {
       isShowTip () {

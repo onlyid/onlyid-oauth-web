@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <el-card class="card">
+    <el-card :body-style="{padding: '30px'}">
       <div v-if="showIcon" style="margin-top: 20px">
         <img :src="iconUrl" width="64" class="icon"/>
         <p style="margin-top: 5px; font-size: 1.4rem">{{ client.name }}</p>
       </div>
       <router-view :client="client"/>
       <div style="margin-top: 50px" v-if="showLogo">
-        <div class="logo" @click="goAbout"></div>
-        <p style="cursor: pointer; font-size: 1.4rem; margin-top: 5px" class="color-note" @click="goAbout">手机号验证服务</p>
+        <div class="logo" @click="goAbout" style="cursor: pointer"></div>
+        <div style="margin-top: 5px">
+          <span @click="goAbout" class="color-note" style="cursor: pointer; font-size: 1.4rem;">手机号验证服务</span>
+        </div>
       </div>
     </el-card>
     <div id="footer">
@@ -41,6 +43,21 @@
         }
 
         this.iconUrl = this.client.iconUrl + '?' + Date.now()
+
+        switch (this.$route.params.scene) {
+          case 'login':
+            document.title = '唯ID - 登录' + this.client.name
+            break
+          case 'bind':
+            document.title = '唯ID - 绑定手机号'
+            break
+          case 'change':
+            document.title = '唯ID - 更换手机号'
+            break
+          case 'auth':
+            document.title = '唯ID - 验证手机号'
+            break
+        }
       } catch (err) {
         console.error(err)
       }
@@ -79,8 +96,8 @@
 
 <style scoped>
   #app {
-    width: 320px;
     margin: 0 auto;
+    width: 340px;
   }
   #footer {
     font-size: 1.3rem;

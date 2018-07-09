@@ -1,18 +1,19 @@
 body {
-  background-color: #4b5046;
-  color: white;
+  /*background-color: #4b5046;*/
+  background-color: #7f7f7f;
 }
 .el-card {
-  background-color: #4b5046;
-  color: white;
-  border: #303133;
+  background-color: #dfdfdf;
+  /*background-color: #4b5046;*/
+  /*color: white;*/
+  /*border: #303133;*/
 }
 #footer {
-  color: #C0C4CC;
-}
-.color-note {
   color: #DCDFE6;
 }
-.logo {
-  background-image: url('./logo-dark.png');
-}
+/*.color-note {*/
+  /*color: #DCDFE6;*/
+/*}*/
+/*.logo {*/
+  /*background-image: url('./logo-dark.png');*/
+/*}*/
