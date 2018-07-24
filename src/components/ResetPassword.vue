@@ -48,7 +48,7 @@
             smsCode: this.form.smsCode
           }
           await this.$axios.put('/user/password', body)
-          await this.$logStats(params.clientId, this.mobile, 'resetPassword', true)
+          await this.$logStats(params.clientId, 'resetPassword', true)
           this.$message({
             type: 'success',
             message: '已重设密码，即将跳转 ' + this.client.name
@@ -60,7 +60,7 @@
           }, 4000)
         } catch (err) {
           console.error(err)
-          this.$logStats(params.clientId, this.mobile, 'resetPassword', false)
+          await this.$logStats(params.clientId, 'resetPassword', false)
         }
       }
     }

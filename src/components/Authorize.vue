@@ -13,7 +13,7 @@
     </p>
     <div style="margin-top: 50px">
       <el-input placeholder="请填写手机号" v-model="form.mobile" @keyup.native.enter="submit" :disabled="isDisable" clearable ref="mobile">
-        <template slot="prepend">手机号</template>
+        <template slot="prepend">{{scene === 'change' ? '新号码' : '手机号'}}</template>
       </el-input>
       <p class="color-note note">
         <template v-if="scene === 'login'">
@@ -47,13 +47,12 @@
     },
     methods: {
       async submit () {
-        localStorage.setItem('mobile', this.form.mobile)
+        try {
+          localStorage.setItem('mobile', this.form.mobile)
 
-        this.$axios.post('/user/check-new', {
-          mobile: this.form.mobile
-        }).then((res) => {
+          const {data: {userType}} = await this.$axios.post('/user/check-new', {mobile: this.form.mobile})
           let route = '/login/'
-          if (res.data.userType === 'new') {
+          if (userType === 'new') {
             route = '/signup/'
           }
 
@@ -61,14 +60,14 @@
           this.$router.push(route + this.form.mobile + '/' + params.clientId + '/' + params.state +
             // 这个encode是必须的 否则跳到下个路由url又变回没转义的了
             '/' + encodeURIComponent(params.redirectUri) + '/' + params.scene)
-        }).catch((err) => {
-          console.log(err)
-        })
+        } catch (err) {
+          console.error(err)
+        }
       }
     },
     mounted () {
-      this.form.mobile = localStorage.getItem('mobile')
       this.scene = this.$route.params.scene
+      this.form.mobile = localStorage.getItem('mobile')
       this.$refs.mobile.focus()
     },
     computed: {

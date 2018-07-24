@@ -8,9 +8,7 @@
       <router-view :client="client"/>
       <div style="margin-top: 50px" v-if="showLogo">
         <div class="logo" @click="goAbout" style="cursor: pointer"></div>
-        <div style="margin-top: 5px">
-          <span @click="goAbout" class="color-note" style="cursor: pointer; font-size: 1.4rem;">手机号验证服务</span>
-        </div>
+        <p class="color-note" style="font-size: 1.4rem; margin: 5px 0 0">共享的手机账号</p>
       </div>
     </el-card>
     <div id="footer">
@@ -36,17 +34,17 @@
     },
     async mounted (data) {
       try {
-        const res = await this.$axios.get('/clients/' + this.$route.params.clientId)
-        this.client = res.data.client
-        if (this.client.redirectUris[0] !== this.$route.params.redirectUri) {
+        const {data: client} = await this.$axios.get('/clients/' + this.$route.params.clientId)
+        this.client = client
+        if (!client.redirectUris.includes(this.$route.params.redirectUri)) {
           this.$message.error('redirect uri错误')
         }
 
-        this.iconUrl = this.client.iconUrl + '?' + Date.now()
+        this.iconUrl = client.iconUrl + '?' + Date.now()
 
         switch (this.$route.params.scene) {
           case 'login':
-            document.title = '唯ID - 登录' + this.client.name
+            document.title = '唯ID - 登录' + client.name
             break
           case 'bind':
             document.title = '唯ID - 绑定手机号'
@@ -77,8 +75,8 @@
 
       // 记录统计
       // 如果不放nextTick的话 会报 Cannot read property '$axios' of undefined
-      this.$nextTick(() => {
-        this.$logStats(this.$route.params.clientId, null, 'request', null)
+      this.$nextTick(async () => {
+        await this.$logStats(this.$route.params.clientId, 'request', null)
       })
     },
     computed: {

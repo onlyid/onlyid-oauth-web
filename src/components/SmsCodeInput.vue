@@ -1,6 +1,6 @@
 <template>
   <el-input placeholder="请填写验证码" v-model="smsCode" type="tel" ref="smsCode">
-    <el-button slot="suffix" type="text" @click="sendSmsCode" style="padding-right: 5px;" :disabled="sent">
+    <el-button slot="suffix" type="text" @click="sendSmsCode" style="padding-right: 5px; font-size: 1.4rem; margin-top: 1px" :disabled="sent">
       {{sent ? countDown + '秒后重试' : '发送验证码'}}</el-button>
     <template slot="prepend">验证码</template>
   </el-input>
@@ -18,10 +18,7 @@
     methods: {
       async sendSmsCode () {
         try {
-          await this.$axios.post('/sms-code/send', {
-            mobile: this.mobile,
-            client: this.$route.params.clientId
-          })
+          await this.$axios.post('/sms-code/send', {mobile: this.mobile, client: this.$route.params.clientId})
 
           this.$refs.smsCode.focus()
 

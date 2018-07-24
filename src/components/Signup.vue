@@ -46,13 +46,13 @@
             smsCode: this.form.smsCode
           }
           await this.$axios.post('/signup', body)
-          await this.$logStats(params.clientId, this.mobile, 'signup', true)
+          await this.$logStats(params.clientId, 'signup', true)
           // 注册成功，请求code
           location.assign(config.authorizeUrl + '&client_id=' + params.clientId + '&state=' + params.state +
             '&redirect_uri=' + encodeURIComponent(params.redirectUri))
         } catch (err) {
           console.error(err)
-          await this.$logStats(params.clientId, this.mobile, 'signup', false)
+          await this.$logStats(params.clientId, 'signup', false)
         }
       }
     },
