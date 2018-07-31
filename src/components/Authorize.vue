@@ -7,9 +7,6 @@
       <template v-else-if="client.review && client.review.status === 'dev'">
         <span style="color: #E6A23C;">【开发中】</span>该{{ client.type === 'app' ? 'app' : '网站' }}未经审核，请注意风险
       </template>
-      <template v-else-if="client.review && client.review.status === 'rejected'">
-        <span style="color: #F56C6C;">【审核未通过】</span>该{{ client.type === 'app' ? 'app' : '网站' }}存在违法违规行为
-      </template>
     </p>
     <div style="margin-top: 50px">
       <el-input placeholder="请填写手机号" v-model="form.mobile" @keyup.native.enter="submit" :disabled="isDisable" clearable ref="mobile">
@@ -29,7 +26,7 @@
           你正在验证手机号，点击“下一步”继续
         </template>
       </p>
-      <el-button type="primary" @click="submit" :disabled="isDisable">下 一 步</el-button>
+      <el-button type="primary" @click="submit" :disabled="expired">下 一 步</el-button>
     </div>
   </div>
 </template>
@@ -72,10 +69,7 @@
     },
     computed: {
       isShowTip () {
-        return this.client.review.status === 'dev' || this.client.review.status === 'rejected' || this.expired
-      },
-      isDisable () {
-        return this.client.review.status === 'rejected' || this.expired
+        return this.client.review.status === 'dev' || this.expired
       },
       expired () {
         return new Date(this.client.developer.expires) < new Date()

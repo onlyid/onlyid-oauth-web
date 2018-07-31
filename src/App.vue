@@ -64,12 +64,12 @@
       console.log('app created')
       if (this.$route.params.viewZoomed === 'true') {
         require.ensure([], (require) => {
-          require('./assets/style-zoomed.css')
+          require('./assets/zoomed.css')
         })
       }
       if (this.$route.params.themeDark === 'true') {
         require.ensure([], (require) => {
-          require('./assets/style-dark.css')
+          require('./assets/dark.css')
         })
       }
 

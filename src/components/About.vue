@@ -1,8 +1,8 @@
 <template>
   <div id="content">
     <div class="logo"></div>
-    <p style="font-size: 2rem">简单、可信赖的手机号验证服务</p>
-    <p class="color-note">我们为app和网站提供简单、可信赖的手机号验证服务。开发者无需关心发送短信、比对验证码等细节，轻松获取用户手机号。可广泛应用于短信验证码登录、三方登录绑定手机号等场景。</p>
+    <p style="font-size: 2rem; text-align: center">共享的手机账号</p>
+    <p class="color-note">我们为app和网站提供共享的手机账号服务。开发者不用开通短信，轻松获取用户手机号。广泛应用于手机号登录、三方登录绑定手机等场景。</p>
     <div class="advantage">
       <i class="material-icons advantage-image" id="developer_mode">developer_mode</i>
       <p class="advantage-title">极简API，半小时闪电接入</p>

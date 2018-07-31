@@ -7,7 +7,6 @@ import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import ResetPassword from '@/components/ResetPassword'
 import About from '@/components/About'
-import Demo from '@/components/Demo'
 import Playground from '@/components/Playground'
 
 Vue.use(Router)
@@ -33,10 +32,6 @@ export default new Router({
     {
       path: '/about',
       component: About
-    },
-    {
-      path: '/demo',
-      component: Demo
     },
     {
       path: '/playground',
