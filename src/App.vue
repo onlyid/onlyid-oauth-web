@@ -19,6 +19,8 @@
 </template>
 
 <script>
+  import url from 'url'
+
   export default {
     data () {
       return {
@@ -36,24 +38,30 @@
       try {
         const {data: client} = await this.$axios.get('/clients/' + this.$route.params.clientId)
         this.client = client
-        if (!client.redirectUris.includes(this.$route.params.redirectUri)) {
-          this.$message.error('redirect uri错误')
+        const domains = client.redirectDomains
+        const {hostname} = url.parse(this.$route.params.redirectUri)
+        if (domains.length > 0 && !domains.includes(hostname)) {
+          window.store.setDisabled(true)
+          this.$message.error('redirect uri不属于回调域名')
+        } else if (new Date(client.developer.expires) < new Date()) {
+          window.store.setDisabled(true)
+          this.$message.error('唯ID服务已过期，请续费')
         }
 
         this.iconUrl = client.iconUrl + '?' + Date.now()
 
-        switch (this.$route.params.scene) {
+        switch (this.$route.params.scenario) {
           case 'login':
-            document.title = '唯ID - 登录' + client.name
+            document.title = '登录' + client.name
             break
           case 'bind':
-            document.title = '唯ID - 绑定手机号'
+            document.title = '绑定手机号'
             break
           case 'change':
-            document.title = '唯ID - 更换手机号'
+            document.title = '更换手机号'
             break
           case 'auth':
-            document.title = '唯ID - 验证手机号'
+            document.title = '验证手机号'
             break
         }
       } catch (err) {
@@ -95,7 +103,7 @@
 <style scoped>
   #app {
     margin: 0 auto;
-    width: 340px;
+    width: 350px;
   }
   #footer {
     font-size: 1.3rem;

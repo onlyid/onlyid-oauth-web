@@ -11,7 +11,7 @@
           <el-button @click="$router.back()">取 消</el-button>
         </el-col>
         <el-col :span="14">
-          <el-button type="primary" @click="submit">重 设</el-button>
+          <el-button type="primary" @click="submit" :disabled="state.disabled">重 设</el-button>
         </el-col>
       </el-row>
     </div>
@@ -25,17 +25,15 @@
 
   export default {
     props: ['client'],
-    components: {
-      SmsCodeInput,
-      PasswordInput
-    },
+    components: {SmsCodeInput, PasswordInput},
     data () {
       return {
         mobile: this.$route.params.mobile,
         form: {
           smsCode: '',
           password: ''
-        }
+        },
+        state: window.store.state
       }
     },
     methods: {
@@ -54,10 +52,12 @@
             message: '已重设密码，即将跳转 ' + this.client.name
           })
           // 重设成功，请求code
-          setTimeout(() => {
-            location.assign(config.authorizeUrl + '&client_id=' + params.clientId + '&state=' + params.state +
-              '&redirect_uri=' + encodeURIComponent(params.redirectUri))
-          }, 4000)
+          const {data: {authorizationCode}} = await this.$axios.get(config.authorizeUrl + '&client_id=' + params.clientId)
+          let url = params.redirectUri + '?code=' + authorizationCode
+          if (params.state !== 'empty') {
+            url += '&state=' + params.state
+          }
+          setTimeout(() => { location.assign(url) }, 4000)
         } catch (err) {
           console.error(err)
           await this.$logStats(params.clientId, 'resetPassword', false)

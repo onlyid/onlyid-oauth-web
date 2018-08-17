@@ -20,6 +20,17 @@ Vue.use(AxiosUtil)
 Vue.use(Focus)
 Vue.use(StatsPlugin)
 
+window.store = {
+  debug: true,
+  state: {
+    disabled: false
+  },
+  setDisabled (newValue) {
+    if (this.debug) console.log('setDisabled', newValue)
+    this.state.disabled = newValue
+  }
+}
+
 /* eslint-disable no-new */
 window.vue = new Vue({
   el: '#app',

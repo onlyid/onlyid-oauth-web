@@ -2,7 +2,7 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import Authorize from '@/components/Authorize'
+import Auth from '@/components/Auth'
 import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import ResetPassword from '@/components/ResetPassword'
@@ -14,15 +14,15 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/authorize/:clientId/:state/:redirectUri/:themeDark/:viewZoomed/:scene',
-      component: Authorize
+      path: '/auth/:clientId/:state/:redirectUri/:themeDark/:viewZoomed/:scenario',
+      component: Auth
     },
     {
-      path: '/login/:mobile/:clientId/:state/:redirectUri/:scene',
+      path: '/login/:mobile/:clientId/:state/:redirectUri/:scenario',
       component: Login
     },
     {
-      path: '/signup/:mobile/:clientId/:state/:redirectUri/:scene',
+      path: '/signup/:mobile/:clientId/:state/:redirectUri/:scenario',
       component: Signup
     },
     {

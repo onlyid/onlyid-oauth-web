@@ -19,7 +19,7 @@ html {
   font-size: 62.5%;
 }
 body {
-  font-family: PingFangSC,"Microsoft YaHei",sans-serif;
+  font-family: PingFangSC-Light,"Microsoft YaHei",sans-serif;
   text-align: center;
   background-image: url('../assets/mask.png');
   background-size: 3000px;
@@ -65,6 +65,7 @@ body {
 }
 .el-button {
   width: 100%;
+  font-family: PingFangSC-Light,"Microsoft YaHei",sans-serif;
 }
 .gradient-hr {
   background:linear-gradient( to right, rgba(220,220,220,0) 0%, rgba(220,220,220,1) 10%, rgba(220,220,220,1) 90%, rgba(220,220,220,0) 100% );

@@ -1,10 +1,12 @@
 <template>
   <div>
-    <el-input suffix-icon="el-icon-view">
-    </el-input>
-    <el-input>
-      <i slot="suffix" class="el-icon-view"></i>
-    </el-input>
+    <el-button @click="testStore" :disabled="store.state.disabled">test store</el-button>
+    <!--<el-button @click="testCache">test cache</el-button>-->
+    <!--<el-input suffix-icon="el-icon-view">-->
+    <!--</el-input>-->
+    <!--<el-input>-->
+      <!--<i slot="suffix" class="el-icon-view"></i>-->
+    <!--</el-input>-->
     <!--<div>-->
       <!--<el-button @click="focus">focus</el-button>-->
       <!--<el-button @click="storage">html5 storage</el-button>-->
@@ -49,6 +51,17 @@
       }
     },
     methods: {
+      testStore () {
+        window.store.setDisabled(true)
+      },
+      async testCache () {
+        try {
+          const {data} = await this.$axios.get('/playground')
+          console.log(data)
+        } catch (err) {
+          console.error(err)
+        }
+      },
       async testAxios () {
         try {
           this.$axios.post('/hi')
