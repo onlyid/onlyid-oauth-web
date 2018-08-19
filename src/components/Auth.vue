@@ -7,7 +7,7 @@
       <el-input placeholder="请填写手机号" v-model="form.mobile" @keyup.native.enter="submit" clearable ref="mobile">
         <template slot="prepend">{{scenario === 'change' ? '新号码' : '手机号'}}</template>
       </el-input>
-      <p class="color-note note">
+      <p class="color-note note" style="margin-top: 20px;">
         <template v-if="scenario === 'login'">
           你正在登录{{client.name}}，点击“下一步”继续
         </template>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+  import {store} from 'onlyid-frontend-common'
+
   export default {
     props: ['client'],
     data () {
@@ -35,7 +37,7 @@
           mobile: ''
         },
         scenario: '',
-        state: window.store.state
+        state: store.state
       }
     },
     methods: {

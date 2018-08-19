@@ -20,6 +20,7 @@
 
 <script>
   import url from 'url'
+  import {store} from 'onlyid-frontend-common'
 
   export default {
     data () {
@@ -41,10 +42,10 @@
         const domains = client.redirectDomains
         const {hostname} = url.parse(this.$route.params.redirectUri)
         if (domains.length > 0 && !domains.includes(hostname)) {
-          window.store.setDisabled(true)
+          store.setDisabled(true)
           this.$message.error('redirect uri不属于回调域名')
         } else if (new Date(client.developer.expires) < new Date()) {
-          window.store.setDisabled(true)
+          store.setDisabled(true)
           this.$message.error('唯ID服务已过期，请续费')
         }
 

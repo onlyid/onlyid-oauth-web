@@ -15,7 +15,7 @@
       <i class="material-icons advantage-image" id="textsms">textsms</i>
       <p class="advantage-title">不限量验证短信任性发</p>
     </div>
-    <p style="margin-top: 30px">了解更多请访问 <a href="https://onlyid.net" target="_blank">onlyid.net</a></p>
+    <p style="margin-top: 30px; font-size: 1.4rem">了解更多请访问 <a href="https://onlyid.net" target="_blank">onlyid.net</a></p>
     <el-button @click="$router.back()" type="primary" style="margin-top: 20px">返 回</el-button>
   </div>
 </template>
@@ -35,7 +35,7 @@
 <style scoped>
   #content {
     text-align: left;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
   .advantage-image {
     float: left;
@@ -43,7 +43,8 @@
     margin-right: 20px;
   }
   .advantage {
-    margin-top: 25px;
+    width: 260px;
+    margin: 25px auto 0;
   }
   .advantage-title {
     font-size: 1.6rem;

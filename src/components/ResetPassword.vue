@@ -22,6 +22,7 @@
   import SmsCodeInput from './SmsCodeInput.vue'
   import PasswordInput from './PasswordInput.vue'
   import config from '../config'
+  import {store} from 'onlyid-frontend-common'
 
   export default {
     props: ['client'],
@@ -33,7 +34,7 @@
           smsCode: '',
           password: ''
         },
-        state: window.store.state
+        state: store.state
       }
     },
     methods: {
