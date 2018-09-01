@@ -5,19 +5,19 @@
     </p>
     <div style="margin-top: 50px">
       <el-input placeholder="请填写手机号" v-model="form.mobile" @keyup.native.enter="submit" clearable ref="mobile">
-        <template slot="prepend">{{scenario === 'change' ? '新号码' : '手机号'}}</template>
+        <template slot="prepend">{{scene === 'change' ? '新号码' : '手机号'}}</template>
       </el-input>
       <p class="color-note note" style="margin-top: 20px;">
-        <template v-if="scenario === 'login'">
+        <template v-if="scene === 'login'">
           你正在登录{{client.name}}，点击“下一步”继续
         </template>
-        <template v-else-if="scenario === 'bind'">
+        <template v-else-if="scene === 'bind'">
           你正在绑定手机号，点击“下一步”继续
         </template>
-        <template v-else-if="scenario === 'change'">
+        <template v-else-if="scene === 'change'">
           你正在更换手机号，点击“下一步”继续
         </template>
-        <template v-else-if="scenario === 'auth'">
+        <template v-else-if="scene === 'auth'">
           你正在验证手机号，点击“下一步”继续
         </template>
       </p>
@@ -36,7 +36,7 @@
         form: {
           mobile: ''
         },
-        scenario: '',
+        scene: '',
         state: store.state
       }
     },
@@ -54,14 +54,14 @@
           const params = this.$route.params
           this.$router.push(route + this.form.mobile + '/' + params.clientId + '/' + params.state +
             // 这个encode是必须的 否则跳到下个路由url又变回没转义的了
-            '/' + encodeURIComponent(params.redirectUri) + '/' + params.scenario)
+            '/' + encodeURIComponent(params.redirectUri) + '/' + params.scene)
         } catch (err) {
           console.error(err)
         }
       }
     },
     mounted () {
-      this.scenario = this.$route.params.scenario
+      this.scene = this.$route.params.scene
       this.form.mobile = localStorage.getItem('mobile')
       this.$refs.mobile.focus()
     }

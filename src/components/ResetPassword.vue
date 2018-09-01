@@ -1,5 +1,12 @@
 <template>
   <div>
+    <el-dialog :visible.sync="dialogVisible" width="300px" :show-close="false" :close-on-click-modal="false">
+      <span style="font-size: 1.5rem;">已重设密码，现在返回 {{client.name}}</span>
+      <span slot="footer">
+        <el-button type="primary" @click="redirect">好 的</el-button>
+      </span>
+    </el-dialog>
+
     <el-button style="margin-top: 5px" icon="el-icon-edit" type="text" @click="$router.go(-2)">{{ mobile }}</el-button>
     <div style="margin-top: 15px">
       <sms-code-input :mobile="mobile" v-model="form.smsCode"/>
@@ -34,7 +41,9 @@
           smsCode: '',
           password: ''
         },
-        state: store.state
+        state: store.state,
+        url: '',
+        dialogVisible: false
       }
     },
     methods: {
@@ -48,21 +57,19 @@
           }
           await this.$axios.put('/user/password', body)
           await this.$logStats(params.clientId, 'resetPassword', true)
-          this.$message({
-            type: 'success',
-            message: '已重设密码，即将跳转 ' + this.client.name
-          })
           // 重设成功，请求code
           const {data: {authorizationCode}} = await this.$axios.get(config.authorizeUrl + '&client_id=' + params.clientId)
-          let url = params.redirectUri + '?code=' + authorizationCode
-          if (params.state !== 'empty') {
-            url += '&state=' + params.state
-          }
-          setTimeout(() => { location.assign(url) }, 4000)
+          this.url = params.redirectUri + '?code=' + authorizationCode
+          if (params.state !== 'empty') this.url += '&state=' + params.state
+
+          this.dialogVisible = true
         } catch (err) {
           console.error(err)
           await this.$logStats(params.clientId, 'resetPassword', false)
         }
+      },
+      redirect () {
+        location.assign(this.url)
       }
     }
   }

@@ -6,10 +6,10 @@
       <password-input v-model="form.password" @keyup.native.enter="submit" v-if="loginType === 'password'" ref="password"/>
       <sms-code-input :mobile="mobile" v-model="form.smsCode" @keyup.native.enter="submit" v-else/>
       <el-button type="primary" @click="submit" style="margin-top: 20px;" :disabled="state.disabled">
-        <template v-if="scenario === 'login'">登 录</template>
-        <template v-else-if="scenario === 'bind'">绑 定</template>
-        <template v-else-if="scenario === 'change'">更 换</template>
-        <template v-else-if="scenario === 'auth'">验 证</template>
+        <template v-if="scene === 'login'">登 录</template>
+        <template v-else-if="scene === 'bind'">绑 定</template>
+        <template v-else-if="scene === 'change'">更 换</template>
+        <template v-else-if="scene === 'auth'">验 证</template>
       </el-button>
     </div>
     <el-row :gutter="20" style="margin-top: 30px">
@@ -39,7 +39,7 @@
           password: '',
           smsCode: ''
         },
-        scenario: '',
+        scene: '',
         state: store.state
       }
     },
@@ -68,9 +68,8 @@
           // 登录成功，请求code
           const {data: {authorizationCode}} = await this.$axios.get(config.authorizeUrl + '&client_id=' + params.clientId)
           let url = params.redirectUri + '?code=' + authorizationCode
-          if (params.state !== 'empty') {
-            url += '&state=' + params.state
-          }
+          if (params.state !== 'empty') url += '&state=' + params.state
+
           location.assign(url)
         } catch (err) {
           console.error(err)
@@ -85,7 +84,7 @@
       }
     },
     mounted () {
-      this.scenario = this.$route.params.scenario
+      this.scene = this.$route.params.scene
       this.$refs.password.focus()
     }
   }

@@ -14,15 +14,15 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/auth/:clientId/:state/:redirectUri/:themeDark/:viewZoomed/:scenario',
+      path: '/auth/:clientId/:state/:redirectUri/:themeDark/:viewZoomed/:scene',
       component: Auth
     },
     {
-      path: '/login/:mobile/:clientId/:state/:redirectUri/:scenario',
+      path: '/login/:mobile/:clientId/:state/:redirectUri/:scene',
       component: Login
     },
     {
-      path: '/signup/:mobile/:clientId/:state/:redirectUri/:scenario',
+      path: '/signup/:mobile/:clientId/:state/:redirectUri/:scene',
       component: Signup
     },
     {

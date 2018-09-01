@@ -51,7 +51,7 @@
 
         this.iconUrl = client.iconUrl + '?' + Date.now()
 
-        switch (this.$route.params.scenario) {
+        switch (this.$route.params.scene) {
           case 'login':
             document.title = '登录' + client.name
             break
@@ -71,16 +71,10 @@
     },
     created () {
       console.log('app created')
-      if (this.$route.params.viewZoomed === 'true') {
-        require.ensure([], (require) => {
-          require('./assets/zoomed.css')
-        })
-      }
-      if (this.$route.params.themeDark === 'true') {
-        require.ensure([], (require) => {
-          require('./assets/dark.css')
-        })
-      }
+      require.ensure([], (require) => {
+        if (this.$route.params.viewZoomed === 'true') require('./assets/zoomed.css')
+        if (this.$route.params.themeDark === 'true') require('./assets/dark.css')
+      })
 
       // 记录统计
       // 如果不放nextTick的话 会报 Cannot read property '$axios' of undefined
