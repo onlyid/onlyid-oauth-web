@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/style.css'
 import App from './App'
 import router from './router'
-import { VueBus, Focus } from 'onlyid-frontend-common'
+import { VueBus, Focus } from 'onlyid-web-common'
 import AxiosUtil from './axios-util'
 import StatsPlugin from './stats-plugin'
 

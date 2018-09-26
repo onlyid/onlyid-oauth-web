@@ -7,8 +7,8 @@
       </div>
       <router-view :client="client"/>
       <div style="margin-top: 50px" v-if="showLogo">
-        <div class="logo" @click="goAbout" style="cursor: pointer"></div>
-        <p class="color-note" style="font-size: 1.4rem; margin: 5px 0 0">共享的手机账号</p>
+        <img width="66" src="./assets/logo.png" @click="goAbout" style="cursor: pointer"/>
+        <p class="color-note" style="font-size: 1.4rem; margin: 0">一个中国 一个帐号</p>
       </div>
     </el-card>
     <div id="footer">
@@ -20,7 +20,7 @@
 
 <script>
   import url from 'url'
-  import {store} from 'onlyid-frontend-common'
+  import {store} from 'onlyid-web-common'
 
   export default {
     data () {

@@ -41,13 +41,6 @@ body {
 .color-note {
   color: #7f7f7f;
 }
-.logo {
-  width: 66px;
-  height: 33px;
-  margin: 0 auto;
-  background-image: url('./logo.png');
-  background-size: contain;
-}
 /*适配笔记本*/
 @media screen and (max-height: 750px) {
   body {

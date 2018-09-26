@@ -1,5 +1,5 @@
 {
-  "name": "onlyid-oauth-frontend",
+  "name": "onlyid-oauth-web",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "ltb <liangtb@qq.com>",
@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "element-ui": "^2.2.1",
-    "onlyid-frontend-common": "file:../onlyid-frontend-common",
+    "onlyid-web-common": "file:../onlyid-web-common",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1"
   },

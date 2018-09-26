@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {store} from 'onlyid-frontend-common'
+  import {store} from 'onlyid-web-common'
 
   export default {
     props: ['client'],

@@ -1,8 +1,7 @@
 <template>
   <div id="content">
-    <div class="logo"></div>
-    <p style="font-size: 2rem; text-align: center">共享的手机账号</p>
-    <p class="color-note">我们为app和网站提供共享的手机账号服务。开发者不用开通短信，轻松获取用户手机号。广泛应用于手机号登录、三方登录绑定手机等场景。</p>
+    <p style="font-size: 2rem; text-align: center"><img src="../assets/logo.png" width="66" style="vertical-align: -25%"/>手机账号</p>
+    <p class="color-note">我们为app和网站提供手机账号服务。开发者不用开通短信，轻松获取用户手机号。广泛应用于手机号登录、三方登录绑定手机等场景。</p>
     <div class="advantage">
       <i class="material-icons advantage-image" id="developer_mode">developer_mode</i>
       <p class="advantage-title">极简API，半小时闪电接入</p>
