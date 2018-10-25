@@ -6,29 +6,29 @@
 </template>
 
 <script>
-  export default {
-    props: ['value', 'label', 'autoComplete'],
-    data () {
-      return {
-        showPassword: false
-      }
-    },
-    methods: {
-      focus () {
-        this.$refs.password.focus()
-      }
-    },
-    computed: {
-      password: {
-        get () {
-          return this.value
-        },
-        set (val) {
-          this.$emit('input', val)
-        }
+export default {
+  props: ['value', 'label', 'autoComplete'],
+  data () {
+    return {
+      showPassword: false
+    }
+  },
+  methods: {
+    focus () {
+      this.$refs.password.focus()
+    }
+  },
+  computed: {
+    password: {
+      get () {
+        return this.value
+      },
+      set (val) {
+        this.$emit('input', val)
       }
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

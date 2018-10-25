@@ -29,6 +29,7 @@ body {
   padding-top: 100px;
   margin: 0;
   color: #303133;
+  font-size: 1.4rem;
 }
 .el-card {
   background-color: #fefefe;
@@ -37,9 +38,6 @@ body {
 #footer {
   margin-top: 70px;
   color: #909399;
-}
-.color-note {
-  color: #7f7f7f;
 }
 /*适配笔记本*/
 @media screen and (max-height: 750px) {
@@ -72,6 +70,13 @@ body {
 }
 .note {
   text-align: left;
+  margin: 15px 0 8px;
+  color: #7f7f7f;
+}
+.small-button {
+  width: auto;
   font-size: 1.4rem;
-  margin: 15px 0 8px
+}
+.small-button+.small-button {
+  margin-left: 50px;
 }

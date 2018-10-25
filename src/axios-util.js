@@ -4,7 +4,7 @@ import axios from 'axios'
 import config from './config'
 
 const install = (Vue) => {
-  const instance = axios.create({baseURL: config.baseUrl, withCredentials: true})
+  const instance = axios.create({ baseURL: config.baseUrl, withCredentials: true })
 
   instance.interceptors.response.use((res) => { return res }, (err) => {
     let res = err.response

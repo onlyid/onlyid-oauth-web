@@ -1,19 +1,9 @@
 body {
-  /*background-color: #4b5046;*/
   background-color: #7f7f7f;
 }
 .el-card {
   background-color: #dfdfdf;
-  /*background-color: #4b5046;*/
-  /*color: white;*/
-  /*border: #303133;*/
 }
 #footer {
   color: #DCDFE6;
 }
-/*.color-note {*/
-  /*color: #DCDFE6;*/
-/*}*/
-/*.logo {*/
-  /*background-image: url('./logo-dark.png');*/
-/*}*/

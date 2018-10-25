@@ -7,49 +7,49 @@
 </template>
 
 <script>
-  export default {
-    props: ['value', 'mobile'],
-    data () {
-      return {
-        sent: false,
-        countDown: 60
-      }
-    },
-    methods: {
-      async sendSmsCode () {
-        try {
-          await this.$axios.post('/sms-code/send', {mobile: this.mobile, client: this.$route.params.clientId})
-
-          this.$refs.smsCode.focus()
-
-          this.countDown = 60
-          this.sent = true
-          const h = setInterval(() => {
-            this.countDown--
-            if (this.countDown === 0) {
-              clearInterval(h)
-              this.sent = false
-            }
-          }, 1000)
-        } catch (err) {
-          console.error(err)
-        }
-      }
-    },
-    computed: {
-      smsCode: {
-        get () {
-          return this.value
-        },
-        set (val) {
-          this.$emit('input', val)
-        }
-      }
-    },
-    created () {
-      // this.sendSmsCode()
+export default {
+  props: ['value', 'mobile'],
+  data () {
+    return {
+      sent: false,
+      countDown: 60
     }
+  },
+  methods: {
+    async sendSmsCode () {
+      try {
+        await this.$axios.post('/sms-code/send', { mobile: this.mobile, client: this.$route.params.clientId })
+
+        this.$refs.smsCode.focus()
+
+        this.countDown = 60
+        this.sent = true
+        const h = setInterval(() => {
+          this.countDown--
+          if (this.countDown === 0) {
+            clearInterval(h)
+            this.sent = false
+          }
+        }, 1000)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  },
+  computed: {
+    smsCode: {
+      get () {
+        return this.value
+      },
+      set (val) {
+        this.$emit('input', val)
+      }
+    }
+  },
+  created () {
+    // this.sendSmsCode()
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

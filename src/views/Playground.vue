@@ -1,6 +1,5 @@
 <template>
   <div>
-    <el-button @click="testStore" :disabled="store.state.disabled">test store</el-button>
     <!--<el-button @click="testCache">test cache</el-button>-->
     <!--<el-input suffix-icon="el-icon-view">-->
     <!--</el-input>-->
@@ -34,57 +33,54 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        p1: true,
-        form: {
-          name: '活动名称',
-          sex: 'male'
-        },
-        input2: 'mobile'
-      }
-    },
-    watch: {
-      input2 (val1, val2) {
-        console.log(val1 + ' ' + val2)
-      }
-    },
-    methods: {
-      testStore () {
-        window.store.setDisabled(true)
+export default {
+  data () {
+    return {
+      p1: true,
+      form: {
+        name: '活动名称',
+        sex: 'male'
       },
-      async testCache () {
-        try {
-          const {data} = await this.$axios.get('/playground')
-          console.log(data)
-        } catch (err) {
-          console.error(err)
-        }
-      },
-      async testAxios () {
-        try {
-          this.$axios.post('/hi')
-        } catch (err) {
-          console.error(err)
-        }
-      },
-      storage () {
-//        localStorage.name = 'ltb'
-        console.log(localStorage.name)
-      },
-      onSubmit () {
-        console.log('here')
-      },
-      focus () {
-        console.log('focus' + this.$refs.input1.$el)
-        this.$refs.input1.focus()
-      }
-    },
-    mounted () {
-      this.$message({message: 'hi', type: 'info'})
+      input2: 'mobile'
     }
+  },
+  watch: {
+    input2 (val1, val2) {
+      console.log(val1 + ' ' + val2)
+    }
+  },
+  methods: {
+    async testCache () {
+      try {
+        const { data } = await this.$axios.get('/playground')
+        console.log(data)
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async testAxios () {
+      try {
+        this.$axios.post('/hi')
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    storage () {
+      //        localStorage.name = 'ltb'
+      console.log(localStorage.name)
+    },
+    onSubmit () {
+      console.log('here')
+    },
+    focus () {
+      console.log('focus' + this.$refs.input1.$el)
+      this.$refs.input1.focus()
+    }
+  },
+  mounted () {
+    this.testCache()
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

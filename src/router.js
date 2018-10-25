@@ -2,23 +2,28 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import Auth from '@/components/Auth'
-import Login from '@/components/Login'
-import Signup from '@/components/Signup'
-import ResetPassword from '@/components/ResetPassword'
-import About from '@/components/About'
-import Playground from '@/components/Playground'
+import Auth from './views/Auth'
+import Login from './views/Login'
+import Signup from './views/Signup'
+import ResetPassword from './views/ResetPassword'
+import About from './views/About'
+import Choose from './views/Choose'
+import Playground from './views/Playground'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
+      path: '/choose/:clientId/:state/:redirectUri/:themeDark/:viewZoomed/:scene',
+      component: Choose
+    },
+    {
       path: '/auth/:clientId/:state/:redirectUri/:themeDark/:viewZoomed/:scene',
       component: Auth
     },
     {
-      path: '/login/:mobile/:clientId/:state/:redirectUri/:scene',
+      path: '/login/:mobile/:clientId/:state/:redirectUri/:scene/:keepLoggedIn',
       component: Login
     },
     {
@@ -26,7 +31,7 @@ export default new Router({
       component: Signup
     },
     {
-      path: '/reset-password/:mobile/:clientId/:state/:redirectUri',
+      path: '/reset-password/:mobile/:clientId/:state/:redirectUri/:keepLoggedIn',
       component: ResetPassword
     },
     {
