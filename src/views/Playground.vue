@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-slider></el-slider>
     <!--<el-button @click="testCache">test cache</el-button>-->
     <!--<el-input suffix-icon="el-icon-view">-->
     <!--</el-input>-->

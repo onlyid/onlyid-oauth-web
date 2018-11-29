@@ -6,7 +6,7 @@
       <p class="note">设置密码，方便下次使用</p>
       <password-input v-model="form.password" auto-complete="new-password"/>
       <div style="text-align: left; margin-top: 20px;">
-        <el-checkbox v-model="form.keepLoggedIn">记住我</el-checkbox><span style="color: #7f7f7f;">（保持登录三个月）</span>
+        <el-checkbox v-model="form.keepLoggedIn">记住我</el-checkbox><span style="color: #7f7f7f;">（保持登录一个月）</span>
       </div>
       <el-button type="primary" @click="submit" style="margin-top: 20px;" :disabled="state.disabled">
         <template v-if="scene === 'login'">登 录</template>

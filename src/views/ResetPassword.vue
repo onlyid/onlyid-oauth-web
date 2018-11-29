@@ -13,7 +13,7 @@
       <p class="note">密码要包含字母、数字或标点符号中的两种</p>
       <password-input v-model="form.password" label="新密码" auto-complete="new-password"/>
       <div style="text-align: left; margin-top: 20px;">
-        <el-checkbox v-model="form.keepLoggedIn">记住我</el-checkbox><span style="color: #7f7f7f;">（保持登录三个月）</span>
+        <el-checkbox v-model="form.keepLoggedIn">记住我</el-checkbox><span style="color: #7f7f7f;">（保持登录一个月）</span>
       </div>
       <div style="margin-top: 20px;">
         <el-button @click="$router.back()" style="width: 35%">取 消</el-button>
