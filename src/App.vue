@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <el-card :body-style="{padding: '30px'}">
-      <div v-if="showIcon" style="margin-top: 20px">
-        <img :src="iconUrl" width="64" class="icon"/>
-        <p style="margin: 5px 0;">{{ client.name }}</p>
-        <span v-if="client.review.status === 'dev'" class="review-status">开发版</span>
-      </div>
-      <router-view :client="client"/>
-      <div style="margin-top: 50px" v-if="showLogo">
-        <img width="66" src="./assets/logo.png" @click="goAbout" style="cursor: pointer;"/><br/>
-        <span style="color: #7f7f7f; margin: 0; cursor: pointer;" @click="goAbout">一个中国 一个帐号</span>
-      </div>
-    </el-card>
+    <div id="main">
+      <el-card :body-style="{padding: '30px'}" id="card1">
+        <div v-if="showIcon" style="margin-top: 20px">
+          <img :src="iconUrl" width="64" class="icon"/>
+          <p style="margin: 5px 0;">{{ client.name }}</p>
+          <span v-if="client.review.status === 'dev'" class="review-status">开发版</span>
+        </div>
+        <router-view :client="client"/>
+        <div style="margin-top: 50px" v-if="showLogo">
+          <img width="66" src="./assets/logo.png" @click="goAbout" style="cursor: pointer;"/><br/>
+          <span style="color: #7f7f7f; margin: 0; cursor: pointer;" @click="goAbout">一个中国 一个帐号</span>
+        </div>
+      </el-card>
+    </div>
     <div id="footer">
       <p>onlyid.net &nbsp; © &nbsp; {{ currentYear }}</p>
       <p>深圳市友全科技有限公司 </p>
@@ -96,8 +98,21 @@ export default {
 
 <style scoped>
   #app {
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100vh;
+  }
+  #card1 {
     width: 350px;
+    margin-top: 20px;
+  }
+  #main {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
   #footer {
     font-size: 1.3rem;
