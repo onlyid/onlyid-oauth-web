@@ -4,9 +4,6 @@
     <div style="margin-top: 15px">
       <password-input v-model="form.password" @keyup.native.enter="submit" v-if="loginType === 'password'" ref="password"/>
       <sms-code-input :mobile="mobile" v-model="form.smsCode" @keyup.native.enter="submit" v-else/>
-      <div style="text-align: left; margin-top: 20px;">
-        <el-checkbox v-model="form.keepLoggedIn">记住我</el-checkbox><span style="color: #7f7f7f;">（保持登录一个月）</span>
-      </div>
       <el-button type="primary" @click="submit" style="margin-top: 20px;" :disabled="state.disabled">
         <template v-if="scene === 'login'">登 录</template>
         <template v-else-if="scene === 'bind'">绑 定</template>

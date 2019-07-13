@@ -10,13 +10,12 @@
         <router-view :client="client"/>
         <div style="margin-top: 50px" v-if="showLogo">
           <img width="66" src="./assets/logo.png" @click="goAbout" style="cursor: pointer;"/><br/>
-          <span style="color: #7f7f7f; margin: 0; cursor: pointer;" @click="goAbout">一个中国 一个帐号</span>
+          <span style="color: #7f7f7f; margin: 0; cursor: pointer;" @click="goAbout">开源帐号</span>
         </div>
       </el-card>
     </div>
     <div id="footer">
       <p>onlyid.net &nbsp; © &nbsp; {{ currentYear }}</p>
-      <p>深圳市友全科技有限公司 </p>
     </div>
   </div>
 </template>
