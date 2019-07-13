@@ -58,8 +58,8 @@ export default {
         await this.$axios.put('/user/password', body)
         await this.$logStats(params.clientId, 'resetPassword', true)
         // 重设成功，请求code
-        const { data: { authorizationCode } } = await this.$axios.get(
-          config.authorizeUrl + '&client_id=' + params.clientId + '&mobile=' + this.mobile)
+        const body1 = { clientId: params.clientId, mobile: this.mobile }
+        const { data: { authorizationCode } } = await this.$axios.post(config.authorizeUrl, body1)
         this.url = params.redirectUri + '?code=' + authorizationCode
         if (params.state !== 'empty') this.url += '&state=' + params.state
 

@@ -5,7 +5,7 @@
         <div v-if="showIcon" style="margin-top: 20px">
           <img :src="iconUrl" width="64" class="icon"/>
           <p style="margin: 5px 0;">{{ client.name }}</p>
-          <span v-if="client.review.status === 'dev'" class="review-status">开发版</span>
+<!--          <span v-if="client.review.status === 'dev'" class="review-status">开发版</span>-->
         </div>
         <router-view :client="client"/>
         <div style="margin-top: 50px" v-if="showLogo">
@@ -100,7 +100,6 @@ export default {
   #app {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     height: 100vh;
   }
   #card1 {

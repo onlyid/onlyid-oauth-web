@@ -1,12 +1,12 @@
 'use strict'
 
 const prod = {
-  authorizeUrl: 'https://my.onlyid.net/authorize?response_type=code',
+  authorizeUrl: 'https://my.onlyid.net/authorize',
   baseUrl: 'https://my.onlyid.net'
 }
 
 const dev = {
-  authorizeUrl: 'http://onlyid2:3001/authorize?response_type=code',
+  authorizeUrl: 'http://onlyid2:3001/authorize',
   baseUrl: 'http://onlyid2:3001'
 }
 
