@@ -33,7 +33,6 @@ export default {
       form: {
         password: '',
         smsCode: '',
-        keepLoggedIn: true
       },
       scene: '',
       state: store.state
@@ -53,7 +52,7 @@ export default {
     async submit () {
       const params = this.$route.params
       try {
-        const body = { mobile: this.mobile, keepLoggedIn: this.form.keepLoggedIn }
+        const body = { mobile: this.mobile }
         if (this.loginType === 'password') {
           body.password = this.form.password
         } else {
@@ -77,7 +76,7 @@ export default {
       const params = this.$route.params
       // encode是必须的 否则跳到下个路由url又变回没转义的了
       this.$router.push('/reset-password/' + params.mobile + '/' + params.clientId + '/' + params.state + '/' +
-          encodeURIComponent(params.redirectUri) + '/' + params.keepLoggedIn)
+          encodeURIComponent(params.redirectUri))
     }
   },
   mounted () {
@@ -85,7 +84,6 @@ export default {
   },
   created () {
     this.scene = this.$route.params.scene
-    this.form.keepLoggedIn = this.$route.params.keepLoggedIn === 'true'
   }
 }
 </script>

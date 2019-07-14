@@ -28,8 +28,7 @@ export default {
       mobile: this.$route.params.mobile,
       form: {
         smsCode: '',
-        password: '',
-        keepLoggedIn: true
+        password: ''
       },
       scene: '',
       state: store.state
@@ -42,8 +41,7 @@ export default {
         const body = {
           mobile: this.mobile,
           password: this.form.password,
-          smsCode: this.form.smsCode,
-          keepLoggedIn: this.form.keepLoggedIn
+          smsCode: this.form.smsCode
         }
         await this.$axios.post('/signup', body)
         await this.$logStats(params.clientId, 'signup', true)

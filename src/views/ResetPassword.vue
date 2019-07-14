@@ -34,8 +34,7 @@ export default {
       mobile: this.$route.params.mobile,
       form: {
         smsCode: '',
-        password: '',
-        keepLoggedIn: true
+        password: ''
       },
       state: store.state,
       url: '',
@@ -49,8 +48,7 @@ export default {
         const body = {
           mobile: this.mobile,
           password: this.form.password,
-          smsCode: this.form.smsCode,
-          keepLoggedIn: this.form.keepLoggedIn
+          smsCode: this.form.smsCode
         }
         await this.$axios.put('/user/password', body)
         await this.$logStats(params.clientId, 'resetPassword', true)
@@ -71,7 +69,6 @@ export default {
     }
   },
   created () {
-    this.form.keepLoggedIn = this.$route.params.keepLoggedIn === 'true'
   }
 }
 </script>

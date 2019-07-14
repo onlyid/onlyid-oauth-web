@@ -39,16 +39,26 @@ export default {
     async submit () {
       try {
         sessionStorage.mobile = this.form.mobile
-        const { data: { isNew } } = await this.$axios.post('/user/check-new', { mobile: this.form.mobile })
+        const { data: { isNew, needUpdatePassword } } = await this.$axios.post('/user/check-new', { mobile: this.form.mobile })
+
+        const params = this.$route.params
+        if (needUpdatePassword) {
+          this.$message({
+            message: '你的账号存在安全隐患，请重设密码',
+            type: 'warning'
+          })
+          this.$router.push('/reset-password/' + this.form.mobile + '/' + params.clientId + '/' + params.state + '/' +
+                  encodeURIComponent(params.redirectUri))
+          return
+        }
+
         let route = '/login/'
         if (isNew) {
           route = '/signup/'
         }
-
-        const params = this.$route.params
         this.$router.push(route + this.form.mobile + '/' + params.clientId + '/' + params.state +
             // 这个encode是必须的 否则跳到下个路由url又变回没转义的了
-            '/' + encodeURIComponent(params.redirectUri) + '/' + params.scene + (isNew ? '' : '/true'))
+            '/' + encodeURIComponent(params.redirectUri) + '/' + params.scene)
       } catch (err) {
         console.error(err)
       }
