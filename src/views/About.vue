@@ -14,7 +14,7 @@
       <i class="material-icons advantage-image" id="textsms">textsms</i>
       <p class="advantage-title">不限量验证短信任性发</p>
     </div>
-    <p style="margin-top: 30px; font-size: 1.4rem">了解更多请访问 <a href="https://onlyid.net" target="_blank">onlyid.net</a></p>
+    <p style="margin-top: 30px; font-size: 1.4rem">了解更多请访问 <a href="https://www.onlyid.net" target="_blank">www.onlyid.net</a></p>
     <el-button @click="$router.back()" type="primary" style="margin-top: 20px">返 回</el-button>
   </div>
 </template>

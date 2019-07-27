@@ -22,7 +22,6 @@
 import SmsCodeInput from '../components/SmsCodeInput.vue'
 import PasswordInput from '../components/PasswordInput.vue'
 import config from '../config'
-import { store } from 'onlyid-web-common'
 
 export default {
   components: { SmsCodeInput, PasswordInput },
@@ -32,15 +31,17 @@ export default {
       mobile: this.$route.params.mobile,
       form: {
         password: '',
-        smsCode: '',
+        smsCode: ''
       },
-      scene: '',
-      state: store.state
+      scene: ''
     }
   },
   computed: {
     toggleLoginText () {
       return this.loginType === 'password' ? '短信验证' : '密码验证'
+    },
+    state () {
+      return this.$store.state
     }
   },
   methods: {

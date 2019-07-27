@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import { store } from 'onlyid-web-common'
-
 export default {
   props: ['client'],
   data () {
@@ -31,8 +29,7 @@ export default {
       form: {
         mobile: ''
       },
-      scene: '',
-      state: store.state
+      scene: ''
     }
   },
   methods: {
@@ -70,6 +67,11 @@ export default {
   created () {
     this.scene = this.$route.params.scene
     this.form.mobile = sessionStorage.mobile
+  },
+  computed: {
+    state () {
+      return this.$store.state
+    }
   }
 }
 </script>

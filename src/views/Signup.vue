@@ -19,7 +19,6 @@
 import SmsCodeInput from '../components/SmsCodeInput.vue'
 import PasswordInput from '../components/PasswordInput.vue'
 import config from '../config'
-import { store } from 'onlyid-web-common'
 
 export default {
   components: { SmsCodeInput, PasswordInput },
@@ -30,8 +29,7 @@ export default {
         smsCode: '',
         password: ''
       },
-      scene: '',
-      state: store.state
+      scene: ''
     }
   },
   methods: {
@@ -60,6 +58,11 @@ export default {
   },
   created () {
     this.scene = this.$route.params.scene
+  },
+  computed: {
+    state () {
+      return this.$store.state
+    }
   }
 }
 </script>

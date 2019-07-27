@@ -22,7 +22,6 @@
 
 <script>
 import url from 'url'
-import { store } from 'onlyid-web-common'
 
 export default {
   data () {
@@ -44,10 +43,10 @@ export default {
       const domains = client.redirectDomains
       const { hostname } = url.parse(this.$route.params.redirectUri)
       if (domains.length > 0 && !domains.includes(hostname)) {
-        store.setDisabled(true)
+        this.$store.commit('disabled', true)
         this.$message.error('redirect uri不属于回调域名')
       } else if (new Date(client.developer.expires) < new Date()) {
-        store.setDisabled(true)
+        this.$store.commit('disabled', true)
         this.$message.error('唯ID服务已过期，请续费')
       }
 
@@ -72,7 +71,6 @@ export default {
     }
   },
   created () {
-    console.log('app created')
     if (this.$route.params.viewZoomed === 'true') import('./assets/zoomed.css')
     if (this.$route.params.themeDark === 'true') import('./assets/dark.css')
 
