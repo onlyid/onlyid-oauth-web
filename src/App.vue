@@ -83,11 +83,11 @@ export default {
   computed: {
     showIcon () {
       const path = this.$route.path
-      return path !== '/about' && path !== '/demo'
+      return !path.startsWith('/about') && !path.startsWith('/demo')
     },
     showLogo () {
       const path = this.$route.path
-      return path !== '/about' && path !== '/demo'
+      return !path.startsWith('/about') && !path.startsWith('/demo')
     }
   }
 }
