@@ -1,16 +1,25 @@
 <template>
   <div id="app">
     <div id="main">
-      <el-card :body-style="{padding: '30px'}" id="card1">
-        <div v-if="showIcon" style="margin-top: 20px">
-          <img :src="iconUrl" width="64" class="icon"/>
+      <el-card :body-style="{padding: '30px'}"
+               id="card1">
+        <div v-if="showIcon"
+             style="margin-top: 20px">
+          <img :src="iconUrl"
+               width="64"
+               class="icon" />
           <p style="margin: 5px 0;">{{ client.name }}</p>
-<!--          <span v-if="client.review.status === 'dev'" class="review-status">开发版</span>-->
+          <!--          <span v-if="client.review.status === 'dev'" class="review-status">开发版</span>-->
         </div>
-        <router-view :client="client"/>
-        <div style="margin-top: 50px" v-if="showLogo">
-          <img width="66" src="./assets/logo.png" @click="goAbout" style="cursor: pointer;"/><br/>
-          <span style="color: #7f7f7f; margin: 0; cursor: pointer;" @click="goAbout">开源帐号</span>
+        <router-view :client="client" />
+        <div style="margin-top: 50px"
+             v-if="showLogo">
+          <img width="66"
+               src="./assets/logo.png"
+               @click="goAbout"
+               style="cursor: pointer;" /><br />
+          <span style="color: #7f7f7f; margin: 0; cursor: pointer;"
+                @click="goAbout">开源帐号</span>
         </div>
       </el-card>
     </div>
@@ -24,7 +33,7 @@
 import url from 'url'
 
 export default {
-  data () {
+  data() {
     return {
       currentYear: new Date().getFullYear(),
       client: { review: '', developer: '' }, // 设置初始值 否则会报错
@@ -32,11 +41,11 @@ export default {
     }
   },
   methods: {
-    goAbout () {
+    goAbout() {
       this.$router.push('/about')
     }
   },
-  async mounted (data) {
+  async mounted() {
     try {
       const { data: client } = await this.$axios.get('/clients/' + this.$route.params.clientId)
       this.client = client
@@ -70,7 +79,7 @@ export default {
       console.error(err)
     }
   },
-  created () {
+  created() {
     if (this.$route.params.viewZoomed === 'true') import('./assets/zoomed.css')
     if (this.$route.params.themeDark === 'true') import('./assets/dark.css')
 
@@ -81,11 +90,11 @@ export default {
     })
   },
   computed: {
-    showIcon () {
+    showIcon() {
       const path = this.$route.path
       return !path.startsWith('/about') && !path.startsWith('/demo')
     },
-    showLogo () {
+    showLogo() {
       const path = this.$route.path
       return !path.startsWith('/about') && !path.startsWith('/demo')
     }
@@ -94,33 +103,33 @@ export default {
 </script>
 
 <style scoped>
-  #app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  #card1 {
-    width: 350px;
-    margin-top: 20px;
-  }
-  #main {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  #footer {
-    font-size: 1.3rem;
-  }
-  .icon {
-    border-radius: 5px;
-  }
-  .review-status {
-      color: white;
-      background-color: #F56C6C;
-      padding: 3px 5px;
-      border-radius: 5px;
-      font-size: 1.3rem;
-  }
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+#card1 {
+  width: 350px;
+  margin-top: 20px;
+}
+#main {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+#footer {
+  font-size: 1.3rem;
+}
+.icon {
+  border-radius: 5px;
+}
+.review-status {
+  color: white;
+  background-color: #f56c6c;
+  padding: 3px 5px;
+  border-radius: 5px;
+  font-size: 1.3rem;
+}
 </style>
