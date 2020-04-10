@@ -1,19 +1,41 @@
 import React, { Suspense } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { CircularProgress } from "@material-ui/core";
+import AccountLayout from "components/AccountLayout";
 
-const Index = React.lazy(() => import("pages/Index"));
+const Support = React.lazy(() => import("pages/Support"));
 
-function App() {
+const loading = (
+    <div style={{ marginTop: "40vh", textAlign: "center" }}>
+        <CircularProgress />
+    </div>
+);
+
+function App(props) {
     return (
-        <Router basename="/oauth">
-            <CssBaseline />
-            <Suspense fallback={<div>加载中，请稍候</div>}>
+        <BrowserRouter basename="/oauth">
+            <Suspense fallback={loading}>
                 <Switch>
-                    <Route path="/">{<Index />}</Route>
+                    <Route path="/support">
+                        <Support />
+                    </Route>
+                    <Route path="/account">
+                        <AccountLayout />
+                    </Route>
+                    <Route
+                        path="/"
+                        render={props => (
+                            <Redirect
+                                to={{
+                                    pathname: "/account",
+                                    search: props.location.search
+                                }}
+                            />
+                        )}
+                    />
                 </Switch>
             </Suspense>
-        </Router>
+        </BrowserRouter>
     );
 }
 

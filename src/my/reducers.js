@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
 
-const defaultApp = {};
+const defaultApp = {
+    accountName: "",
+    client: {},
+    nickname: null,
+    avatarUrl: null
+};
 
 function app(state = defaultApp, action) {
     const { type, payload } = action;

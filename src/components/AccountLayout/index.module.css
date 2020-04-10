@@ -1,0 +1,17 @@
+.root {
+    min-height: 100vh;
+    padding: 30px 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.root footer {
+    text-align: center;
+}
+
+.root footer img {
+    margin-top: 20px;
+    background-color: antiquewhite;
+}

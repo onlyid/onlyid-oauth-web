@@ -1,0 +1,16 @@
+.accountBox {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.accountBox :global .MuiButton-outlined {
+    border-radius: 20px;
+    opacity: 0.8;
+    border-color: #ccc;
+}
+
+.box1 {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
