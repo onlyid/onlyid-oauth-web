@@ -2,14 +2,33 @@ import React, { PureComponent } from "react";
 import { Button, TextField } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import http from "my/http";
-import styles from "./index.module.css";
 import { connect } from "react-redux";
+import Validator from "async-validator";
+import { REG_EXP } from "my/constants";
+
+const RULES = {
+    email: [
+        { required: true, message: "请输入" },
+        { max: 50, message: "最多输入50字" },
+        { type: "email", message: "邮箱格式不正确" }
+    ],
+    mobile: [
+        { required: true, message: "请输入" },
+        { max: 50, message: "最多输入50字" },
+        { pattern: REG_EXP.mobile, message: "手机号格式不正确" }
+    ]
+};
 
 class Account extends PureComponent {
     state = {
         helperText: null,
         isError: false
     };
+
+    componentDidMount() {
+        const { dispatch } = this.props;
+        dispatch({ type: "app/save", payload: { avatarUrl: null, nickname: null } });
+    }
 
     onSubmit = async e => {
         e.preventDefault();
@@ -22,25 +41,37 @@ class Account extends PureComponent {
             dispatch
         } = this.props;
 
-        if (accountName) {
-            this.setState({ helperText: null, isError: false });
+        if (!(await this.validateField())) return;
 
-            const params = { accountName };
-            const { registered, nickname, avatarUrl } = await http.get("oauth/check-registered", {
-                params
-            });
-            if (registered) {
-                history.push(match.url + "/sign-in" + search);
-                dispatch({ type: "app/save", payload: { nickname, avatarUrl } });
-            }
-        } else {
-            this.setState({ helperText: "请输入", isError: true });
+        const params = { accountName };
+        const { registered, nickname, avatarUrl } = await http.get("oauth/check-registered", {
+            params
+        });
+        if (registered) {
+            history.push(match.url + "/sign-in" + search);
+            dispatch({ type: "app/save", payload: { nickname, avatarUrl } });
         }
     };
 
     onChange = e => {
         const { dispatch } = this.props;
         dispatch({ type: "app/save", payload: { accountName: e.target.value } });
+    };
+
+    validateField = async () => {
+        const {
+            app: { accountName }
+        } = this.props;
+        try {
+            const rules = accountName.includes("@") ? RULES.email : RULES.mobile;
+            const validator = new Validator({ accountName: rules });
+            await validator.validate({ accountName });
+            this.setState({ helperText: null, isError: false });
+            return true;
+        } catch ({ errors }) {
+            this.setState({ helperText: errors[0].message, isError: true });
+            return false;
+        }
     };
 
     render() {
@@ -60,6 +91,7 @@ class Account extends PureComponent {
                         fullWidth
                         onChange={this.onChange}
                         value={accountName}
+                        onBlur={this.validateField}
                     />
                     <div style={{ marginTop: 20 }}>
                         <Button

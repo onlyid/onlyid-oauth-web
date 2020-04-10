@@ -13,6 +13,7 @@ import IconAndAvatar from "components/IconAndAvatar";
 const Account = React.lazy(() => import("pages/Account"));
 const SignUp = React.lazy(() => import("pages/SignUp"));
 const SignIn = React.lazy(() => import("pages/SignIn"));
+const ResetPassword = React.lazy(() => import("pages/ResetPassword"));
 
 class AccountLayout extends PureComponent {
     state = {
@@ -86,6 +87,9 @@ class AccountLayout extends PureComponent {
                         </Route>
                         <Route path={`${match.path}/sign-up`}>
                             <SignUp />
+                        </Route>
+                        <Route path={`${match.path}/reset-password`}>
+                            <ResetPassword />
                         </Route>
                         <Route path={match.path}>
                             <Account />

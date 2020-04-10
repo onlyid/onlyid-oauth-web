@@ -14,3 +14,13 @@
     display: flex;
     justify-content: space-between;
 }
+
+.box2 {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.form1 :global .MuiFormControl-root:not(:first-of-type) {
+    margin-top: 10px;
+}

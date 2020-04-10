@@ -23,7 +23,7 @@ class PasswordInput extends PureComponent {
     };
 
     render() {
-        const { error, onChange, helperText, label } = this.props;
+        const { error, onChange, helperText, label, ...restProps } = this.props;
         const { showPassword } = this.state;
 
         return (
@@ -41,6 +41,7 @@ class PasswordInput extends PureComponent {
                         </InputAdornment>
                     }
                     label={label}
+                    {...restProps}
                 />
                 <FormHelperText>{helperText}</FormHelperText>
             </FormControl>

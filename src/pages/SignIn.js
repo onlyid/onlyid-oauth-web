@@ -6,6 +6,12 @@ import { Button } from "@material-ui/core";
 import http from "my/http";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
+import Validator from "async-validator";
+
+const RULES = [
+    { required: true, message: "请输入" },
+    { max: 50, message: "最多输入50字" }
+];
 
 class SignIn extends PureComponent {
     state = {
@@ -33,33 +39,52 @@ class SignIn extends PureComponent {
     };
 
     onSubmit = async e => {
+        e.preventDefault();
+
         const { inputValue, loginType } = this.state;
         const {
             app: { accountName, client }
         } = this.props;
 
-        if (inputValue) {
-            this.setState({ helperText: null, isError: false });
+        if (!(await this.validateField())) return;
 
-            const { authorizationCode } = await http.post("oauth/sign-in", {
-                accountName,
-                [loginType]: inputValue,
-                clientId: client.id
-            });
-            console.log(authorizationCode);
-        } else {
-            this.setState({ helperText: "请输入", isError: true });
-        }
+        const { authorizationCode } = await http.post("oauth/sign-in", {
+            accountName,
+            [loginType]: inputValue,
+            clientId: client.id
+        });
+        console.log(authorizationCode);
     };
 
     onChange = e => {
         this.setState({ inputValue: e.target.value });
     };
 
+    validateField = async () => {
+        const { inputValue } = this.state;
+        try {
+            const validator = new Validator({ inputValue: RULES });
+            await validator.validate({ inputValue });
+            this.setState({ helperText: null, isError: false });
+            return true;
+        } catch ({ errors }) {
+            this.setState({ helperText: errors[0].message, isError: true });
+            return false;
+        }
+    };
+
     toggleLoginType = () => {
         this.setState(({ loginType }) => ({
             loginType: loginType === "password" ? "otp" : "password"
         }));
+    };
+
+    resetPassword = () => {
+        const {
+            history,
+            location: { search }
+        } = this.props;
+        history.push("/account/reset-password" + search);
     };
 
     render() {
@@ -86,6 +111,7 @@ class SignIn extends PureComponent {
                             error={isError}
                             onChange={this.onChange}
                             helperText={helperText}
+                            onBlur={this.validateField}
                         />
                     ) : (
                         <OtpInput
@@ -94,6 +120,7 @@ class SignIn extends PureComponent {
                             helperText={helperText}
                             accountName={accountName}
                             clientId={client.id}
+                            onBlur={this.validateField}
                         />
                     )}
                     <div style={{ marginTop: 20 }}>
@@ -112,7 +139,9 @@ class SignIn extends PureComponent {
                     <Button variant="outlined" color="primary" onClick={this.toggleLoginType}>
                         {loginType === "password" ? "验证码登录" : "密码登录"}
                     </Button>
-                    <Button variant="outlined">忘记密码</Button>
+                    <Button variant="outlined" onClick={this.resetPassword}>
+                        忘记密码
+                    </Button>
                 </div>
             </div>
         );

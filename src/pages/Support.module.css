@@ -50,6 +50,10 @@
     justify-content: center;
 }
 
+.left p {
+    margin-top: 0;
+}
+
 .right {
     margin-left: 10px;
 }

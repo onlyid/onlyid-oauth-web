@@ -55,6 +55,7 @@ class Support extends PureComponent {
                     <div className={styles.contactBox}>
                         <div className={styles.left}>
                             <p>客服电话：15521312099</p>
+                            <p>客服邮箱：help@onlyid.net</p>
                             <p>客服QQ：452391310</p>
                             <p>客服微信：15521312099</p>
                         </div>

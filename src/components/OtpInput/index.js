@@ -32,8 +32,11 @@ class OtpInput extends PureComponent {
     };
 
     render() {
-        const { error, onChange, helperText } = this.props;
+        const { error, onChange, helperText, ...restProps } = this.props;
         const { sent, countDown } = this.state;
+
+        delete restProps.accountName;
+        delete restProps.clientId;
 
         return (
             <FormControl variant="outlined" fullWidth error={error}>
@@ -50,6 +53,7 @@ class OtpInput extends PureComponent {
                         </InputAdornment>
                     }
                     label="验证码"
+                    {...restProps}
                 />
                 <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
