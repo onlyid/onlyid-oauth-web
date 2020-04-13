@@ -8,7 +8,6 @@ import http from "my/http";
 import { connect } from "react-redux";
 import { Switch, Route, withRouter, Link as RouterLink } from "react-router-dom";
 import logo from "assets/logo.svg";
-import IconAndAvatar from "components/IconAndAvatar";
 
 const Account = React.lazy(() => import("pages/Account"));
 const SignUp = React.lazy(() => import("pages/SignUp"));
@@ -79,23 +78,20 @@ class AccountLayout extends PureComponent {
                         {message}
                     </Alert>
                 </Snackbar>
-                <div>
-                    <IconAndAvatar />
-                    <Switch>
-                        <Route path={`${match.path}/sign-in`}>
-                            <SignIn />
-                        </Route>
-                        <Route path={`${match.path}/sign-up`}>
-                            <SignUp />
-                        </Route>
-                        <Route path={`${match.path}/reset-password`}>
-                            <ResetPassword />
-                        </Route>
-                        <Route path={match.path}>
-                            <Account />
-                        </Route>
-                    </Switch>
-                </div>
+                <Switch>
+                    <Route path={`${match.path}/sign-in`}>
+                        <SignIn />
+                    </Route>
+                    <Route path={`${match.path}/sign-up`}>
+                        <SignUp />
+                    </Route>
+                    <Route path={`${match.path}/reset-password`}>
+                        <ResetPassword />
+                    </Route>
+                    <Route path={match.path}>
+                        <Account />
+                    </Route>
+                </Switch>
                 <footer>
                     <Link component={RouterLink} to="/support">
                         需要帮助？

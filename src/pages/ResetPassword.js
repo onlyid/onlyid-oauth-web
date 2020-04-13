@@ -7,13 +7,11 @@ import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
 import http from "my/http";
+import IconAndAvatar from "components/IconAndAvatar";
 
 class ResetPassword extends PureComponent {
     RULES = {
-        otp: [
-            { required: true, message: "请输入" },
-            { max: 50, message: "最多输入50字" }
-        ],
+        otp: [{ required: true, message: "请输入" }],
         password: [
             { required: true, message: "请输入" },
             { min: 6, message: "密码最少要输入6位" },
@@ -126,6 +124,7 @@ class ResetPassword extends PureComponent {
 
         return (
             <div>
+                <IconAndAvatar />
                 <div className={styles.accountBox}>
                     <Button
                         startIcon={<span className="material-icons">edit</span>}
@@ -141,7 +140,7 @@ class ResetPassword extends PureComponent {
                         error={validation.otp.isError}
                         onChange={({ target: { value } }) => this.onChange("otp", value)}
                         helperText={validation.otp.helperText}
-                        accountName={accountName}
+                        recipient={accountName}
                         clientId={client.id}
                         onBlur={() => this.validateField("otp")}
                     />

@@ -1,0 +1,22 @@
+.root {
+    text-align: center;
+}
+
+.root label {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.root img {
+    border-radius: 4px;
+}
+
+.root .title {
+    margin: 5px 0;
+}
+
+.root :global .tip {
+    margin-top: 0;
+}

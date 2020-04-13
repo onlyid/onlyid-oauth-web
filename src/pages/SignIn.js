@@ -7,11 +7,9 @@ import http from "my/http";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
+import IconAndAvatar from "components/IconAndAvatar";
 
-const RULES = [
-    { required: true, message: "请输入" },
-    { max: 50, message: "最多输入50字" }
-];
+const RULES = [{ required: true, message: "请输入" }];
 
 class SignIn extends PureComponent {
     state = {
@@ -95,6 +93,7 @@ class SignIn extends PureComponent {
 
         return (
             <div>
+                <IconAndAvatar />
                 <div className={styles.accountBox}>
                     <Button
                         startIcon={<span className="material-icons">edit</span>}
@@ -118,7 +117,7 @@ class SignIn extends PureComponent {
                             error={isError}
                             onChange={this.onChange}
                             helperText={helperText}
-                            accountName={accountName}
+                            recipient={accountName}
                             clientId={client.id}
                             onBlur={this.validateField}
                         />

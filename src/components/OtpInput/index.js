@@ -16,8 +16,8 @@ class OtpInput extends PureComponent {
     };
 
     sendOtp = async () => {
-        const { accountName, clientId } = this.props;
-        await http.post("oauth/send-otp", { accountName, clientId });
+        const { recipient, clientId } = this.props;
+        await http.post("oauth/send-otp", { recipient, clientId });
 
         this.setState({ countDown: 60, sent: true });
         const h = setInterval(() => {
@@ -35,7 +35,7 @@ class OtpInput extends PureComponent {
         const { error, onChange, helperText, ...restProps } = this.props;
         const { sent, countDown } = this.state;
 
-        delete restProps.accountName;
+        delete restProps.recipient;
         delete restProps.clientId;
 
         return (

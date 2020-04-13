@@ -5,6 +5,7 @@ import http from "my/http";
 import { connect } from "react-redux";
 import Validator from "async-validator";
 import { REG_EXP } from "my/constants";
+import IconAndAvatar from "components/IconAndAvatar";
 
 const RULES = {
     email: [
@@ -36,7 +37,6 @@ class Account extends PureComponent {
         const {
             history,
             location: { search },
-            match,
             app: { accountName },
             dispatch
         } = this.props;
@@ -48,8 +48,10 @@ class Account extends PureComponent {
             params
         });
         if (registered) {
-            history.push(match.url + "/sign-in" + search);
+            history.push("/account/sign-in" + search);
             dispatch({ type: "app/save", payload: { nickname, avatarUrl } });
+        } else {
+            history.push("/account/sign-up" + search);
         }
     };
 
@@ -82,6 +84,7 @@ class Account extends PureComponent {
 
         return (
             <div>
+                <IconAndAvatar />
                 <form onSubmit={this.onSubmit} style={{ marginTop: 30 }}>
                     <TextField
                         label="手机号/邮箱"
