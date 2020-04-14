@@ -4,7 +4,8 @@ const defaultApp = {
     accountName: "",
     client: {},
     nickname: null,
-    avatarUrl: null
+    avatarUrl: null,
+    nextDisabled: false
 };
 
 function app(state = defaultApp, action) {

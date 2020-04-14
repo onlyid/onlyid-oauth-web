@@ -79,7 +79,7 @@ class Account extends PureComponent {
     render() {
         const { helperText, isError } = this.state;
         const {
-            app: { client, accountName }
+            app: { client, accountName, nextDisabled }
         } = this.props;
 
         return (
@@ -103,6 +103,7 @@ class Account extends PureComponent {
                             fullWidth
                             onClick={this.onSubmit}
                             size="large"
+                            disabled={nextDisabled}
                         >
                             下 一 步
                         </Button>

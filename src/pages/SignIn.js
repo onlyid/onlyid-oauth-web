@@ -8,6 +8,8 @@ import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
 import IconAndAvatar from "components/IconAndAvatar";
+import { Edit } from "@material-ui/icons";
+import qs from "qs";
 
 const RULES = [{ required: true, message: "请输入" }];
 
@@ -41,7 +43,8 @@ class SignIn extends PureComponent {
 
         const { inputValue, loginType } = this.state;
         const {
-            app: { accountName, client }
+            app: { accountName, client },
+            location: { search }
         } = this.props;
 
         if (!(await this.validateField())) return;
@@ -51,7 +54,12 @@ class SignIn extends PureComponent {
             [loginType]: inputValue,
             clientId: client.id
         });
-        console.log(authorizationCode);
+
+        const query = qs.parse(search, { ignoreQueryPrefix: true });
+        let url = query["redirect-uri"] + "?code=" + authorizationCode;
+        if (query["state"]) url += "&state=" + query["state"];
+
+        window.location.assign(url);
     };
 
     onChange = e => {
@@ -96,7 +104,7 @@ class SignIn extends PureComponent {
                 <IconAndAvatar />
                 <div className={styles.accountBox}>
                     <Button
-                        startIcon={<span className="material-icons">edit</span>}
+                        startIcon={<Edit />}
                         size="large"
                         variant="outlined"
                         onClick={this.back}

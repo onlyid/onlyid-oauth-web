@@ -44,6 +44,19 @@ class AccountLayout extends PureComponent {
         const client = await http.get("oauth/clients/" + query["client-id"]);
         if (!client) {
             this.openToast({ message: "应用不存在或client id错误，请检查" });
+            dispatch({ type: "app/save", payload: { nextDisabled: true } });
+            return;
+        }
+
+        if (!client.redirectUris.length) {
+            this.openToast({ message: "应用回调uri未配置，请登录控制台配置" });
+            dispatch({ type: "app/save", payload: { nextDisabled: true } });
+            return;
+        }
+
+        if (!client.redirectUris.includes(query["redirect-uri"])) {
+            this.openToast({ message: "redirect uri参数错误，请检查" });
+            dispatch({ type: "app/save", payload: { nextDisabled: true } });
             return;
         }
 

@@ -9,6 +9,7 @@ import Validator from "async-validator";
 import http from "my/http";
 import { REG_EXP } from "my/constants";
 import AvatarUpload from "components/AvatarUpload";
+import qs from "qs";
 
 const RULES = {
     nickname: [
@@ -68,7 +69,8 @@ class SignUp extends PureComponent {
 
         const { filename, nickname, email, mobile, otp, password } = this.state;
         const {
-            app: { client }
+            app: { client },
+            location: { search }
         } = this.props;
 
         // 校验表单
@@ -98,7 +100,12 @@ class SignUp extends PureComponent {
             password,
             clientId: client.id
         });
-        console.log(authorizationCode);
+
+        const query = qs.parse(search, { ignoreQueryPrefix: true });
+        let url = query["redirect-uri"] + "?code=" + authorizationCode;
+        if (query["state"]) url += "&state=" + query["state"];
+
+        window.location.assign(url);
     };
 
     validateField = async key => {

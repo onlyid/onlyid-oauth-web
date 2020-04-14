@@ -38,6 +38,7 @@ class AvatarUpload extends PureComponent {
                 />
                 <label htmlFor="upload-file">
                     <img src={avatarUrl || defaultAvatar} alt="avatar" width="100" />
+                    <br />
                     <span className={styles.title}>上传头像</span>
                 </label>
                 <p className="tip">{IMG_UPLOAD_TIP}</p>

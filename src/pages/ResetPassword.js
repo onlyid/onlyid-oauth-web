@@ -8,6 +8,8 @@ import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
 import http from "my/http";
 import IconAndAvatar from "components/IconAndAvatar";
+import { Edit } from "@material-ui/icons";
+import qs from "qs";
 
 class ResetPassword extends PureComponent {
     RULES = {
@@ -69,7 +71,8 @@ class ResetPassword extends PureComponent {
 
         const { otp, password } = this.state;
         const {
-            app: { accountName, client }
+            app: { accountName, client },
+            location: { search }
         } = this.props;
 
         // 校验表单
@@ -86,7 +89,12 @@ class ResetPassword extends PureComponent {
             password,
             clientId: client.id
         });
-        console.log(authorizationCode);
+
+        const query = qs.parse(search, { ignoreQueryPrefix: true });
+        let url = query["redirect-uri"] + "?code=" + authorizationCode;
+        if (query["state"]) url += "&state=" + query["state"];
+
+        window.location.assign(url);
     };
 
     validateField = async key => {
@@ -127,7 +135,7 @@ class ResetPassword extends PureComponent {
                 <IconAndAvatar />
                 <div className={styles.accountBox}>
                     <Button
-                        startIcon={<span className="material-icons">edit</span>}
+                        startIcon={<Edit />}
                         size="large"
                         variant="outlined"
                         onClick={() => this.back(-2)}
