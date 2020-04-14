@@ -143,10 +143,15 @@ class SignIn extends PureComponent {
                     </div>
                 </form>
                 <div className={styles.box1}>
-                    <Button variant="outlined" color="primary" onClick={this.toggleLoginType}>
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={this.toggleLoginType}
+                        size="small"
+                    >
                         {loginType === "password" ? "验证码登录" : "密码登录"}
                     </Button>
-                    <Button variant="outlined" onClick={this.resetPassword}>
+                    <Button variant="outlined" onClick={this.resetPassword} size="small">
                         忘记密码
                     </Button>
                 </div>

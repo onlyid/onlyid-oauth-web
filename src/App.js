@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
-import AccountLayout from "components/AccountLayout";
 import styles from "pages/index.module.css";
 import qs from "qs";
 
+const AccountLayout = React.lazy(() => import("components/AccountLayout"));
 const Support = React.lazy(() => import("pages/Support"));
 
 const loading = (

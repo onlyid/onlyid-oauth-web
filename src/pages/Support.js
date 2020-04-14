@@ -21,7 +21,7 @@ class Support extends PureComponent {
                 </header>
                 <Alert severity="info" className={styles.tipBox}>
                     <p>
-                        本网站/APP使用了「唯ID」统一、专业、安全的账号和认证解决方案，用于解决登录和认证过程中可能遇到的各种复杂问题。
+                        本网站/APP使用「唯ID」统一、专业、安全的账号和认证解决方案，用于解决登录和认证过程中可能遇到的各种复杂问题。
                     </p>
                     <p style={{ marginBottom: 0 }}>
                         你的「唯ID」账号是你的网上"身份证"，独立于你登录的网站/APP。只需一个账号，就可以登录所有接入的网站和APP，畅游全球互联网。
@@ -29,7 +29,7 @@ class Support extends PureComponent {
                 </Alert>
                 <main>
                     <p>
-                        这个页面描述了你使用唯ID过程中可能遇到的问题，你也可以&nbsp;
+                        本页面描述了你使用唯ID过程中可能遇到的问题，你也可以&nbsp;
                         <Link href="#contact">联系客服获取帮助。</Link>
                         （注：对于使用接入网站/APP本身遇到的问题，请寻求对应网站/APP的支持帮助。）
                     </p>

@@ -6,13 +6,12 @@ import styles from "./index.module.css";
 import qs from "qs";
 import http from "my/http";
 import { connect } from "react-redux";
-import { Switch, Route, withRouter, Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Route, Switch, withRouter } from "react-router-dom";
 import logo from "assets/logo.svg";
-
-const Account = React.lazy(() => import("pages/Account"));
-const SignUp = React.lazy(() => import("pages/SignUp"));
-const SignIn = React.lazy(() => import("pages/SignIn"));
-const ResetPassword = React.lazy(() => import("pages/ResetPassword"));
+import Account from "pages/Account";
+import SignUp from "pages/SignUp";
+import SignIn from "pages/SignIn";
+import ResetPassword from "pages/ResetPassword";
 
 class AccountLayout extends PureComponent {
     state = {
@@ -91,20 +90,22 @@ class AccountLayout extends PureComponent {
                         {message}
                     </Alert>
                 </Snackbar>
-                <Switch>
-                    <Route path={`${match.path}/sign-in`}>
-                        <SignIn />
-                    </Route>
-                    <Route path={`${match.path}/sign-up`}>
-                        <SignUp />
-                    </Route>
-                    <Route path={`${match.path}/reset-password`}>
-                        <ResetPassword />
-                    </Route>
-                    <Route path={match.path}>
-                        <Account />
-                    </Route>
-                </Switch>
+                <div className={styles.card}>
+                    <Switch>
+                        <Route path={`${match.path}/sign-in`}>
+                            <SignIn />
+                        </Route>
+                        <Route path={`${match.path}/sign-up`}>
+                            <SignUp />
+                        </Route>
+                        <Route path={`${match.path}/reset-password`}>
+                            <ResetPassword />
+                        </Route>
+                        <Route path={match.path}>
+                            <Account />
+                        </Route>
+                    </Switch>
+                </div>
                 <footer>
                     <Link component={RouterLink} to="/support">
                         需要帮助？

@@ -5,6 +5,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+}
+
+.card {
+    width: 100%;
 }
 
 .root footer {
@@ -15,4 +20,25 @@
 .root footer img {
     margin-top: 20px;
     background-color: antiquewhite;
+}
+
+@media (min-width: 700px) {
+    .root {
+        background-image: url("../../assets/mask.png");
+        background-size: 3000px;
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-color: #fdfdfd;
+    }
+
+    .card {
+        margin-top: 15vh;
+        width: 400px;
+        box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+            0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+        min-height: 600px;
+        padding: 40px 25px;
+        background-color: #fafafa;
+        border-radius: 4px;
+    }
 }

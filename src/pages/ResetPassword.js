@@ -179,7 +179,7 @@ class ResetPassword extends PureComponent {
                     </div>
                 </form>
                 <div className={styles.box2}>
-                    <Button variant="outlined" onClick={() => this.back()}>
+                    <Button variant="outlined" onClick={() => this.back()} size="small">
                         取 消
                     </Button>
                 </div>
