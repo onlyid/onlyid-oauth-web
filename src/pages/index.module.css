@@ -24,3 +24,13 @@
 .form1 :global .MuiFormControl-root:not(:first-of-type) {
     margin-top: 10px;
 }
+
+.dark {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background-color: black;
+    opacity: 0.3;
+}
