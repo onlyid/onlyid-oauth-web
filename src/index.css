@@ -1,9 +1,15 @@
-/* reset mui start */
-
-/* reset mui end */
+body {
+    background-color: #fdfdfd;
+}
 
 .tip {
     font-size: 0.8125rem;
     color: #7f7f7f;
     margin-bottom: 0;
+}
+
+@media (max-width: 599px) {
+    .hide-xs {
+        display: none;
+    }
 }

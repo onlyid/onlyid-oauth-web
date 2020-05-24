@@ -16,8 +16,8 @@ class Support extends PureComponent {
         return (
             <div className={styles.root}>
                 <header>
-                    <img src={logo} alt="logo" width="32" />
-                    <h2>需要帮助？</h2>
+                    <img src={logo} alt="logo" width="40" />
+                    <h1>需要帮助？</h1>
                 </header>
                 <Alert severity="info" className={styles.tipBox}>
                     <p>
@@ -33,24 +33,26 @@ class Support extends PureComponent {
                         <Link href="#contact">联系客服获取帮助。</Link>
                         （注：对于使用接入网站/APP本身遇到的问题，请寻求对应网站/APP的支持帮助。）
                     </p>
-                    <h3>常见问题</h3>
-                    <h4>使用唯ID是否收费？</h4>
+                    <h2>常见问题</h2>
+                    <h3>使用唯ID是否收费？</h3>
                     <p>以任何形式使用唯ID任何产品（例如接收短信验证码），均不收取任何费用。</p>
-                    <h4>可在哪些平台上使用唯ID？</h4>
+                    <h3>可在哪些平台上使用唯ID？</h3>
                     <p>iOS、Android和网页均支持使用唯ID。</p>
-                    <p>对于iOS，支持iOS 9或更高版本。</p>
-                    <p>对于Android，支持Android 4.4或更高版本。</p>
-                    <p>对于网页，支持IE 11、Firefox、Chrome以及其他现代浏览器。</p>
-                    <h4>使用唯ID是否会泄露隐私？</h4>
+                    <ul>
+                        <li>对于iOS，支持iOS 9或更高版本。</li>
+                        <li>对于Android，支持Android 4.4或更高版本。</li>
+                        <li>对于网页，支持IE 11、Firefox和Chrome等现代浏览器。</li>
+                    </ul>
+                    <h3>使用唯ID是否会泄露隐私？</h3>
                     <p>
                         我们非常重视用户隐私，只收集产品运行必需的信息，同时使用符合业界规范的方式妥善保存。
                     </p>
                     <p>在网站/APP即将获取你的信息前，也会有清晰明确的提示。</p>
-                    <h4>为什么从保存的书签访问登录页，发生异常？</h4>
+                    <h3>为什么从保存的书签访问登录页，发生异常？</h3>
                     <p>
                         唯ID不是你要登录网站的首页，请不要把唯ID登录页保存书签。你应该永远从要登录的网站跳转过来，否则可能缺失必要的参数，甚至登录非预期的网站。
                     </p>
-                    <h3 id="contact">联系客服</h3>
+                    <h2 id="contact">联系客服</h2>
                     <p>如果以上信息不能解决你的问题，请联系客服获取帮助。</p>
                     <div className={styles.contactBox}>
                         <div className={styles.left}>
@@ -72,7 +74,7 @@ class Support extends PureComponent {
                 <footer>
                     &copy; 2015 - {new Date().getFullYear()}
                     <span style={{ marginLeft: 20 }}>深圳市友全科技有限公司</span>
-                    <span style={{ marginLeft: 20 }} className={styles.hideSmall}>
+                    <span style={{ marginLeft: 20 }} className="hide-xs">
                         All rights reserved.
                     </span>
                 </footer>

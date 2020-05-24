@@ -114,7 +114,7 @@ class AccountLayout extends PureComponent {
                     <img src={logo} alt="logo" width="100" />
                     <p className="tip">
                         使用一个「唯ID」账号登录所有接入的网站和APP，畅游全球互联网。
-                        <Link href="https://www.onlyid.net/home/about/manifesto" target="_blank">
+                        <Link href="https://www.onlyid.net/home" target="_blank">
                             了解更多
                         </Link>
                     </p>

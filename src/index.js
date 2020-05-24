@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducers from "my/reducers";
 import { createMuiTheme, CssBaseline } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider, StylesProvider } from "@material-ui/core/styles";
 import { zhCN } from "@material-ui/core/locale";
 
 const store = createStore(reducers);
@@ -16,12 +16,14 @@ const theme = createMuiTheme({ zhCN });
 
 const content = (
     <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <Provider store={store}>
-                <CssBaseline />
-                <App />
-            </Provider>
-        </ThemeProvider>
+        <StylesProvider injectFirst>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <CssBaseline />
+                    <App />
+                </Provider>
+            </ThemeProvider>
+        </StylesProvider>
     </React.StrictMode>
 );
 ReactDOM.render(content, document.getElementById("root"));

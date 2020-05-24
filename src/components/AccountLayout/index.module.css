@@ -21,23 +21,22 @@
     margin-top: 20px;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
     .root {
         background-image: url("../../assets/mask.png");
         background-size: 3000px;
         background-position: center top;
         background-repeat: no-repeat;
-        background-color: #fafafa;
     }
 
     .card {
         margin-top: 15vh;
         width: 400px;
-        box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-            0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+            0 1px 3px 0 rgba(0, 0, 0, 0.12);
         min-height: 600px;
         padding: 40px 25px;
-        background-color: #fafafa;
+        background-color: #fdfdfd;
         border-radius: 4px;
     }
 }

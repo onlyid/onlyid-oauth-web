@@ -6,12 +6,13 @@
 
 .root header {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
-.root h2 {
+.root h1 {
     color: #1967d2;
     margin-top: 0;
+    font-size: 24px;
 }
 
 .tipBox {
@@ -23,11 +24,29 @@
 }
 
 .root main {
-    margin-top: 30px;
+    margin-top: 40px;
+}
+
+.root h2 {
+    margin-top: 2em;
 }
 
 .root h3 {
-    margin-top: 30px;
+    margin-top: 1.6em;
+}
+
+.root p {
+    font-size: 1rem;
+}
+
+.root ul {
+    font-size: 1rem;
+    padding-left: 1em;
+    list-style: circle;
+}
+
+.root ul li:not(:last-of-type) {
+    margin-bottom: 0.2em;
 }
 
 .root footer {
@@ -65,14 +84,10 @@
 
 .backBox {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-.hideSmall {
-    display: none;
-}
-
-@media (min-width: 700px) {
+@media (min-width: 600px) {
     .root {
         background-image: url("../assets/support-header-bg.svg");
         background-repeat: no-repeat;
@@ -84,30 +99,10 @@
     }
 
     .tipBox {
-        margin-top: 80px;
-    }
-
-    .root main {
-        margin-top: 50px;
-    }
-
-    .root h3 {
-        margin-top: 50px;
-    }
-
-    .root h4 {
-        margin-top: 30px;
+        margin-top: 60px;
     }
 
     .right {
         margin-left: 30px;
-    }
-
-    .backBox {
-        margin-top: 40px;
-    }
-
-    .hideSmall {
-        display: inline;
     }
 }
