@@ -37,7 +37,7 @@ class AvatarUpload extends PureComponent {
                     onChange={this.onChange}
                 />
                 <label htmlFor="upload-file">
-                    <img src={avatarUrl || defaultAvatar} alt="avatar" width="100" />
+                    <img src={avatarUrl || defaultAvatar} alt="avatar" width="100" height="100" />
                     <br />
                     <span className={styles.title}>上传头像</span>
                 </label>
