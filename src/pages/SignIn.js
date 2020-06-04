@@ -9,7 +9,7 @@ import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
 import IconAndAvatar from "components/IconAndAvatar";
 import { Edit } from "@material-ui/icons";
-import qs from "qs";
+import { redirectCode } from "../my/utils";
 
 const RULES = [{ required: true, message: "请输入" }];
 
@@ -55,11 +55,7 @@ class SignIn extends PureComponent {
             clientId: client.id
         });
 
-        const query = qs.parse(search, { ignoreQueryPrefix: true });
-        let url = query["redirect-uri"] + "?code=" + authorizationCode;
-        if (query["state"]) url += "&state=" + query["state"];
-
-        window.location.assign(url);
+        redirectCode(client, search, authorizationCode);
     };
 
     onChange = e => {

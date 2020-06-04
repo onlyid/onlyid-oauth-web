@@ -35,31 +35,38 @@ class AccountLayout extends PureComponent {
 
         const query = qs.parse(search, { ignoreQueryPrefix: true });
         const clientId = query["client-id"];
-        if (!clientId) {
-            this.openToast({ message: "client id参数错误，请检查" });
-            return;
-        }
+        if (!clientId) return this.disableNext("client id参数错误，请检查");
 
-        const client = await http.get("oauth/clients/" + query["client-id"]);
-        if (!client) {
-            this.openToast({ message: "应用不存在或client id错误，请检查" });
-            dispatch({ type: "app/save", payload: { nextDisabled: true } });
-            return;
-        }
+        const client = await http.get("oauth/clients/" + clientId);
+        if (!client) return this.disableNext("应用不存在或client id错误，请检查");
 
-        if (!client.redirectUris.length) {
-            this.openToast({ message: "应用回调uri未配置，请登录控制台配置" });
-            dispatch({ type: "app/save", payload: { nextDisabled: true } });
-            return;
-        }
+        if (client.type === "APP") {
+            if (window.android) {
+                if (client.packageName !== query["package-name"])
+                    return this.disableNext("应用包名错误，请检查");
+            }
+            // ios
+            else {
+                if (client.bundleId !== query["bundle-id"])
+                    return this.disableNext("Bundle ID错误，请检查");
+            }
+        } else {
+            if (!client.redirectUris.length)
+                return this.disableNext("应用回调uri未配置，请登录控制台配置");
 
-        if (!client.redirectUris.includes(query["redirect-uri"])) {
-            this.openToast({ message: "redirect uri参数错误，请检查" });
-            dispatch({ type: "app/save", payload: { nextDisabled: true } });
-            return;
+            if (!client.redirectUris.includes(query["redirect-uri"])) {
+                return this.disableNext("redirect uri参数错误，请检查");
+            }
         }
 
         dispatch({ type: "app/save", payload: { client } });
+    };
+
+    disableNext = message => {
+        const { dispatch } = this.props;
+
+        this.openToast({ message });
+        dispatch({ type: "app/save", payload: { nextDisabled: true } });
     };
 
     openToast = toast => {
@@ -76,7 +83,10 @@ class AccountLayout extends PureComponent {
         const {
             toast: { open, severity, message }
         } = this.state;
-        const { match } = this.props;
+        const {
+            match,
+            app: { client }
+        } = this.props;
 
         return (
             <div className={styles.root}>
@@ -114,9 +124,11 @@ class AccountLayout extends PureComponent {
                     <img src={logo} alt="logo" width="100" height="40.5" />
                     <p className="tip">
                         使用一个「唯ID」账号登录所有接入的网站和APP，畅游全球互联网。
-                        <Link href="https://www.onlyid.net/home" target="_blank">
-                            了解更多
-                        </Link>
+                        {client.type !== "APP" && (
+                            <Link href="https://www.onlyid.net/home" target="_blank">
+                                了解更多
+                            </Link>
+                        )}
                     </p>
                 </footer>
             </div>
