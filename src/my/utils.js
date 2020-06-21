@@ -22,7 +22,13 @@ export function redirectCode(client, search, code) {
     if (client.type === "APP") {
         if (window.android) window.android.onCode(code, state || null);
         else {
-            // TODO
+            window.webkit.messageHandlers.ios.postMessage({
+                method: "onCode",
+                data: {
+                    code,
+                    state: state || null
+                }
+            });
         }
     } else {
         let url = query["redirect-uri"] + "?code=" + code;

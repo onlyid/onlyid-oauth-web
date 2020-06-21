@@ -44,11 +44,18 @@ class AccountLayout extends PureComponent {
             if (window.android) {
                 if (client.packageName !== query["package-name"])
                     return this.disableNext("应用包名错误，请检查");
+
+                window.android.setTitle("登录" + client.name);
             }
             // ios
             else {
                 if (client.bundleId !== query["bundle-id"])
                     return this.disableNext("Bundle ID错误，请检查");
+
+                window.webkit.messageHandlers.ios.postMessage({
+                    method: "setTitle",
+                    data: { title: "登录" + client.name }
+                });
             }
         } else {
             if (!client.redirectUris.length)
