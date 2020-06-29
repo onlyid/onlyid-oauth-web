@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import defaultAvatar from "assets/default-avatar.svg";
 import http from "my/http";
 import { IMG_UPLOAD_TIP } from "my/constants";
+import { eventEmitter } from "../../my/utils";
 
 class AvatarUpload extends PureComponent {
     state = {
@@ -15,11 +16,17 @@ class AvatarUpload extends PureComponent {
 
         if (!files.length) return;
 
+        const file = files[0];
+        if (file.size > 1024 * 1024) {
+            eventEmitter.emit("app/openToast", { message: "不能大于 1 MB" });
+            return;
+        }
+
         const formData = new FormData();
-        formData.append("file", files[0]);
+        formData.append("file", file);
         const { filename } = await http.post("img", formData);
 
-        this.setState({ filename, avatarUrl: URL.createObjectURL(files[0]) });
+        this.setState({ filename, avatarUrl: URL.createObjectURL(file) });
 
         onChange(filename);
     };
