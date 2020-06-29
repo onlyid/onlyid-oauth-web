@@ -11,6 +11,7 @@ import reducers from "my/reducers";
 import { createMuiTheme, CssBaseline } from "@material-ui/core";
 import { ThemeProvider, StylesProvider } from "@material-ui/core/styles";
 import { zhCN } from "@material-ui/core/locale";
+import { BrowserRouter } from "react-router-dom";
 
 const store = createStore(reducers);
 
@@ -22,7 +23,9 @@ const content = (
             <ThemeProvider theme={theme}>
                 <Provider store={store}>
                     <CssBaseline />
-                    <App />
+                    <BrowserRouter basename="/oauth">
+                        <App />
+                    </BrowserRouter>
                 </Provider>
             </ThemeProvider>
         </StylesProvider>
