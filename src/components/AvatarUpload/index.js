@@ -3,7 +3,6 @@ import styles from "./index.module.css";
 import defaultAvatar from "assets/default-avatar.svg";
 import http from "my/http";
 import { IMG_UPLOAD_TIP } from "my/constants";
-import { eventEmitter } from "../../my/utils";
 
 class AvatarUpload extends PureComponent {
     state = {
@@ -17,16 +16,25 @@ class AvatarUpload extends PureComponent {
         if (!files.length) return;
 
         const file = files[0];
-        if (file.size > 1024 * 1024) {
-            eventEmitter.emit("app/openToast", { message: "不能大于 1 MB" });
-            return;
-        }
+
+        const { image } = await window.loadImage(file, {
+            orientation: true,
+            aspectRatio: 1,
+            canvas: true
+        });
+        const scaledImage = window.loadImage.scale(image, { maxWidth: 256, minWidth: 256 });
+
+        const blob = await new Promise(resolve => {
+            // 兼容IE11
+            if (scaledImage.toBlob) scaledImage.toBlob(resolve, file.type);
+            else resolve(scaledImage.msToBlob());
+        });
 
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", blob);
         const { filename } = await http.post("img", formData);
 
-        this.setState({ filename, avatarUrl: URL.createObjectURL(file) });
+        this.setState({ filename, avatarUrl: scaledImage.toDataURL(file.type) });
 
         onChange(filename);
     };
