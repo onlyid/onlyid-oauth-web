@@ -149,6 +149,7 @@ class SignUp extends PureComponent {
                         onChange={({ target: { value } }) => this.onChange("password", value)}
                         helperText={validation.password.helperText}
                         onBlur={() => this.validateField("password")}
+                        autoComplete="new-password"
                     />
                     <div style={{ marginTop: 20 }}>
                         <Button
