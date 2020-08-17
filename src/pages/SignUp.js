@@ -7,22 +7,14 @@ import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
 import http from "my/http";
-import { REG_EXP } from "my/constants";
 import AvatarUpload from "components/AvatarUpload";
 import { redirectCode } from "../my/utils";
+import { Edit } from "@material-ui/icons";
 
 const RULES = {
     nickname: [
         { required: true, message: "请输入" },
         { max: 50, message: "最多输入50字" }
-    ],
-    email: [
-        { max: 50, message: "最多输入50字" },
-        { type: "email", message: "邮箱格式不正确" }
-    ],
-    mobile: [
-        { max: 50, message: "最多输入50字" },
-        { pattern: REG_EXP.mobile, message: "手机号格式不正确" }
     ],
     otp: [{ required: true, message: "请输入" }],
     password: [
@@ -36,16 +28,12 @@ class SignUp extends PureComponent {
     state = {
         validation: {
             nickname: { helperText: null, isError: false },
-            mobile: { helperText: "手机号或邮箱至少填一项，作为登录账号", isError: false },
-            email: { helperText: null, isError: false },
             otp: { helperText: null, isError: false },
             password: { helperText: null, isError: false }
         },
         otp: null,
         password: null,
         nickname: null,
-        mobile: "",
-        email: "",
         filename: null
     };
 
@@ -59,43 +47,29 @@ class SignUp extends PureComponent {
             history.replace("/account" + location.search);
             return;
         }
-
-        if (accountName.includes("@")) this.setState({ email: accountName });
-        else this.setState({ mobile: accountName });
     }
 
     onSubmit = async e => {
         e.preventDefault();
 
-        const { filename, nickname, email, mobile, otp, password } = this.state;
+        const { filename, nickname, otp, password } = this.state;
         const {
-            app: { client },
+            app: { client, accountName },
             location: { search }
         } = this.props;
 
         // 校验表单
         const values = await Promise.all([
             await this.validateField("nickname"),
-            await this.validateField("email"),
-            await this.validateField("mobile"),
             await this.validateField("otp"),
             await this.validateField("password")
         ]);
         if (values.includes(false)) return;
 
-        if (!mobile && !email) {
-            const { validation } = this.state;
-            validation.mobile.isError = true;
-            validation.mobile.helperText = "手机号或邮箱至少填一项，作为登录账号";
-            this.setState({ validation: { ...validation } });
-            return;
-        }
-
         const { authorizationCode } = await http.post("oauth/users", {
             filename,
             nickname,
-            mobile,
-            email,
+            accountName,
             otp,
             password,
             clientId: client.id
@@ -133,13 +107,23 @@ class SignUp extends PureComponent {
 
     render() {
         const {
-            app: { client }
+            app: { accountName, client }
         } = this.props;
-        const { validation, mobile, email } = this.state;
+        const { validation } = this.state;
 
         return (
-            <div>
+            <div className={styles.signUp}>
                 <AvatarUpload onChange={value => this.onChange("filename", value)} />
+                <div className={styles.accountBox}>
+                    <Button
+                        startIcon={<Edit />}
+                        size="large"
+                        variant="outlined"
+                        onClick={this.back}
+                    >
+                        {accountName}
+                    </Button>
+                </div>
                 <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className={styles.form1}>
                     <FormControl variant="outlined" fullWidth error={validation.nickname.isError}>
                         <InputLabel htmlFor="nickname">昵称</InputLabel>
@@ -152,35 +136,11 @@ class SignUp extends PureComponent {
                         />
                         <FormHelperText>{validation.nickname.helperText}</FormHelperText>
                     </FormControl>
-                    <FormControl variant="outlined" fullWidth error={validation.mobile.isError}>
-                        <InputLabel htmlFor="mobile">手机号</InputLabel>
-                        <OutlinedInput
-                            id="mobile"
-                            type="text"
-                            onChange={({ target: { value } }) => this.onChange("mobile", value)}
-                            label="手机号"
-                            onBlur={() => this.validateField("mobile")}
-                            value={mobile}
-                        />
-                        <FormHelperText>{validation.mobile.helperText}</FormHelperText>
-                    </FormControl>
-                    <FormControl variant="outlined" fullWidth error={validation.email.isError}>
-                        <InputLabel htmlFor="email">邮箱</InputLabel>
-                        <OutlinedInput
-                            id="email"
-                            type="text"
-                            onChange={({ target: { value } }) => this.onChange("email", value)}
-                            label="邮箱"
-                            onBlur={() => this.validateField("email")}
-                            value={email}
-                        />
-                        <FormHelperText>{validation.email.helperText}</FormHelperText>
-                    </FormControl>
                     <OtpInput
                         error={validation.otp.isError}
                         onChange={({ target: { value } }) => this.onChange("otp", value)}
                         helperText={validation.otp.helperText}
-                        recipient={mobile || email}
+                        recipient={accountName}
                         clientId={client.id}
                         onBlur={() => this.validateField("otp")}
                     />
