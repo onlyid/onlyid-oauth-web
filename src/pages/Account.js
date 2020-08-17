@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Validator from "async-validator";
 import { REG_EXP } from "my/constants";
 import IconAndAvatar from "components/IconAndAvatar";
+import styles from "./index.module.css";
 
 const RULES = {
     email: [
@@ -110,6 +111,12 @@ class Account extends PureComponent {
                         <p className="tip">「{client.name}」将获得你的手机号、昵称等账号信息。</p>
                     </div>
                 </form>
+                <div className={styles.scanLoginBox}>
+                    <div className={styles.scanLogin}>
+                        <span className="material-icons">qr_code</span>
+                        <p>扫码登录</p>
+                    </div>
+                </div>
             </div>
         );
     }

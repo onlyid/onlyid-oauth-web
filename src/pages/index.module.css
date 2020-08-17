@@ -40,3 +40,24 @@
 .signUp .accountBox {
     margin-top: 20px;
 }
+
+.scanLoginBox {
+    display: flex;
+    margin-top: 3rem;
+    justify-content: center;
+}
+
+.scanLogin {
+    cursor: pointer;
+    text-align: center;
+    color: #3f51b5;
+}
+
+.scanLogin :global .material-icons {
+    font-size: 2rem;
+}
+
+.scanLogin p {
+    margin: 0;
+    font-size: 0.8125rem;
+}
