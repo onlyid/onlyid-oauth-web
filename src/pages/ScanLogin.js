@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./ScanLogin.module.css";
 import { Button, Dialog, DialogTitle, IconButton, DialogContent } from "@material-ui/core";
-import { Close, Android } from "@material-ui/icons";
+import { Close, Android, Check } from "@material-ui/icons";
+import icon from "assets/ic_launcher.png";
 
 class ScanLogin extends PureComponent {
     state = {
@@ -70,7 +71,7 @@ class ScanLogin extends PureComponent {
         return (
             <div className={styles.root}>
                 <p className={styles.title1}>扫码登录</p>
-                <div ref={this.ref1} className={styles.qrCodeBox} />
+                <div ref={this.ref1} className={styles.qrCodeBox1} />
                 <p className="tip">用 唯ID APP 扫码登录「{client.name}」</p>
                 <div className={styles.downloadButtonBox}>
                     <Button
@@ -95,18 +96,61 @@ class ScanLogin extends PureComponent {
                         </IconButton>
                     </DialogTitle>
                     <DialogContent>
-                        <p className={styles.title2}>
-                            <Android style={{ color: "#2FD96C" }} />
-                            Android
-                        </p>
-                        <p>用手机浏览器、微信等扫码：</p>
-                        <div ref={this.ref2} className={styles.qrCodeBox1} />
-                        <p className={styles.title2}>
-                            <i className="iconfont" style={{ color: "#fd2420" }}>
-                                &#xe72c;
-                            </i>
-                            iPhone
-                        </p>
+                        <div className={styles.dialogContent1}>
+                            <div className={styles.appBox}>
+                                <img src={icon} alt="icon" />
+                                <br />
+                                <span>唯ID</span>
+                            </div>
+                            <div className={styles.appDesc}>
+                                <p>使用唯ID 客户端：</p>
+                                <ul>
+                                    <li>
+                                        <Check />
+                                        管理账号资料
+                                    </li>
+                                    <li>
+                                        <Check />
+                                        一键扫码登录
+                                    </li>
+                                    <li>
+                                        <Check />
+                                        管理可信设备
+                                    </li>
+                                    <li>
+                                        <Check />
+                                        管理授权应用
+                                    </li>
+                                </ul>
+                                <p>更多功能等你亲自探索。。。</p>
+                            </div>
+                        </div>
+                        <div className={styles.dialogContent2}>
+                            <div>
+                                <p className={styles.title2}>
+                                    <Android style={{ color: "#2FD96C" }} />
+                                    Android
+                                </p>
+                                <p>用手机浏览器、微信扫码：</p>
+                                <div ref={this.ref2} className={styles.qrCodeBox2} />
+                            </div>
+                            <div className={styles.divider} />
+                            <div>
+                                <div>
+                                    <p className={styles.title2}>
+                                        <i className="iconfont" style={{ color: "#3f51b5" }}>
+                                            &#xe72c;
+                                        </i>
+                                        iPhone
+                                    </p>
+                                    <p>
+                                        App Store搜索「唯ID」，
+                                        <br />
+                                        下载安装。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </DialogContent>
                 </Dialog>
             </div>

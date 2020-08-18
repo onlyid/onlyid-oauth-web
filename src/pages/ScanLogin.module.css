@@ -4,12 +4,12 @@
     margin-top: 0;
 }
 
-.qrCodeBox {
+.qrCodeBox1 {
     display: flex;
     justify-content: center;
 }
 
-.qrCodeBox img {
+.qrCodeBox1 img {
     border: 1px solid #ccc;
 }
 
@@ -29,12 +29,63 @@
     margin-top: 3rem;
 }
 
-.qrCodeBox1 {
+.dialogContent1 {
+    display: flex;
+    padding: 0 1.5rem 2rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.appBox {
+    text-align: center;
+}
+
+.appBox img {
+    border-radius: 0.5rem;
+    width: 4rem;
+}
+
+.appDesc p {
+    margin-top: 0;
+    font-size: 0.95rem;
+}
+
+.appDesc ul {
+    font-size: 0.9rem;
+    list-style: none;
+    padding: 0;
+}
+
+.appDesc ul li:not(:first-of-type) {
+    margin-top: 0.5rem;
+}
+
+.appDesc ul li :global .MuiSvgIcon-root {
+    color: #52c41a;
+    vertical-align: middle;
+    margin-right: 1rem;
+}
+
+.dialogContent2 {
+    display: flex;
+    padding: 0 0.5rem 2rem;
+}
+
+.qrCodeBox2 {
     height: 128px;
+    display: flex;
+    justify-content: center;
+}
+
+.qrCodeBox2 img {
+    border: 1px solid #ccc;
 }
 
 .title2 {
     font-size: 1rem;
+    margin-top: 0;
+    line-height: 2rem;
+    height: 2rem;
 }
 
 .title2 :global .MuiSvgIcon-root {
@@ -44,4 +95,11 @@
 
 .title2 :global .iconfont {
     margin-right: 1rem;
+    vertical-align: -10%;
+}
+
+.dialogContent2 .divider {
+    width: 1px;
+    background-color: #e8e8e8;
+    margin: 0 2rem;
 }
