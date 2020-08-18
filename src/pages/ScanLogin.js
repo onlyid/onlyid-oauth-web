@@ -103,7 +103,7 @@ class ScanLogin extends PureComponent {
                                 <span>唯ID</span>
                             </div>
                             <div className={styles.appDesc}>
-                                <p>使用唯ID 客户端：</p>
+                                <p className={styles.title3}>使用唯ID 客户端：</p>
                                 <ul>
                                     <li>
                                         <Check />
@@ -144,7 +144,7 @@ class ScanLogin extends PureComponent {
                                         iPhone
                                     </p>
                                     <p>
-                                        App Store搜索「唯ID」，
+                                        App Store 搜索「唯ID」，
                                         <br />
                                         下载安装。
                                     </p>
