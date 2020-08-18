@@ -5,6 +5,7 @@ import qs from "qs";
 
 const AccountLayout = React.lazy(() => import("components/AccountLayout"));
 const Support = React.lazy(() => import("pages/Support"));
+const DownloadApp = React.lazy(() => import("pages/DownloadApp"));
 
 const loading = (
     <div style={{ paddingTop: "40vh", textAlign: "center" }}>
@@ -50,6 +51,9 @@ function App(props) {
                 <Switch>
                     <Route path="/support">
                         <Support />
+                    </Route>
+                    <Route path="/download-app">
+                        <DownloadApp />
                     </Route>
                     <Route path="/account">
                         <AccountLayout />

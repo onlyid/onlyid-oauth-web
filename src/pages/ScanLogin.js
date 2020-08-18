@@ -46,7 +46,7 @@ class ScanLogin extends PureComponent {
 
         setTimeout(() => {
             this.code = new window.QRCode(this.ref2.current, {
-                text: "https://www.onlyid.net/static/downloads/onlyid.apk",
+                text: window.location.origin + "/oauth/download-app",
                 width: 128,
                 height: 128
             });
