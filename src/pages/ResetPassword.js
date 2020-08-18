@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import styles from "./index.module.css";
 import { Button } from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
@@ -129,7 +128,7 @@ class ResetPassword extends PureComponent {
         return (
             <div>
                 <IconAndAvatar />
-                <div className={styles.accountBox}>
+                <div className="accountBox">
                     <Button
                         startIcon={<Edit />}
                         size="large"
@@ -139,7 +138,7 @@ class ResetPassword extends PureComponent {
                         {accountName}
                     </Button>
                 </div>
-                <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className={styles.form1}>
+                <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
                     <OtpInput
                         error={validation.otp.isError}
                         onChange={({ target: { value } }) => this.onChange("otp", value)}
@@ -154,6 +153,7 @@ class ResetPassword extends PureComponent {
                         helperText={validation.password.helperText}
                         label="新密码"
                         onBlur={() => this.validateField("password")}
+                        autoComplete="new-password"
                     />
                     <PasswordInput
                         error={validation.password1.isError}
@@ -174,7 +174,7 @@ class ResetPassword extends PureComponent {
                         </Button>
                     </div>
                 </form>
-                <div className={styles.box2}>
+                <div className="oneButtonBox">
                     <Button variant="outlined" onClick={() => this.back()} size="small">
                         取 消
                     </Button>

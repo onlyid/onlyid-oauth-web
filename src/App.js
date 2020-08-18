@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
-import styles from "pages/index.module.css";
 import qs from "qs";
 
 const AccountLayout = React.lazy(() => import("components/AccountLayout"));
@@ -18,7 +17,7 @@ function App(props) {
     const query = qs.parse(search, { ignoreQueryPrefix: true });
 
     // eslint-disable-next-line no-unused-expressions
-    if (query.view === "zoomed") import("assets/zoomed.css");
+    if (query.view === "zoomed") import("assets/view-zoomed.css");
 
     const history = useHistory();
     useEffect(() => {
@@ -46,7 +45,7 @@ function App(props) {
 
     return (
         <>
-            {query.theme === "dark" && <div className={styles.dark} />}
+            {query.theme === "dark" && <div className="themeDark" />}
             <Suspense fallback={loading}>
                 <Switch>
                     <Route path="/support">

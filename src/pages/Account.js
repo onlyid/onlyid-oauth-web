@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button, Hidden, TextField } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import http from "my/http";
 import { connect } from "react-redux";
 import Validator from "async-validator";
 import { REG_EXP } from "my/constants";
 import IconAndAvatar from "components/IconAndAvatar";
-import styles from "./index.module.css";
+import styles from "./Account.module.css";
 
 const RULES = {
     email: [
@@ -77,6 +77,14 @@ class Account extends PureComponent {
         }
     };
 
+    scanLogin = () => {
+        const {
+            history,
+            location: { search }
+        } = this.props;
+        history.push("/account/scan-login" + search);
+    };
+
     render() {
         const { helperText, isError } = this.state;
         const {
@@ -111,12 +119,14 @@ class Account extends PureComponent {
                         <p className="tip">「{client.name}」将获得你的手机号、昵称等账号信息。</p>
                     </div>
                 </form>
-                <div className={styles.scanLoginBox}>
-                    <div className={styles.scanLogin}>
-                        <span className="material-icons">qr_code</span>
-                        <p>扫码登录</p>
+                <Hidden xsDown>
+                    <div className={styles.scanButtonBox}>
+                        <div className={styles.scanButton} onClick={this.scanLogin}>
+                            <span className="material-icons">qr_code</span>
+                            <p>扫码登录</p>
+                        </div>
                     </div>
-                </div>
+                </Hidden>
             </div>
         );
     }

@@ -12,6 +12,7 @@ import Account from "pages/Account";
 import SignUp from "pages/SignUp";
 import SignIn from "pages/SignIn";
 import ResetPassword from "pages/ResetPassword";
+import ScanLogin from "pages/ScanLogin";
 
 class AccountLayout extends PureComponent {
     state = {
@@ -117,6 +118,9 @@ class AccountLayout extends PureComponent {
                         </Route>
                         <Route path={`${match.path}/reset-password`}>
                             <ResetPassword />
+                        </Route>
+                        <Route path={`${match.path}/scan-login`}>
+                            <ScanLogin />
                         </Route>
                         <Route path={match.path}>
                             <Account />

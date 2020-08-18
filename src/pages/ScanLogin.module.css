@@ -1,0 +1,47 @@
+.title1 {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 0;
+}
+
+.qrCodeBox {
+    display: flex;
+    justify-content: center;
+}
+
+.qrCodeBox img {
+    border: 1px solid #ccc;
+}
+
+.root :global .tip {
+    text-align: center;
+}
+
+.downloadButtonBox {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.accountButtonBox {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.qrCodeBox1 {
+    height: 128px;
+}
+
+.title2 {
+    font-size: 1rem;
+}
+
+.title2 :global .MuiSvgIcon-root {
+    vertical-align: text-bottom;
+    margin-right: 1rem;
+}
+
+.title2 :global .iconfont {
+    margin-right: 1rem;
+}

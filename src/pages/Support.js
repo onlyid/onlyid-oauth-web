@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import styles from "./Support.module.css";
 import logo from "assets/support-logo.png";
 import { Alert } from "@material-ui/lab";
-import { Button, Link } from "@material-ui/core";
+import { Button, Hidden, Link } from "@material-ui/core";
 import wechat155 from "assets/wechat-155.jpeg";
 import { withRouter } from "react-router-dom";
 
@@ -74,9 +74,9 @@ class Support extends PureComponent {
                 <footer>
                     &copy; 2015 - {new Date().getFullYear()}
                     <span style={{ marginLeft: 20 }}>深圳市友全科技有限公司</span>
-                    <span style={{ marginLeft: 20 }} className="hide-xs">
-                        All rights reserved.
-                    </span>
+                    <Hidden xsDown>
+                        <span style={{ marginLeft: 20 }}>All rights reserved.</span>
+                    </Hidden>
                 </footer>
             </div>
         );

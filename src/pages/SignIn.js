@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import styles from "./index.module.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Button } from "@material-ui/core";
@@ -9,7 +8,7 @@ import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
 import IconAndAvatar from "components/IconAndAvatar";
 import { Edit } from "@material-ui/icons";
-import { redirectCode } from "../my/utils";
+import { redirectCode } from "my/utils";
 
 const RULES = [{ required: true, message: "请输入" }];
 
@@ -98,7 +97,7 @@ class SignIn extends PureComponent {
         return (
             <div>
                 <IconAndAvatar />
-                <div className={styles.accountBox}>
+                <div className="accountBox">
                     <Button
                         startIcon={<Edit />}
                         size="large"
@@ -138,7 +137,7 @@ class SignIn extends PureComponent {
                         </Button>
                     </div>
                 </form>
-                <div className={styles.box1}>
+                <div className="twoButtonBox">
                     <Button
                         variant="outlined"
                         color="primary"

@@ -2,14 +2,73 @@ body {
     background-color: #fdfdfd;
 }
 
+@font-face {
+    font-family: "iconfont"; /* project id 545468 */
+    src: url("//at.alicdn.com/t/font_545468_l0yekts9wjb.eot");
+    src: url("//at.alicdn.com/t/font_545468_l0yekts9wjb.eot?#iefix") format("embedded-opentype"),
+        url("//at.alicdn.com/t/font_545468_l0yekts9wjb.woff2") format("woff2"),
+        url("//at.alicdn.com/t/font_545468_l0yekts9wjb.woff") format("woff"),
+        url("//at.alicdn.com/t/font_545468_l0yekts9wjb.ttf") format("truetype"),
+        url("//at.alicdn.com/t/font_545468_l0yekts9wjb.svg#iconfont") format("svg");
+}
+
+.iconfont {
+    font-family: "iconfont";
+    font-size: 24px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .tip {
     font-size: 0.8125rem;
     color: #7f7f7f;
     margin-bottom: 0;
 }
 
-@media (max-width: 599px) {
-    .hide-xs {
-        display: none;
-    }
+.accountBox {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.accountBox .MuiButton-outlined {
+    border-radius: 20px;
+    opacity: 0.8;
+    border-color: #ccc;
+
+    text-transform: none;
+}
+
+.twoButtonBox {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.oneButtonBox {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.form1 .MuiFormControl-root:not(:first-of-type) {
+    margin-top: 10px;
+}
+
+.themeDark {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background-color: black;
+    opacity: 0.3;
+}
+
+.dialogCloseButton {
+    position: absolute;
+    right: 0.2rem;
+    top: 0.2rem;
+    color: #7f7f7f;
 }

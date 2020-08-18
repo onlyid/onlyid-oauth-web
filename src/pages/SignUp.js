@@ -1,14 +1,14 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import styles from "./index.module.css";
+import styles from "./SignUp.module.css";
 import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
 import http from "my/http";
 import AvatarUpload from "components/AvatarUpload";
-import { redirectCode } from "../my/utils";
+import { redirectCode } from "my/utils";
 import { Edit } from "@material-ui/icons";
 
 const RULES = {
@@ -112,9 +112,9 @@ class SignUp extends PureComponent {
         const { validation } = this.state;
 
         return (
-            <div className={styles.signUp}>
+            <div className={styles.root}>
                 <AvatarUpload onChange={value => this.onChange("filename", value)} />
-                <div className={styles.accountBox}>
+                <div className="accountBox">
                     <Button
                         startIcon={<Edit />}
                         size="large"
@@ -124,7 +124,7 @@ class SignUp extends PureComponent {
                         {accountName}
                     </Button>
                 </div>
-                <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className={styles.form1}>
+                <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
                     <FormControl variant="outlined" fullWidth error={validation.nickname.isError}>
                         <InputLabel htmlFor="nickname">昵称</InputLabel>
                         <OutlinedInput
@@ -163,7 +163,7 @@ class SignUp extends PureComponent {
                         </Button>
                     </div>
                 </form>
-                <div className={styles.box2}>
+                <div className="oneButtonBox">
                     <Button variant="outlined" onClick={this.back} size="small">
                         取 消
                     </Button>
