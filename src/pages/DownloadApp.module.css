@@ -8,14 +8,13 @@
 
 .guideArrow {
     position: fixed;
-    right: 0.9rem;
+    right: 1.5rem;
     top: 0.5rem;
-    transform: rotate(90deg);
 }
 
-.guideArrow :global .MuiSvgIcon-root {
-    font-size: 2rem;
-    color: rgba(0, 0, 0, 0.75);
+.guideArrow img {
+    opacity: 0.9;
+    width: 17rem;
 }
 
 .box1 {

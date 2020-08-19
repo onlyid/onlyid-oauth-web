@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
-import { Reply } from "@material-ui/icons";
 import openWithBrowser from "assets/open-with-browser.png";
 import styles from "./DownloadApp.module.css";
+import guideArrow from "assets/guide-arrow.png";
 
 class DownloadApp extends PureComponent {
     state = {
@@ -25,7 +25,7 @@ class DownloadApp extends PureComponent {
         return (
             <div className={styles.root}>
                 <div className={styles.guideArrow}>
-                    <Reply />
+                    <img src={guideArrow} alt="guideArrow" />
                 </div>
                 <div className={styles.box1}>
                     <p>右上角菜单选择：</p>
