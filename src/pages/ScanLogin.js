@@ -1,11 +1,12 @@
 import React, { PureComponent } from "react";
-import { getRandomValue } from "my/utils";
+import { eventEmitter, getRandomValue, redirectCode } from "my/utils";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./ScanLogin.module.css";
 import { Button, Dialog, DialogTitle, IconButton, DialogContent } from "@material-ui/core";
 import { Close, Android, Check } from "@material-ui/icons";
 import icon from "assets/ic_launcher.png";
+import http from "my/http";
 
 class ScanLogin extends PureComponent {
     state = {
@@ -25,10 +26,10 @@ class ScanLogin extends PureComponent {
             location
         } = this.props;
 
-        // if (!client.id) {
-        //     history.replace("/account" + location.search);
-        //     return;
-        // }
+        if (!client.id) {
+            history.replace("/account" + location.search);
+            return;
+        }
 
         const text = {
             uid: getRandomValue(),
@@ -39,7 +40,37 @@ class ScanLogin extends PureComponent {
             width: 256,
             height: 256
         });
+
+        this.startLoop(text);
     }
+
+    startLoop = async params => {
+        const {
+            app: { client },
+            location: { search },
+            history
+        } = this.props;
+
+        let code;
+        while (true) {
+            const { authorizationCode } = await http.post("oauth/scan-login", params);
+            if (authorizationCode) {
+                code = authorizationCode;
+                break;
+            }
+        }
+
+        if (code === "reject") {
+            eventEmitter.emit("app/openToast", {
+                message: "你拒绝了本次登录请求",
+                severity: "warning"
+            });
+            history.goBack();
+            return;
+        }
+
+        redirectCode(client, search, code);
+    };
 
     showDialog = () => {
         this.setState({ dialogVisible: true });
