@@ -9,6 +9,8 @@ import icon from "assets/ic_launcher.png";
 import http from "my/http";
 
 class ScanLogin extends PureComponent {
+    unmounted = false;
+
     state = {
         dialogVisible: false
     };
@@ -44,6 +46,10 @@ class ScanLogin extends PureComponent {
         this.startLoop(text);
     }
 
+    componentWillUnmount() {
+        this.unmounted = true;
+    }
+
     startLoop = async params => {
         const {
             app: { client },
@@ -54,6 +60,9 @@ class ScanLogin extends PureComponent {
         let code;
         while (true) {
             const { authorizationCode } = await http.post("oauth/scan-login", params);
+
+            if (this.unmounted) return;
+
             if (authorizationCode) {
                 code = authorizationCode;
                 break;
