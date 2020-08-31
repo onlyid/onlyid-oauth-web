@@ -13,9 +13,11 @@ import SignUp from "pages/SignUp";
 import SignIn from "pages/SignIn";
 import ResetPassword from "pages/ResetPassword";
 import ScanLogin from "pages/ScanLogin";
+import Choose from "pages/Choose";
 
 class AccountLayout extends PureComponent {
     state = {
+        loading: true,
         toast: {
             open: false,
             severity: null,
@@ -29,12 +31,9 @@ class AccountLayout extends PureComponent {
     }
 
     initData = async () => {
-        const {
-            location: { search },
-            dispatch
-        } = this.props;
+        const { location, dispatch, history } = this.props;
 
-        const query = qs.parse(search, { ignoreQueryPrefix: true });
+        const query = qs.parse(location.search, { ignoreQueryPrefix: true });
         const clientId = query["client-id"];
         if (!clientId) return this.disableNext("client id参数错误，请检查");
 
@@ -68,6 +67,16 @@ class AccountLayout extends PureComponent {
         }
 
         dispatch({ type: "app/save", payload: { client } });
+
+        const sessionUsers = await http.get("oauth/session-users");
+        if (sessionUsers.length) {
+            dispatch({ type: "app/save", payload: { sessionUsers } });
+            history.replace("/account/choose" + location.search);
+        } else {
+            history.replace("/account" + location.search);
+        }
+
+        this.setState({ loading: false });
     };
 
     disableNext = message => {
@@ -89,7 +98,8 @@ class AccountLayout extends PureComponent {
 
     render() {
         const {
-            toast: { open, severity, message }
+            toast: { open, severity, message },
+            loading
         } = this.state;
         const {
             match,
@@ -109,23 +119,28 @@ class AccountLayout extends PureComponent {
                     </Alert>
                 </Snackbar>
                 <div className={styles.card}>
-                    <Switch>
-                        <Route path={`${match.path}/sign-in`}>
-                            <SignIn />
-                        </Route>
-                        <Route path={`${match.path}/sign-up`}>
-                            <SignUp />
-                        </Route>
-                        <Route path={`${match.path}/reset-password`}>
-                            <ResetPassword />
-                        </Route>
-                        <Route path={`${match.path}/scan-login`}>
-                            <ScanLogin />
-                        </Route>
-                        <Route path={match.path}>
-                            <Account />
-                        </Route>
-                    </Switch>
+                    {!loading && (
+                        <Switch>
+                            <Route path={`${match.path}/sign-in`}>
+                                <SignIn />
+                            </Route>
+                            <Route path={`${match.path}/sign-up`}>
+                                <SignUp />
+                            </Route>
+                            <Route path={`${match.path}/reset-password`}>
+                                <ResetPassword />
+                            </Route>
+                            <Route path={`${match.path}/scan-login`}>
+                                <ScanLogin />
+                            </Route>
+                            <Route path={`${match.path}/choose`}>
+                                <Choose />
+                            </Route>
+                            <Route path={match.path}>
+                                <Account />
+                            </Route>
+                        </Switch>
+                    )}
                 </div>
                 <footer>
                     <Link component={RouterLink} to="/support">

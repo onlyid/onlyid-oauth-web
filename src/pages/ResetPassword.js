@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
@@ -50,25 +50,14 @@ class ResetPassword extends PureComponent {
         },
         otp: null,
         password: null,
-        password1: null
+        password1: null,
+        keepLoggedIn: false
     };
-
-    componentDidMount() {
-        const {
-            app: { accountName },
-            history,
-            location
-        } = this.props;
-        if (!accountName) {
-            history.replace("/account" + location.search);
-            return;
-        }
-    }
 
     onSubmit = async e => {
         e.preventDefault();
 
-        const { otp, password } = this.state;
+        const { otp, password, keepLoggedIn } = this.state;
         const {
             app: { accountName, client },
             location: { search }
@@ -86,7 +75,8 @@ class ResetPassword extends PureComponent {
             accountName,
             otp,
             password,
-            clientId: client.id
+            clientId: client.id,
+            keepLoggedIn
         });
 
         redirectCode(client, search, authorizationCode);
@@ -119,11 +109,15 @@ class ResetPassword extends PureComponent {
         this.setState({ [key]: value });
     };
 
+    onCheckBoxChange = event => {
+        this.setState({ keepLoggedIn: event.target.checked });
+    };
+
     render() {
         const {
             app: { accountName, client }
         } = this.props;
-        const { validation } = this.state;
+        const { validation, keepLoggedIn } = this.state;
 
         return (
             <div>
@@ -162,7 +156,14 @@ class ResetPassword extends PureComponent {
                         label="重复新密码"
                         onBlur={() => this.validateField("password1")}
                     />
-                    <div style={{ marginTop: 20 }}>
+                    <FormControlLabel
+                        style={{ marginTop: "0.5rem" }}
+                        control={
+                            <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
+                        }
+                        label="记住我（保持登录一个月）"
+                    />
+                    <div style={{ marginTop: "0.5rem" }}>
                         <Button
                             variant="contained"
                             color="primary"

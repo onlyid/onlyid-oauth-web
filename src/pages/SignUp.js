@@ -2,7 +2,15 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./SignUp.module.css";
-import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core";
+import {
+    Button,
+    FormControl,
+    FormHelperText,
+    InputLabel,
+    OutlinedInput,
+    FormControlLabel,
+    Checkbox
+} from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
@@ -34,25 +42,14 @@ class SignUp extends PureComponent {
         otp: null,
         password: null,
         nickname: null,
-        filename: null
+        filename: null,
+        keepLoggedIn: false
     };
-
-    componentDidMount() {
-        const {
-            app: { accountName },
-            history,
-            location
-        } = this.props;
-        if (!accountName) {
-            history.replace("/account" + location.search);
-            return;
-        }
-    }
 
     onSubmit = async e => {
         e.preventDefault();
 
-        const { filename, nickname, otp, password } = this.state;
+        const { filename, nickname, otp, password, keepLoggedIn } = this.state;
         const {
             app: { client, accountName },
             location: { search }
@@ -72,7 +69,8 @@ class SignUp extends PureComponent {
             accountName,
             otp,
             password,
-            clientId: client.id
+            clientId: client.id,
+            keepLoggedIn
         });
 
         redirectCode(client, search, authorizationCode);
@@ -105,11 +103,15 @@ class SignUp extends PureComponent {
         this.setState({ [key]: value });
     };
 
+    onCheckBoxChange = event => {
+        this.setState({ keepLoggedIn: event.target.checked });
+    };
+
     render() {
         const {
             app: { accountName, client }
         } = this.props;
-        const { validation } = this.state;
+        const { validation, keepLoggedIn } = this.state;
 
         return (
             <div className={styles.root}>
@@ -151,7 +153,14 @@ class SignUp extends PureComponent {
                         onBlur={() => this.validateField("password")}
                         autoComplete="new-password"
                     />
-                    <div style={{ marginTop: 20 }}>
+                    <FormControlLabel
+                        style={{ marginTop: "0.5rem" }}
+                        control={
+                            <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
+                        }
+                        label="记住我（保持登录一个月）"
+                    />
+                    <div style={{ marginTop: "0.5rem" }}>
                         <Button
                             variant="contained"
                             color="primary"

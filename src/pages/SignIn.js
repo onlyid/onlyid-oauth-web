@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
 import http from "my/http";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
@@ -17,20 +17,9 @@ class SignIn extends PureComponent {
         helperText: null,
         isError: false,
         inputValue: "",
-        loginType: "password"
+        loginType: "password",
+        keepLoggedIn: false
     };
-
-    componentDidMount() {
-        const {
-            app: { accountName },
-            history,
-            location
-        } = this.props;
-        if (!accountName) {
-            history.replace("/account" + location.search);
-            return;
-        }
-    }
 
     back = () => {
         const { history } = this.props;
@@ -40,7 +29,7 @@ class SignIn extends PureComponent {
     onSubmit = async e => {
         e.preventDefault();
 
-        const { inputValue, loginType } = this.state;
+        const { inputValue, loginType, keepLoggedIn } = this.state;
         const {
             app: { accountName, client },
             location: { search }
@@ -51,7 +40,8 @@ class SignIn extends PureComponent {
         const { authorizationCode } = await http.post("oauth/sign-in", {
             accountName,
             [loginType]: inputValue,
-            clientId: client.id
+            clientId: client.id,
+            keepLoggedIn
         });
 
         redirectCode(client, search, authorizationCode);
@@ -88,8 +78,12 @@ class SignIn extends PureComponent {
         history.push("/account/reset-password" + search);
     };
 
+    onCheckBoxChange = event => {
+        this.setState({ keepLoggedIn: event.target.checked });
+    };
+
     render() {
-        const { helperText, isError, loginType } = this.state;
+        const { helperText, isError, loginType, keepLoggedIn } = this.state;
         const {
             app: { accountName, client }
         } = this.props;
@@ -125,7 +119,14 @@ class SignIn extends PureComponent {
                             onBlur={this.validateField}
                         />
                     )}
-                    <div style={{ marginTop: 20 }}>
+                    <FormControlLabel
+                        style={{ marginTop: "0.5rem" }}
+                        control={
+                            <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
+                        }
+                        label="记住我（保持登录一个月）"
+                    />
+                    <div style={{ marginTop: "0.5rem" }}>
                         <Button
                             variant="contained"
                             color="primary"

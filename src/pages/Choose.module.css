@@ -1,0 +1,83 @@
+.listBox {
+    margin-top: 0.5rem;
+}
+
+.item:first-of-type {
+    border-top: solid 1px #eee;
+}
+
+.item {
+    display: flex;
+    border-bottom: solid 1px #eee;
+    align-items: center;
+}
+
+.item.hover {
+    background-color: #f7f8f9;
+}
+
+.mainBox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    flex-grow: 1;
+    padding: 0.4rem 0;
+}
+
+.loginStatus {
+    color: #7f7f7f;
+    visibility: hidden;
+}
+
+.mainBox:hover .loginStatus {
+    visibility: visible;
+}
+
+.mainBox.loggedIn .loginStatus {
+    color: #409eff;
+}
+
+.avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.2rem;
+}
+
+.box1 {
+    flex-grow: 1;
+    margin-left: 1.2rem;
+}
+
+.mainBox.loggedIn .nickname {
+    color: #409eff;
+}
+
+.nickname {
+    font-size: 1.2rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0;
+}
+
+.accountName {
+    margin-top: 0.2rem;
+    margin-bottom: 0;
+    color: #7f7f7f;
+}
+
+.useNew {
+    padding: 16px 10px;
+    font-size: 1.1rem;
+    border-bottom: solid 1px #eee;
+    text-align: center;
+    color: #666;
+}
+
+.useNew :global .MuiSvgIcon-root {
+    vertical-align: -15%;
+}
+
+.useNew:hover {
+    background-color: #f7f8f9;
+    cursor: pointer;
+    color: inherit;
+}

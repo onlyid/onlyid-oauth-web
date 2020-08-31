@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import { Button, Hidden, TextField } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import http from "my/http";
 import { connect } from "react-redux";
 import Validator from "async-validator";
 import { REG_EXP } from "my/constants";
 import IconAndAvatar from "components/IconAndAvatar";
-import styles from "./Account.module.css";
+import ScanLoginButton from "components/ScanLoginButton";
 
 const RULES = {
     email: [
@@ -29,7 +29,10 @@ class Account extends PureComponent {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch({ type: "app/save", payload: { avatarUrl: null, nickname: null } });
+        dispatch({
+            type: "app/save",
+            payload: { avatarUrl: null, nickname: null, accountName: "" }
+        });
     }
 
     onSubmit = async e => {
@@ -77,14 +80,6 @@ class Account extends PureComponent {
         }
     };
 
-    scanLogin = () => {
-        const {
-            history,
-            location: { search }
-        } = this.props;
-        history.push("/account/scan-login" + search);
-    };
-
     render() {
         const { helperText, isError } = this.state;
         const {
@@ -119,14 +114,7 @@ class Account extends PureComponent {
                         <p className="tip">「{client.name}」将获得你的手机号、昵称等账号信息。</p>
                     </div>
                 </form>
-                <Hidden xsDown>
-                    <div className={styles.scanButtonBox}>
-                        <div className={styles.scanButton} onClick={this.scanLogin}>
-                            <span className="material-icons">qr_code</span>
-                            <p>扫码登录</p>
-                        </div>
-                    </div>
-                </Hidden>
+                <ScanLoginButton />
             </div>
         );
     }

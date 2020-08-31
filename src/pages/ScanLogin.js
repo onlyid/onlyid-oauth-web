@@ -23,15 +23,8 @@ class ScanLogin extends PureComponent {
 
     componentDidMount() {
         const {
-            app: { client },
-            history,
-            location
+            app: { client }
         } = this.props;
-
-        if (!client.id) {
-            history.replace("/account" + location.search);
-            return;
-        }
 
         const text = {
             uid: getRandomValue(),
