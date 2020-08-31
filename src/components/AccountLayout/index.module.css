@@ -4,8 +4,15 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+}
+
+.cardWrapper {
+    flex-grow: 1;
+
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .card {
@@ -29,9 +36,11 @@
         background-repeat: no-repeat;
     }
 
-    .card {
-        margin-top: 15vh;
+    .cardWrapper {
         width: 400px;
+    }
+
+    .card {
         box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
             0 1px 3px 0 rgba(0, 0, 0, 0.12);
         min-height: 600px;

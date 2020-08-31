@@ -118,29 +118,31 @@ class AccountLayout extends PureComponent {
                         {message}
                     </Alert>
                 </Snackbar>
-                <div className={styles.card}>
-                    {!loading && (
-                        <Switch>
-                            <Route path={`${match.path}/sign-in`}>
-                                <SignIn />
-                            </Route>
-                            <Route path={`${match.path}/sign-up`}>
-                                <SignUp />
-                            </Route>
-                            <Route path={`${match.path}/reset-password`}>
-                                <ResetPassword />
-                            </Route>
-                            <Route path={`${match.path}/scan-login`}>
-                                <ScanLogin />
-                            </Route>
-                            <Route path={`${match.path}/choose`}>
-                                <Choose />
-                            </Route>
-                            <Route path={match.path}>
-                                <Account />
-                            </Route>
-                        </Switch>
-                    )}
+                <div className={styles.cardWrapper}>
+                    <div className={styles.card}>
+                        {!loading && (
+                            <Switch>
+                                <Route path={`${match.path}/sign-in`}>
+                                    <SignIn />
+                                </Route>
+                                <Route path={`${match.path}/sign-up`}>
+                                    <SignUp />
+                                </Route>
+                                <Route path={`${match.path}/reset-password`}>
+                                    <ResetPassword />
+                                </Route>
+                                <Route path={`${match.path}/scan-login`}>
+                                    <ScanLogin />
+                                </Route>
+                                <Route path={`${match.path}/choose`}>
+                                    <Choose />
+                                </Route>
+                                <Route path={match.path}>
+                                    <Account />
+                                </Route>
+                            </Switch>
+                        )}
+                    </div>
                 </div>
                 <footer>
                     <Link component={RouterLink} to="/support">
