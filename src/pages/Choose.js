@@ -25,9 +25,10 @@ class Item extends PureComponent {
     };
 
     render() {
-        const { user, onDelete, onLogout, onClick } = this.props;
+        const { session, onDelete, onLogout, onClick } = this.props;
         const { anchorEl, isHover } = this.state;
-        const loggedIn = new Date(user.expireDate) > new Date();
+        const { user } = session;
+        const loggedIn = new Date(session.expireDate) > new Date();
 
         return (
             <div className={classNames(styles.item, { [styles.hover]: isHover })}>
@@ -75,7 +76,7 @@ class Choose extends PureComponent {
         const { dispatch } = this.props;
         dispatch({ type: "app/save", payload: { avatarUrl: null, nickname: null } });
     }
-    onClick = async user => {
+    onClick = async session => {
         const {
             app: { client },
             history,
@@ -86,8 +87,10 @@ class Choose extends PureComponent {
         // +5s是防止用户过期的那一刻点 后台报错
         const now = new Date();
         now.setSeconds(now.getSeconds() + 5);
-        if (new Date(user.expireDate) < now) {
-            const { nickname, avatarUrl, mobile, email } = user;
+        if (new Date(session.expireDate) < now) {
+            const {
+                user: { nickname, avatarUrl, mobile, email }
+            } = session;
             dispatch({
                 type: "app/save",
                 payload: { nickname, avatarUrl, accountName: mobile || email }
@@ -95,7 +98,7 @@ class Choose extends PureComponent {
             history.push("/account/sign-in" + location.search);
         } else {
             const { authorizationCode } = await http.post("oauth/choose", {
-                userId: user.id,
+                userId: session.user.id,
                 clientId: client.id
             });
 
@@ -103,7 +106,7 @@ class Choose extends PureComponent {
         }
     };
 
-    delete1 = async user => {
+    delete1 = async ({ user }) => {
         const {
             app: { sessionUsers },
             dispatch,
@@ -115,7 +118,7 @@ class Choose extends PureComponent {
 
         dispatch({
             type: "app/save",
-            payload: { sessionUsers: sessionUsers.filter(u => u.id !== user.id) }
+            payload: { sessionUsers: sessionUsers.filter(s => s.user.id !== user.id) }
         });
 
         if (sessionUsers.length === 0) history.replace("/account" + location.search);
@@ -123,9 +126,9 @@ class Choose extends PureComponent {
         eventEmitter.emit("app/openToast", { message: "已删除", severity: "success" });
     };
 
-    logout = async user => {
-        await http.post(`oauth/session-users/${user.id}/logout`);
-        user.expireDate = new Date().toISOString();
+    logout = async session => {
+        await http.post(`oauth/session-users/${session.user.id}/logout`);
+        session.expireDate = new Date().toISOString();
         this.forceUpdate();
         eventEmitter.emit("app/openToast", { message: "已退出", severity: "success" });
     };
@@ -148,13 +151,13 @@ class Choose extends PureComponent {
                     正在登录「{client.name}」，选择一个账号继续。
                 </p>
                 <div className={styles.listBox}>
-                    {sessionUsers.map(u => (
+                    {sessionUsers.map(s => (
                         <Item
-                            user={u}
-                            key={u.id}
-                            onClick={() => this.onClick(u)}
-                            onDelete={() => this.delete1(u)}
-                            onLogout={() => this.logout(u)}
+                            session={s}
+                            key={s.user.id}
+                            onClick={() => this.onClick(s)}
+                            onDelete={() => this.delete1(s)}
+                            onLogout={() => this.logout(s)}
                         />
                     ))}
                 </div>
