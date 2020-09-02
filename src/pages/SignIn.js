@@ -119,13 +119,15 @@ class SignIn extends PureComponent {
                             onBlur={this.validateField}
                         />
                     )}
-                    <FormControlLabel
-                        style={{ marginTop: "0.5rem" }}
-                        control={
-                            <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
-                        }
-                        label="记住我（保持登录一个月）"
-                    />
+                    {client.type !== "APP" && (
+                        <FormControlLabel
+                            style={{ marginTop: "0.5rem" }}
+                            control={
+                                <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
+                            }
+                            label="记住我（保持登录一个月）"
+                        />
+                    )}
                     <div style={{ marginTop: "0.5rem" }}>
                         <Button
                             variant="contained"
