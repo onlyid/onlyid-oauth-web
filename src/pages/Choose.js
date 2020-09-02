@@ -121,7 +121,7 @@ class Choose extends PureComponent {
             payload: { sessionUsers: sessionUsers.filter(s => s.user.id !== user.id) }
         });
 
-        if (sessionUsers.length === 0) history.replace("/account" + location.search);
+        if (sessionUsers.length === 1) history.replace("/account" + location.search);
 
         eventEmitter.emit("app/openToast", { message: "已删除", severity: "success" });
     };
