@@ -9,6 +9,8 @@ import classNames from "classnames";
 import http from "my/http";
 import { eventEmitter, redirectCode } from "my/utils";
 import ScanLoginButton from "components/ScanLoginButton";
+import moment from "moment";
+import * as constants from "my/constants";
 
 class Item extends PureComponent {
     state = {
@@ -28,7 +30,7 @@ class Item extends PureComponent {
         const { session, onDelete, onLogout, onClick } = this.props;
         const { anchorEl, isHover } = this.state;
         const { user } = session;
-        const loggedIn = new Date(session.expireDate) > new Date();
+        const loggedIn = moment(session.expireDate) > moment();
 
         return (
             <div className={classNames(styles.item, { [styles.hover]: isHover })}>
@@ -85,9 +87,9 @@ class Choose extends PureComponent {
         } = this.props;
 
         // +5s是防止用户过期的那一刻点 后台报错
-        const now = new Date();
-        now.setSeconds(now.getSeconds() + 5);
-        if (new Date(session.expireDate) < now) {
+        const now = moment();
+        now.add(5, "seconds");
+        if (moment(session.expireDate) < now) {
             const {
                 user: { nickname, avatarUrl, mobile, email }
             } = session;
@@ -128,7 +130,7 @@ class Choose extends PureComponent {
 
     logout = async session => {
         await http.post(`oauth/session-users/${session.user.id}/logout`);
-        session.expireDate = new Date().toISOString();
+        session.expireDate = moment().format(constants.DATE_TIME_FORMAT);
         this.forceUpdate();
         eventEmitter.emit("app/openToast", { message: "已退出", severity: "success" });
     };
