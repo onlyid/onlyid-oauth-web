@@ -8,6 +8,8 @@ const instance = axios.create({ baseURL });
 instance.interceptors.response.use(
     res => res.data,
     err => {
+        if (axios.isCancel(err)) return Promise.reject(err);
+
         let errMsg;
         if (err.response) errMsg = err.response.data.error;
         else errMsg = err.message;

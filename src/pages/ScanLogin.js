@@ -3,16 +3,26 @@ import { eventEmitter, getRandomValue, redirectCode } from "my/utils";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./ScanLogin.module.css";
-import { Button, Dialog, DialogTitle, IconButton, DialogContent } from "@material-ui/core";
+import {
+    Button,
+    Dialog,
+    DialogTitle,
+    IconButton,
+    DialogContent,
+    FormControlLabel,
+    Checkbox
+} from "@material-ui/core";
 import { Close, Android, Check } from "@material-ui/icons";
 import icon from "assets/ic_launcher.png";
 import http from "my/http";
+import axios from "axios";
 
 class ScanLogin extends PureComponent {
-    unmounted = false;
+    source;
 
     state = {
-        dialogVisible: false
+        dialogVisible: false,
+        keepLoggedIn: false
     };
 
     constructor(props) {
@@ -40,7 +50,7 @@ class ScanLogin extends PureComponent {
     }
 
     componentWillUnmount() {
-        this.unmounted = true;
+        this.source.cancel("unmount");
     }
 
     startLoop = async params => {
@@ -52,13 +62,27 @@ class ScanLogin extends PureComponent {
 
         let code;
         while (true) {
-            const { authorizationCode } = await http.post("oauth/scan-login", params);
+            try {
+                this.source = axios.CancelToken.source();
+                params.keepLoggedIn = this.state.keepLoggedIn;
+                const { authorizationCode } = await http.post("oauth/scan-login", params, {
+                    cancelToken: this.source.token
+                });
 
-            if (this.unmounted) return;
-
-            if (authorizationCode) {
-                code = authorizationCode;
-                break;
+                if (authorizationCode) {
+                    code = authorizationCode;
+                    break;
+                }
+            } catch (err) {
+                if (axios.isCancel(err)) {
+                    if (err.message === "unmount") {
+                        return;
+                    } else {
+                        // do nothing
+                    }
+                } else {
+                    throw err;
+                }
             }
         }
 
@@ -95,17 +119,30 @@ class ScanLogin extends PureComponent {
         history.goBack();
     };
 
+    onCheckBoxChange = event => {
+        this.source.cancel();
+        this.setState({ keepLoggedIn: event.target.checked });
+    };
+
     render() {
         const {
             app: { client }
         } = this.props;
-        const { dialogVisible } = this.state;
+        const { dialogVisible, keepLoggedIn } = this.state;
 
         return (
             <div className={styles.root}>
                 <p className={styles.title1}>扫码登录</p>
                 <div ref={this.ref1} className={styles.qrCodeBox1} />
                 <p className="tip">用 唯ID APP 扫码登录「{client.name}」</p>
+                <div className={styles.keepLoggedInBox}>
+                    <FormControlLabel
+                        control={
+                            <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
+                        }
+                        label="记住我（保持登录一个月）"
+                    />
+                </div>
                 <div className={styles.downloadButtonBox}>
                     <Button
                         variant="outlined"

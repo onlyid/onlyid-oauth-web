@@ -164,7 +164,7 @@ class Choose extends PureComponent {
                     ))}
                 </div>
                 <div className={styles.useNew} onClick={this.useNew}>
-                    <Add /> 使用新手机号
+                    <Add /> 使用新账号
                 </div>
                 <ScanLoginButton />
             </div>
