@@ -12,7 +12,7 @@ class DownloadApp extends PureComponent {
         document.title = "下载 唯ID APP";
 
         if (!navigator.userAgent.includes("MicroMessenger")) {
-            window.location.replace(window.location.origin + "/static/downloads/onlyid.apk");
+            window.location.replace(window.location.origin + "/static/downloads/唯ID.apk");
             this.setState({ isWeChat: false });
         }
     }
