@@ -35,10 +35,10 @@ class AccountLayout extends PureComponent {
 
         const query = qs.parse(location.search, { ignoreQueryPrefix: true });
         const clientId = query["client-id"];
-        if (!clientId) return this.disableNext("client id参数错误，请检查");
+        if (!clientId) return this.disableNext("Client ID参数错误，请检查");
 
         const client = await http.get("oauth/clients/" + clientId);
-        if (!client) return this.disableNext("应用不存在或client id错误，请检查");
+        if (!client) return this.disableNext("应用不存在或Client ID错误，请检查");
 
         if (client.type === "APP") {
             if (window.android) {
@@ -59,11 +59,10 @@ class AccountLayout extends PureComponent {
             }
         } else {
             if (!client.redirectUris.length)
-                return this.disableNext("应用回调uri未配置，请登录控制台配置");
+                return this.disableNext("Redirect URI未配置，请登录控制台配置");
 
-            if (!client.redirectUris.includes(query["redirect-uri"])) {
-                return this.disableNext("redirect uri参数错误，请检查");
-            }
+            if (!client.redirectUris.includes(query["redirect-uri"]))
+                return this.disableNext("Redirect URI参数错误，请检查");
         }
 
         dispatch({ type: "app/save", payload: { client } });
