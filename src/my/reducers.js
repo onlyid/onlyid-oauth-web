@@ -6,7 +6,7 @@ const defaultApp = {
     nickname: null,
     avatarUrl: null,
     nextDisabled: false,
-    sessionUsers: []
+    mySessions: []
 };
 
 function app(state = defaultApp, action) {

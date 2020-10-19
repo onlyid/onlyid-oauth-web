@@ -110,26 +110,26 @@ class Choose extends PureComponent {
 
     delete1 = async ({ user }) => {
         const {
-            app: { sessionUsers },
+            app: { mySessions },
             dispatch,
             history,
             location
         } = this.props;
 
-        await http.delete(`oauth/session-users/${user.id}`);
+        await http.delete(`oauth/my-sessions/${user.id}`);
 
         dispatch({
             type: "app/save",
-            payload: { sessionUsers: sessionUsers.filter(s => s.user.id !== user.id) }
+            payload: { mySessions: mySessions.filter(s => s.user.id !== user.id) }
         });
 
-        if (sessionUsers.length === 1) history.replace("/account" + location.search);
+        if (mySessions.length === 1) history.replace("/account" + location.search);
 
         eventEmitter.emit("app/openToast", { message: "已删除", severity: "success" });
     };
 
     logout = async session => {
-        await http.post(`oauth/session-users/${session.user.id}/logout`);
+        await http.post(`oauth/my-sessions/${session.user.id}/invalidate`);
         session.expireDate = moment().format(constants.DATE_TIME_FORMAT);
         this.forceUpdate();
         eventEmitter.emit("app/openToast", { message: "已退出", severity: "success" });
@@ -143,7 +143,7 @@ class Choose extends PureComponent {
 
     render() {
         const {
-            app: { client, sessionUsers }
+            app: { client, mySessions }
         } = this.props;
 
         return (
@@ -153,7 +153,7 @@ class Choose extends PureComponent {
                     正在登录「{client.name}」，选择一个账号继续。
                 </p>
                 <div className={styles.listBox}>
-                    {sessionUsers.map(s => (
+                    {mySessions.map(s => (
                         <Item
                             session={s}
                             key={s.user.id}

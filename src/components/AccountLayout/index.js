@@ -67,9 +67,9 @@ class AccountLayout extends PureComponent {
                 return this.disableNext("Redirect URI参数错误，请检查");
         }
 
-        const sessionUsers = await http.get("oauth/session-users");
-        if (sessionUsers.length) {
-            dispatch({ type: "app/save", payload: { sessionUsers } });
+        const mySessions = await http.get("oauth/my-sessions");
+        if (mySessions.length) {
+            dispatch({ type: "app/save", payload: { mySessions } });
             history.replace("/account/choose" + location.search);
         } else {
             history.replace("/account" + location.search);
