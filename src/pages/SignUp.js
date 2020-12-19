@@ -4,12 +4,12 @@ import { withRouter } from "react-router-dom";
 import styles from "./SignUp.module.css";
 import {
     Button,
+    Checkbox,
     FormControl,
+    FormControlLabel,
     FormHelperText,
     InputLabel,
-    OutlinedInput,
-    FormControlLabel,
-    Checkbox
+    OutlinedInput
 } from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
@@ -149,7 +149,7 @@ class SignUp extends PureComponent {
                     <PasswordInput
                         error={validation.password.isError}
                         onChange={({ target: { value } }) => this.onChange("password", value)}
-                        helperText={validation.password.helperText}
+                        helperText={validation.password.helperText || "设置密码，方便下次登录"}
                         onBlur={() => this.validateField("password")}
                         autoComplete="new-password"
                     />
@@ -170,7 +170,7 @@ class SignUp extends PureComponent {
                             onClick={this.onSubmit}
                             size="large"
                         >
-                            注 册
+                            注册账号并登录
                         </Button>
                     </div>
                 </form>

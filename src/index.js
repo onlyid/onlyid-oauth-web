@@ -12,6 +12,10 @@ import { createMuiTheme, CssBaseline } from "@material-ui/core";
 import { ThemeProvider, StylesProvider } from "@material-ui/core/styles";
 import { zhCN } from "@material-ui/core/locale";
 import { BrowserRouter } from "react-router-dom";
+import moment from "moment";
+import "moment/locale/zh-cn";
+
+moment.locale("zh-cn");
 
 const store = createStore(reducers);
 

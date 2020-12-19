@@ -3,15 +3,12 @@ import styles from "./index.module.css";
 import defaultAvatar from "assets/default-avatar.svg";
 import http from "my/http";
 import { IMG_UPLOAD_TIP } from "my/constants";
+import { connect } from "react-redux";
 
 class AvatarUpload extends PureComponent {
-    state = {
-        avatarUrl: null
-    };
-
     onChange = async e => {
         const { files } = e.target;
-        const { onChange } = this.props;
+        const { onChange, dispatch } = this.props;
 
         if (!files.length) return;
 
@@ -34,13 +31,15 @@ class AvatarUpload extends PureComponent {
         formData.append("file", blob);
         const { filename } = await http.post("img", formData);
 
-        this.setState({ filename, avatarUrl: scaledImage.toDataURL(file.type) });
+        dispatch({ type: "app/save", payload: { avatarUrl: scaledImage.toDataURL(file.type) } });
 
         onChange(filename);
     };
 
     render() {
-        const { avatarUrl } = this.state;
+        const {
+            app: { avatarUrl }
+        } = this.props;
 
         return (
             <div className={styles.root}>
@@ -62,4 +61,4 @@ class AvatarUpload extends PureComponent {
     }
 }
 
-export default AvatarUpload;
+export default connect(({ app }) => ({ app }))(AvatarUpload);

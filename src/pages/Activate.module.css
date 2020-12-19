@@ -1,0 +1,24 @@
+.root {
+}
+
+.form1 {
+    margin-top: 1.5rem;
+}
+
+.form1 :global .MuiInputAdornment-positionStart {
+    width: 4rem;
+}
+
+.form1 :global .MuiFormControl-root:not(:first-of-type) {
+    margin-top: 0.9rem;
+}
+
+.requiredAsterisk:after {
+    display: inline-block;
+    margin-left: 4px;
+    color: #f50057;
+    font-size: 14px;
+    line-height: 1;
+    content: "*";
+    font-family: SimSun, sans-serif;
+}

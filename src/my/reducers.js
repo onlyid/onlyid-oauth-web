@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 const defaultApp = {
     accountName: "",
     client: {},
+    userId: null,
     nickname: null,
     avatarUrl: null,
     nextDisabled: false,

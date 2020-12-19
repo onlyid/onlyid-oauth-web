@@ -173,7 +173,7 @@ class ResetPassword extends PureComponent {
                             onClick={this.onSubmit}
                             size="large"
                         >
-                            重设密码
+                            重设密码并登录
                         </Button>
                     </div>
                 </form>

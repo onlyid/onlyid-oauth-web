@@ -10,6 +10,10 @@ import {
 import http from "my/http";
 
 class OtpInput extends PureComponent {
+    static defaultProps = {
+        label: "验证码"
+    };
+
     state = {
         sent: false,
         countDown: 60
@@ -32,7 +36,7 @@ class OtpInput extends PureComponent {
     };
 
     render() {
-        const { error, onChange, helperText, ...restProps } = this.props;
+        const { error, onChange, helperText, label, ...restProps } = this.props;
         const { sent, countDown } = this.state;
 
         delete restProps.recipient;
@@ -40,7 +44,7 @@ class OtpInput extends PureComponent {
 
         return (
             <FormControl variant="outlined" fullWidth error={error}>
-                <InputLabel htmlFor="input">验证码</InputLabel>
+                <InputLabel htmlFor="input">{label}</InputLabel>
                 <OutlinedInput
                     id="input"
                     type="text"
@@ -52,7 +56,7 @@ class OtpInput extends PureComponent {
                             </Button>
                         </InputAdornment>
                     }
-                    label="验证码"
+                    label={label}
                     {...restProps}
                 />
                 <FormHelperText>{helperText}</FormHelperText>
