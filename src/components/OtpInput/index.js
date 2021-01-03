@@ -20,8 +20,8 @@ class OtpInput extends PureComponent {
     };
 
     sendOtp = async () => {
-        const { recipient, clientId } = this.props;
-        await http.post("oauth/send-otp", { recipient, clientId });
+        const { recipient, clientId, updateField } = this.props;
+        await http.post("oauth/send-otp", { recipient, clientId, updateField });
 
         this.setState({ countDown: 60, sent: true });
         const h = setInterval(() => {

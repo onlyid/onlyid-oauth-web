@@ -140,6 +140,7 @@ class ResetPassword extends PureComponent {
                         recipient={accountName}
                         clientId={client.id}
                         onBlur={() => this.validateField("otp")}
+                        updateField="密码"
                     />
                     <PasswordInput
                         error={validation.password.isError}
