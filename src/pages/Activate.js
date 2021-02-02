@@ -213,7 +213,7 @@ class Activate extends PureComponent {
 
     render() {
         const {
-            app: { accountName, client }
+            app: { account, client }
         } = this.props;
         const {
             nickname,
@@ -269,7 +269,7 @@ class Activate extends PureComponent {
                             }
                             onBlur={() => this.validateField("mobile")}
                             value={mobile || ""}
-                            disabled={!accountName.includes("@")}
+                            disabled={account === mobile}
                         />
                         <FormHelperText>{validation.mobile.helperText}</FormHelperText>
                     </FormControl>
@@ -280,7 +280,7 @@ class Activate extends PureComponent {
                             startAdornment={<InputAdornment position="start">邮箱</InputAdornment>}
                             onBlur={() => this.validateField("email")}
                             value={email || ""}
-                            disabled={accountName.includes("@")}
+                            disabled={account === email}
                         />
                         <FormHelperText>{validation.email.helperText}</FormHelperText>
                     </FormControl>

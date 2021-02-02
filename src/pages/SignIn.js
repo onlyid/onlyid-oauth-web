@@ -31,14 +31,14 @@ class SignIn extends PureComponent {
 
         const { inputValue, loginType, keepLoggedIn } = this.state;
         const {
-            app: { accountName, client },
+            app: { account, client },
             location: { search }
         } = this.props;
 
         if (!(await this.validateField())) return;
 
         const { authorizationCode } = await http.post("oauth/sign-in", {
-            accountName,
+            account,
             [loginType]: inputValue,
             clientId: client.id,
             keepLoggedIn
@@ -85,7 +85,7 @@ class SignIn extends PureComponent {
     render() {
         const { helperText, isError, loginType, keepLoggedIn } = this.state;
         const {
-            app: { accountName, client }
+            app: { account, client }
         } = this.props;
 
         return (
@@ -98,7 +98,7 @@ class SignIn extends PureComponent {
                         variant="outlined"
                         onClick={this.back}
                     >
-                        {accountName}
+                        {account}
                     </Button>
                 </div>
                 <form onSubmit={this.onSubmit} style={{ marginTop: 20 }}>
@@ -114,7 +114,7 @@ class SignIn extends PureComponent {
                             error={isError}
                             onChange={this.onChange}
                             helperText={helperText}
-                            recipient={accountName}
+                            recipient={account}
                             clientId={client.id}
                             onBlur={this.validateField}
                         />

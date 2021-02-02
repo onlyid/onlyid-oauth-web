@@ -43,7 +43,7 @@ class Account extends PureComponent {
         const { dispatch } = this.props;
         dispatch({
             type: "app/save",
-            payload: { avatarUrl: null, nickname: null, accountName: "" }
+            payload: { avatarUrl: null, nickname: null, account: "" }
         });
     }
 
@@ -53,13 +53,13 @@ class Account extends PureComponent {
         const {
             history,
             location: { search },
-            app: { accountName },
+            app: { account },
             dispatch
         } = this.props;
 
         if (!(await this.validateField())) return;
 
-        const params = { accountName };
+        const params = { account };
         const {
             created,
             userId,
@@ -82,17 +82,17 @@ class Account extends PureComponent {
 
     onChange = e => {
         const { dispatch } = this.props;
-        dispatch({ type: "app/save", payload: { accountName: e.target.value } });
+        dispatch({ type: "app/save", payload: { account: e.target.value } });
     };
 
     validateField = async () => {
         const {
-            app: { accountName }
+            app: { account }
         } = this.props;
         try {
-            const rules = accountName.includes("@") ? RULES.email : RULES.mobile;
-            const validator = new Validator({ accountName: rules });
-            await validator.validate({ accountName });
+            const rules = account.includes("@") ? RULES.email : RULES.mobile;
+            const validator = new Validator({ account: rules });
+            await validator.validate({ account });
             this.setState({ helperText: null, isError: false });
             return true;
         } catch ({ errors }) {
@@ -116,7 +116,7 @@ class Account extends PureComponent {
     render() {
         const { helperText, isError, dialogVisible, dialogType } = this.state;
         const {
-            app: { client, accountName, nextDisabled }
+            app: { client, account, nextDisabled }
         } = this.props;
 
         return (
@@ -130,7 +130,7 @@ class Account extends PureComponent {
                         helperText={helperText}
                         fullWidth
                         onChange={this.onChange}
-                        value={accountName}
+                        value={account}
                         onBlur={this.validateField}
                     />
                     <div style={{ marginTop: 20 }}>

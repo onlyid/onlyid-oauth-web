@@ -46,7 +46,7 @@ class Item extends PureComponent {
                     <img src={user.avatarUrl} alt="icon" className={styles.avatar} />
                     <div className={styles.box1}>
                         <p className={styles.nickname}>{user.nickname}</p>
-                        <p className={styles.accountName}>{user.mobile || user.email}</p>
+                        <p className={styles.account}>{user.mobile || user.email}</p>
                     </div>
                     <p className={styles.loginStatus}>{loggedIn ? "已登录" : "未登录"}</p>
                 </div>
@@ -95,7 +95,7 @@ class Choose extends PureComponent {
             } = session;
             dispatch({
                 type: "app/save",
-                payload: { nickname, avatarUrl, accountName: mobile || email }
+                payload: { nickname, avatarUrl, account: mobile || email }
             });
             history.push("/account/sign-in" + location.search);
         } else {

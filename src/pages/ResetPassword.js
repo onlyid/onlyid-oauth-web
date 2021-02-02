@@ -59,7 +59,7 @@ class ResetPassword extends PureComponent {
 
         const { otp, password, keepLoggedIn } = this.state;
         const {
-            app: { accountName, client },
+            app: { account, client },
             location: { search }
         } = this.props;
 
@@ -72,7 +72,7 @@ class ResetPassword extends PureComponent {
         if (values.includes(false)) return;
 
         const { authorizationCode } = await http.put("oauth/users/password", {
-            accountName,
+            account,
             otp,
             password,
             clientId: client.id,
@@ -115,7 +115,7 @@ class ResetPassword extends PureComponent {
 
     render() {
         const {
-            app: { accountName, client }
+            app: { account, client }
         } = this.props;
         const { validation, keepLoggedIn } = this.state;
 
@@ -129,7 +129,7 @@ class ResetPassword extends PureComponent {
                         variant="outlined"
                         onClick={() => this.back(-2)}
                     >
-                        {accountName}
+                        {account}
                     </Button>
                 </div>
                 <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
@@ -137,7 +137,7 @@ class ResetPassword extends PureComponent {
                         error={validation.otp.isError}
                         onChange={({ target: { value } }) => this.onChange("otp", value)}
                         helperText={validation.otp.helperText}
-                        recipient={accountName}
+                        recipient={account}
                         clientId={client.id}
                         onBlur={() => this.validateField("otp")}
                         updateField="密码"

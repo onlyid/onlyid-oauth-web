@@ -51,7 +51,7 @@ class SignUp extends PureComponent {
 
         const { filename, nickname, otp, password, keepLoggedIn } = this.state;
         const {
-            app: { client, accountName },
+            app: { client, account },
             location: { search }
         } = this.props;
 
@@ -66,7 +66,7 @@ class SignUp extends PureComponent {
         const { authorizationCode } = await http.post("oauth/users", {
             filename,
             nickname,
-            accountName,
+            account,
             otp,
             password,
             clientId: client.id,
@@ -109,7 +109,7 @@ class SignUp extends PureComponent {
 
     render() {
         const {
-            app: { accountName, client }
+            app: { account, client }
         } = this.props;
         const { validation, keepLoggedIn } = this.state;
 
@@ -123,7 +123,7 @@ class SignUp extends PureComponent {
                         variant="outlined"
                         onClick={this.back}
                     >
-                        {accountName}
+                        {account}
                     </Button>
                 </div>
                 <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
@@ -142,7 +142,7 @@ class SignUp extends PureComponent {
                         error={validation.otp.isError}
                         onChange={({ target: { value } }) => this.onChange("otp", value)}
                         helperText={validation.otp.helperText}
-                        recipient={accountName}
+                        recipient={account}
                         clientId={client.id}
                         onBlur={() => this.validateField("otp")}
                     />

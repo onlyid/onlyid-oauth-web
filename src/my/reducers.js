@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 const defaultApp = {
-    accountName: "",
+    account: "",
     client: {},
     userId: null,
     nickname: null,
