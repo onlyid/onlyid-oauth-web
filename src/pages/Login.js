@@ -12,7 +12,7 @@ import { redirectCode } from "my/utils";
 
 const RULES = [{ required: true, message: "请输入" }];
 
-class SignIn extends PureComponent {
+class Login extends PureComponent {
     state = {
         helperText: null,
         isError: false,
@@ -37,7 +37,7 @@ class SignIn extends PureComponent {
 
         if (!(await this.validateField())) return;
 
-        const { authorizationCode } = await http.post("oauth/sign-in", {
+        const { authorizationCode } = await http.post("oauth/login", {
             account,
             [loginType]: inputValue,
             clientId: client.id,
@@ -158,4 +158,4 @@ class SignIn extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(SignIn));
+export default connect(({ app }) => ({ app }))(withRouter(Login));

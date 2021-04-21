@@ -10,7 +10,7 @@ import { Link as RouterLink, Route, Switch, withRouter } from "react-router-dom"
 import logo from "assets/logo.svg";
 import Account from "pages/Account";
 import SignUp from "pages/SignUp";
-import SignIn from "pages/SignIn";
+import Login from "pages/Login";
 import ResetPassword from "pages/ResetPassword";
 import ScanLogin from "pages/ScanLogin";
 import Choose from "pages/Choose";
@@ -124,8 +124,8 @@ class AccountLayout extends PureComponent {
                     <div className={styles.card}>
                         {!loading && (
                             <Switch>
-                                <Route path={`${match.path}/sign-in`}>
-                                    <SignIn />
+                                <Route path={`${match.path}/login`}>
+                                    <Login />
                                 </Route>
                                 <Route path={`${match.path}/sign-up`}>
                                     <SignUp />

@@ -70,7 +70,7 @@ class Account extends PureComponent {
         if (created) {
             if (activated) {
                 dispatch({ type: "app/save", payload: { userId, nickname, avatarUrl } });
-                history.push("/account/sign-in" + search);
+                history.push("/account/login" + search);
             } else {
                 dispatch({ type: "app/save", payload: { userId } });
                 this.setState({ dialogVisible: true, dialogType: "activate" });

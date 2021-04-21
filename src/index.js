@@ -18,7 +18,6 @@ import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 
 const store = createStore(reducers);
-
 const theme = createMuiTheme({ zhCN });
 
 const content = (
