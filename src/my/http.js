@@ -12,7 +12,7 @@ instance.interceptors.response.use(
 
         let errMsg;
         if (err.response) errMsg = err.response.data.error;
-        else errMsg = err.message;
+        if (!errMsg) errMsg = err.message;
 
         eventEmitter.emit("app/openToast", { message: errMsg });
 
