@@ -8,6 +8,7 @@ import {
     OutlinedInput
 } from "@material-ui/core";
 import http from "my/http";
+import CaptchaDialog from "../CaptchaDialog";
 
 class OtpInput extends PureComponent {
     static defaultProps = {
@@ -16,12 +17,18 @@ class OtpInput extends PureComponent {
 
     state = {
         sent: false,
-        countDown: 60
+        countDown: 60,
+        captchaOpen: false
     };
 
     sendOtp = async () => {
         const { recipient, clientId, updateField } = this.props;
-        await http.post("oauth/send-otp", { recipient, clientId, updateField });
+        const data = await http.post("oauth/send-otp", { recipient, clientId, updateField });
+
+        if (data && data.requireCaptcha) {
+            this.toggleCaptcha();
+            return;
+        }
 
         this.setState({ countDown: 60, sent: true });
         const h = setInterval(() => {
@@ -35,9 +42,13 @@ class OtpInput extends PureComponent {
         }, 1000);
     };
 
+    toggleCaptcha = () => {
+        this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }));
+    };
+
     render() {
         const { error, onChange, helperText, label, ...restProps } = this.props;
-        const { sent, countDown } = this.state;
+        const { sent, countDown, captchaOpen } = this.state;
 
         delete restProps.recipient;
         delete restProps.clientId;
@@ -60,6 +71,14 @@ class OtpInput extends PureComponent {
                     {...restProps}
                 />
                 <FormHelperText>{helperText}</FormHelperText>
+                <CaptchaDialog
+                    open={captchaOpen}
+                    onCancel={this.toggleCaptcha}
+                    onSuccess={() => {
+                        this.toggleCaptcha();
+                        this.sendOtp();
+                    }}
+                />
             </FormControl>
         );
     }

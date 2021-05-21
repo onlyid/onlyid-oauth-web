@@ -9,6 +9,7 @@ import Validator from "async-validator";
 import IconAndAvatar from "components/IconAndAvatar";
 import { Edit } from "@material-ui/icons";
 import { redirectCode } from "my/utils";
+import CaptchaDialog from "components/CaptchaDialog";
 
 const RULES = [{ required: true, message: "请输入" }];
 
@@ -18,7 +19,8 @@ class Login extends PureComponent {
         isError: false,
         inputValue: "",
         loginType: "password",
-        keepLoggedIn: false
+        keepLoggedIn: false,
+        captchaOpen: false
     };
 
     back = () => {
@@ -27,7 +29,7 @@ class Login extends PureComponent {
     };
 
     onSubmit = async e => {
-        e.preventDefault();
+        e && e.preventDefault();
 
         const { inputValue, loginType, keepLoggedIn } = this.state;
         const {
@@ -37,12 +39,17 @@ class Login extends PureComponent {
 
         if (!(await this.validateField())) return;
 
-        const { authorizationCode } = await http.post("oauth/login", {
+        const { authorizationCode, requireCaptcha } = await http.post("oauth/login", {
             account,
             [loginType]: inputValue,
             clientId: client.id,
             keepLoggedIn
         });
+
+        if (requireCaptcha) {
+            this.toggleCaptcha();
+            return;
+        }
 
         redirectCode(client, search, authorizationCode);
     };
@@ -82,8 +89,12 @@ class Login extends PureComponent {
         this.setState({ keepLoggedIn: event.target.checked });
     };
 
+    toggleCaptcha = () => {
+        this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }));
+    };
+
     render() {
-        const { helperText, isError, loginType, keepLoggedIn } = this.state;
+        const { helperText, isError, loginType, keepLoggedIn, captchaOpen } = this.state;
         const {
             app: { account, client }
         } = this.props;
@@ -153,6 +164,14 @@ class Login extends PureComponent {
                         忘记密码
                     </Button>
                 </div>
+                <CaptchaDialog
+                    open={captchaOpen}
+                    onCancel={this.toggleCaptcha}
+                    onSuccess={() => {
+                        this.toggleCaptcha();
+                        this.onSubmit();
+                    }}
+                />
             </div>
         );
     }

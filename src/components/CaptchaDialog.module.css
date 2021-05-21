@@ -1,0 +1,8 @@
+.content {
+    padding-bottom: 20px;
+    width: 20rem;
+}
+
+.content > p {
+    margin-top: 0;
+}

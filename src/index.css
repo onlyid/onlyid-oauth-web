@@ -72,3 +72,23 @@ body {
     top: 0.2rem;
     color: #7f7f7f;
 }
+
+.geetest_logo {
+    display: none;
+}
+
+.geetest_success_logo {
+    display: none;
+}
+
+.geetest_feedback {
+    display: none !important;
+}
+
+.geetest_copyright {
+    display: none;
+}
+
+.geetest_popup_ghost {
+    opacity: 0 !important;
+}
