@@ -26,7 +26,6 @@ const RULES = {
     ],
     mobile: [
         { required: true, message: "请输入" },
-        { max: 50, message: "最多输入50字" },
         { pattern: REG_EXP.mobile, message: "手机号格式不正确" }
     ]
 };

@@ -28,17 +28,14 @@ import IconAndAvatar from "components/IconAndAvatar";
 const RULES = {
     nickname: [
         { required: true, message: "请输入" },
-        { max: 50, message: "最多输入50字" }
+        { max: 20, message: "最多输入20字" }
     ],
-    mobile: [
-        { max: 50, message: "最多输入50字" },
-        { pattern: REG_EXP.mobile, message: "手机号格式不正确" }
-    ],
+    mobile: { pattern: REG_EXP.mobile, message: "手机号格式不正确" },
     email: [
         { max: 50, message: "最多输入50字" },
         { type: "email", message: "邮箱格式不正确" }
     ],
-    bio: [{ max: 500, message: "最多输入500字" }],
+    bio: [{ max: 200, message: "最多输入200字" }],
     otpSms: [{ required: true, message: "请输入" }],
     otpEmail: [{ required: true, message: "请输入" }],
     password: [

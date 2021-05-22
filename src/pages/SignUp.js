@@ -22,7 +22,7 @@ import { Edit } from "@material-ui/icons";
 const RULES = {
     nickname: [
         { required: true, message: "请输入" },
-        { max: 50, message: "最多输入50字" }
+        { max: 20, message: "最多输入20字" }
     ],
     otp: [{ required: true, message: "请输入" }],
     password: [
