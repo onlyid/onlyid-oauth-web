@@ -60,14 +60,9 @@ class Account extends PureComponent {
         if (!(await this.validateField())) return;
 
         const params = { account };
-        const {
-            created,
-            userId,
-            nickname,
-            avatarUrl,
-            activated
-        } = await http.get("oauth/check-account", { params });
-        if (created) {
+        const data = await http.get("oauth/check-account", { params });
+        if (data) {
+            const { userId, nickname, avatarUrl, activated } = data;
             if (activated) {
                 dispatch({ type: "app/save", payload: { userId, nickname, avatarUrl } });
                 history.push("/account/login" + search);

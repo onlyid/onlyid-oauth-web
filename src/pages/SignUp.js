@@ -63,7 +63,7 @@ class SignUp extends PureComponent {
         ]);
         if (values.includes(false)) return;
 
-        const { authorizationCode } = await http.post("oauth/users", {
+        const { authorizationCode } = await http.post("oauth/sign-up", {
             filename,
             nickname,
             account,
