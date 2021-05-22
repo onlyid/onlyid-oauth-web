@@ -32,8 +32,7 @@ const RULES = {
 
 class Account extends PureComponent {
     state = {
-        helperText: null,
-        isError: false,
+        validation: {},
         dialogVisible: false,
         dialogType: "signUp"
     };
@@ -83,15 +82,18 @@ class Account extends PureComponent {
         const {
             app: { account }
         } = this.props;
+        let validation;
         try {
             const rules = account.includes("@") ? RULES.email : RULES.mobile;
             const validator = new Validator({ account: rules });
             await validator.validate({ account });
-            this.setState({ helperText: null, isError: false });
+            validation = {};
             return true;
         } catch ({ errors }) {
-            this.setState({ helperText: errors[0].message, isError: true });
+            validation = { text: errors[0].message, error: true };
             return false;
+        } finally {
+            this.setState({ validation });
         }
     };
 
@@ -108,7 +110,7 @@ class Account extends PureComponent {
     };
 
     render() {
-        const { helperText, isError, dialogVisible, dialogType } = this.state;
+        const { validation, dialogVisible, dialogType } = this.state;
         const {
             app: { client, account, nextDisabled }
         } = this.props;
@@ -120,8 +122,8 @@ class Account extends PureComponent {
                     <TextField
                         label="手机号/邮箱"
                         variant="outlined"
-                        error={isError}
-                        helperText={helperText}
+                        error={validation.error}
+                        helperText={validation.text}
                         fullWidth
                         onChange={this.onChange}
                         value={account}
