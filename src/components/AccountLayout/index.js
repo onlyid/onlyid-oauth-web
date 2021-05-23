@@ -154,9 +154,11 @@ class AccountLayout extends PureComponent {
                         需要帮助？
                     </Link>
                     <Divider style={{ marginTop: 20 }} />
-                    <img src={logo} alt="logo" width="100" height="40.5" />
+                    <a href="https://www.onlyid.net/home" target="_blank" rel="noopener noreferrer">
+                        <img src={logo} alt="logo" width="100" height="40.5" />
+                    </a>
                     <p className="tip">
-                        使用一个「唯ID」账号登录所有接入的网站和APP，畅游全球互联网。
+                        用一个「唯ID」账号登录全球互联网。
                         {client.type !== "APP" && (
                             <Link href="https://www.onlyid.net/home" target="_blank">
                                 了解更多

@@ -24,6 +24,7 @@ import MomentUtils from "@date-io/moment";
 import LocationInput from "components/LocationInput";
 import { DATE_FORMAT, GENDER_TEXT, REG_EXP } from "my/constants";
 import IconAndAvatar from "components/IconAndAvatar";
+import { Alert } from "@material-ui/lab";
 
 const RULES = {
     nickname: [
@@ -238,6 +239,13 @@ class Activate extends PureComponent {
 
         const step1Content = (
             <>
+                <Alert severity="info" className={styles.tipBox} icon={false}>
+                    <p>
+                        「{client.name}
+                        」支持用唯ID登录：类似微信、微博登录，你可以用唯ID登录各种网站、APP。
+                        你的账号已导入，设置密码即可使用。
+                    </p>
+                </Alert>
                 <AvatarUpload onChange={value => this.onChange("filename", value)} />
                 <form onSubmit={this.next} className={styles.form1}>
                     <FormControl fullWidth error={validation.nickname.isError}>
@@ -338,7 +346,7 @@ class Activate extends PureComponent {
                             onClick={this.next}
                             size="large"
                         >
-                            检查无误，设置登录密码
+                            下 一 步
                         </Button>
                     </div>
                 </form>
@@ -400,7 +408,7 @@ class Activate extends PureComponent {
                             onClick={this.onSubmit}
                             size="large"
                         >
-                            激活账号并登录
+                            完成设置并登录
                         </Button>
                     </div>
                 </form>

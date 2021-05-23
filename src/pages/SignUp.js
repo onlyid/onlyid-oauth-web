@@ -11,6 +11,7 @@ import {
     InputLabel,
     OutlinedInput
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
@@ -115,6 +116,13 @@ class SignUp extends PureComponent {
 
         return (
             <div className={styles.root}>
+                <Alert severity="info" className={styles.tipBox} icon={false}>
+                    <p>
+                        「{client.name}
+                        」支持用唯ID登录：类似微信、微博登录，你可以用唯ID登录各种网站、APP。
+                        新用户请先完成账号注册。
+                    </p>
+                </Alert>
                 <AvatarUpload onChange={value => this.onChange("filename", value)} />
                 <div className="accountBox">
                     <Button
@@ -170,7 +178,7 @@ class SignUp extends PureComponent {
                             onClick={this.onSubmit}
                             size="large"
                         >
-                            注册账号并登录
+                            注册并登录
                         </Button>
                     </div>
                 </form>

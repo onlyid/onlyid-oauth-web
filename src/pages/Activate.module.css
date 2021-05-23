@@ -22,3 +22,12 @@
     content: "*";
     font-family: SimSun, sans-serif;
 }
+
+.tipBox {
+    margin-bottom: 30px;
+    margin-top: -20px;
+}
+
+.tipBox p {
+    margin: 0;
+}
