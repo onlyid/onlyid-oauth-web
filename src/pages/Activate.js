@@ -242,7 +242,7 @@ class Activate extends PureComponent {
                 <Alert severity="info" className={styles.tipBox} icon={false}>
                     <p>
                         「{client.name}
-                        」支持用唯ID登录：类似微信、微博登录，你可以用唯ID登录各种网站、APP。
+                        」支持用唯ID登录，和微信、微博登录一样，用唯ID也可以登录各种网站、APP。
                         你的账号已导入，设置密码即可使用。
                     </p>
                 </Alert>

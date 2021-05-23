@@ -119,7 +119,7 @@ class SignUp extends PureComponent {
                 <Alert severity="info" className={styles.tipBox} icon={false}>
                     <p>
                         「{client.name}
-                        」支持用唯ID登录：类似微信、微博登录，你可以用唯ID登录各种网站、APP。
+                        」支持用唯ID登录，和微信、微博登录一样，用唯ID也可以登录各种网站、APP。
                         新用户请先完成账号注册。
                     </p>
                 </Alert>
