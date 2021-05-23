@@ -13,7 +13,7 @@ class AvatarUpload extends PureComponent {
         if (!files.length) return;
 
         const file = files[0];
-
+        e.target.value = null;
         const { image } = await window.loadImage(file, {
             orientation: true,
             aspectRatio: 1,
@@ -29,7 +29,7 @@ class AvatarUpload extends PureComponent {
 
         const formData = new FormData();
         formData.append("file", blob);
-        const { filename } = await http.post("img", formData);
+        const { filename } = await http.post("oauth/image", formData);
 
         dispatch({ type: "app/save", payload: { avatarUrl: scaledImage.toDataURL(file.type) } });
 
