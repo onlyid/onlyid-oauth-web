@@ -4,9 +4,15 @@
 
 .tipBox {
     margin-bottom: 30px;
-    margin-top: -20px;
+    margin-top: -10px;
 }
 
 .tipBox p {
     margin: 0;
+}
+
+@media (min-width: 600px) {
+    .tipBox {
+        margin-top: -20px;
+    }
 }

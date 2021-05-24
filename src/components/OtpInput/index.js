@@ -55,9 +55,9 @@ class OtpInput extends PureComponent {
 
         return (
             <FormControl variant="outlined" fullWidth error={error}>
-                <InputLabel htmlFor="input">{label}</InputLabel>
+                <InputLabel htmlFor="otp-input">{label}</InputLabel>
                 <OutlinedInput
-                    id="input"
+                    id="otp-input"
                     type="text"
                     onChange={onChange}
                     endAdornment={

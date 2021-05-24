@@ -28,9 +28,9 @@ class PasswordInput extends PureComponent {
 
         return (
             <FormControl variant="outlined" fullWidth error={error}>
-                <InputLabel htmlFor="input">{label}</InputLabel>
+                <InputLabel htmlFor="password-input">{label}</InputLabel>
                 <OutlinedInput
-                    id="input"
+                    id="password-input"
                     type={showPassword ? "text" : "password"}
                     onChange={onChange}
                     endAdornment={

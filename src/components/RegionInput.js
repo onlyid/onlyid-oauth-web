@@ -12,10 +12,10 @@ import {
     ListItemText
 } from "@material-ui/core";
 import { KeyboardArrowRight } from "@material-ui/icons";
-import styles from "./index.module.css";
+import styles from "./RegionInput.module.css";
 import CHINA_CITY_LIST from "my/china-city-list";
 
-class LocationInput extends PureComponent {
+class RegionInput extends PureComponent {
     static defaultProps = {
         label: "地区"
     };
@@ -33,7 +33,7 @@ class LocationInput extends PureComponent {
         const { provinceIndex } = this.state;
         const { onChange } = this.props;
 
-        onChange(CHINA_CITY_LIST[provinceIndex].province + " " + city);
+        onChange([CHINA_CITY_LIST[provinceIndex].province, city]);
         this.toggleDialog();
     };
 
@@ -76,8 +76,8 @@ class LocationInput extends PureComponent {
             <>
                 <FormControl fullWidth onClick={this.toggleDialog}>
                     <Input
-                        id="location"
-                        value={value && value.split(" ").join(" - ")}
+                        id="region"
+                        value={(value && value.join(" - ")) || ""}
                         readOnly
                         startAdornment={<InputAdornment position="start">{label}</InputAdornment>}
                     />
@@ -99,4 +99,4 @@ class LocationInput extends PureComponent {
     }
 }
 
-export default LocationInput;
+export default RegionInput;
