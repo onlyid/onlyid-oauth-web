@@ -10,48 +10,21 @@ import IconAndAvatar from "components/IconAndAvatar";
 import { Edit } from "@material-ui/icons";
 import { redirectCode } from "my/utils";
 import RememberMe from "components/RememberMe";
+import { NEW_PASSWORD_RULE } from "my/constants";
+
+const RULES = {
+    otp: [{ required: true, message: "请输入" }],
+    password: NEW_PASSWORD_RULE
+};
 
 class ResetPassword extends PureComponent {
-    RULES = {
-        otp: [{ required: true, message: "请输入" }],
-        password: [
-            { required: true, message: "请输入" },
-            { min: 6, message: "密码最少要输入6位" },
-            { max: 50, message: "最多输入50字" },
-            {
-                validator: (rule, value, callback) => {
-                    const { password1 } = this.state;
-                    // 如果重复新密码已经填写 触发一次校验
-                    if (password1) this.validateField("password1");
-
-                    callback();
-                }
-            }
-        ],
-        password1: [
-            { required: true, message: "请输入" },
-            {
-                validator: (rule, value, callback) => {
-                    const { password1, password } = this.state;
-                    if (password1 !== password) {
-                        callback("两次输入的密码不一致");
-                    } else {
-                        callback();
-                    }
-                }
-            }
-        ]
-    };
-
     state = {
         validation: {
             otp: { helperText: null, isError: false },
-            password: { helperText: null, isError: false },
-            password1: { helperText: null, isError: false }
+            password: { helperText: null, isError: false }
         },
         otp: null,
         password: null,
-        password1: null,
         keepLoggedIn: false
     };
 
@@ -67,8 +40,7 @@ class ResetPassword extends PureComponent {
         // 校验表单
         const values = await Promise.all([
             await this.validateField("otp"),
-            await this.validateField("password"),
-            await this.validateField("password1")
+            await this.validateField("password")
         ]);
         if (values.includes(false)) return;
 
@@ -86,7 +58,7 @@ class ResetPassword extends PureComponent {
     validateField = async key => {
         const { [key]: value, validation } = this.state;
         try {
-            const validator = new Validator({ [key]: this.RULES[key] });
+            const validator = new Validator({ [key]: RULES[key] });
             await validator.validate({ [key]: value });
 
             validation[key].helperText = null;
@@ -150,13 +122,6 @@ class ResetPassword extends PureComponent {
                         label="新密码"
                         onBlur={() => this.validateField("password")}
                         autoComplete="new-password"
-                    />
-                    <PasswordInput
-                        error={validation.password1.isError}
-                        onChange={({ target: { value } }) => this.onChange("password1", value)}
-                        helperText={validation.password1.helperText}
-                        label="重复新密码"
-                        onBlur={() => this.validateField("password1")}
                     />
                     {client.type !== "APP" && (
                         <RememberMe
