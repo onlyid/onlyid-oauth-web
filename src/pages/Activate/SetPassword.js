@@ -6,15 +6,12 @@ import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import Validator from "async-validator";
 import RememberMe from "components/RememberMe";
+import { NEW_PASSWORD_RULE } from "my/constants";
 
 const RULES = {
     otpSms: [{ required: true, message: "请输入" }],
     otpEmail: [{ required: true, message: "请输入" }],
-    password: [
-        { required: true, message: "请输入" },
-        { min: 6, message: "密码最少要输入6位" },
-        { max: 50, message: "最多输入50字" }
-    ]
+    password: NEW_PASSWORD_RULE
 };
 
 class SetPassword extends PureComponent {

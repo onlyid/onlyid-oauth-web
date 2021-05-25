@@ -12,6 +12,7 @@ import AvatarUpload from "components/AvatarUpload";
 import { redirectCode } from "my/utils";
 import { Edit } from "@material-ui/icons";
 import RememberMe from "components/RememberMe";
+import { NEW_PASSWORD_RULE } from "my/constants";
 
 const RULES = {
     nickname: [
@@ -19,11 +20,7 @@ const RULES = {
         { max: 20, message: "最多输入20字" }
     ],
     otp: [{ required: true, message: "请输入" }],
-    password: [
-        { required: true, message: "请输入" },
-        { min: 6, message: "密码最少要输入6位" },
-        { max: 50, message: "最多输入50字" }
-    ]
+    password: NEW_PASSWORD_RULE
 };
 
 class SignUp extends PureComponent {
