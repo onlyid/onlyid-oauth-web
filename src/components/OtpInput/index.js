@@ -52,6 +52,7 @@ class OtpInput extends PureComponent {
 
         delete restProps.recipient;
         delete restProps.clientId;
+        delete restProps.updateField;
 
         return (
             <FormControl variant="outlined" fullWidth error={error}>

@@ -16,8 +16,7 @@ const RULES = [{ required: true, message: "请输入" }];
 
 class Login extends PureComponent {
     state = {
-        helperText: null,
-        isError: false,
+        validation: {},
         inputValue: "",
         loginType: "password",
         keepLoggedIn: false,
@@ -61,14 +60,17 @@ class Login extends PureComponent {
 
     validateField = async () => {
         const { inputValue } = this.state;
+        let validation;
         try {
             const validator = new Validator({ inputValue: RULES });
-            await validator.validate({ inputValue });
-            this.setState({ helperText: null, isError: false });
+            await validator.validate({ inputValue }, { first: true });
+            validation = {};
             return true;
         } catch ({ errors }) {
-            this.setState({ helperText: errors[0].message, isError: true });
+            validation = { text: errors[0].message, error: true };
             return false;
+        } finally {
+            this.setState({ validation });
         }
     };
 
@@ -95,7 +97,7 @@ class Login extends PureComponent {
     };
 
     render() {
-        const { helperText, isError, loginType, keepLoggedIn, captchaOpen } = this.state;
+        const { validation, loginType, keepLoggedIn, captchaOpen } = this.state;
         const {
             app: { account, client }
         } = this.props;
@@ -116,16 +118,16 @@ class Login extends PureComponent {
                 <form onSubmit={this.onSubmit} style={{ marginTop: 20 }}>
                     {loginType === "password" ? (
                         <PasswordInput
-                            error={isError}
+                            error={validation.error}
                             onChange={this.onChange}
-                            helperText={helperText}
+                            helperText={validation.text}
                             onBlur={this.validateField}
                         />
                     ) : (
                         <OtpInput
-                            error={isError}
+                            error={validation.error}
                             onChange={this.onChange}
-                            helperText={helperText}
+                            helperText={validation.text}
                             recipient={account}
                             clientId={client.id}
                             onBlur={this.validateField}

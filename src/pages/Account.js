@@ -77,7 +77,7 @@ class Account extends PureComponent {
         try {
             const rules = account.includes("@") ? RULES.email : RULES.mobile;
             const validator = new Validator({ account: rules });
-            await validator.validate({ account });
+            await validator.validate({ account }, { first: true });
             validation = {};
             return true;
         } catch ({ errors }) {

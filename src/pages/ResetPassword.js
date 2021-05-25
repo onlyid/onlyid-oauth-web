@@ -19,10 +19,7 @@ const RULES = {
 
 class ResetPassword extends PureComponent {
     state = {
-        validation: {
-            otp: { helperText: null, isError: false },
-            password: { helperText: null, isError: false }
-        },
+        validation: { otp: {}, password: {} },
         otp: null,
         password: null,
         keepLoggedIn: false
@@ -31,18 +28,21 @@ class ResetPassword extends PureComponent {
     onSubmit = async e => {
         e.preventDefault();
 
-        const { otp, password, keepLoggedIn } = this.state;
+        const { otp, password, keepLoggedIn, validation } = this.state;
         const {
             app: { account, client },
             location: { search }
         } = this.props;
 
         // 校验表单
-        const values = await Promise.all([
-            await this.validateField("otp"),
-            await this.validateField("password")
-        ]);
-        if (values.includes(false)) return;
+        try {
+            const values = { otp, password };
+            await new Validator(RULES).validate(values, { firstFields: true });
+        } catch ({ errors }) {
+            for (const e of errors) validation[e.field] = { text: e.message, error: true };
+
+            return this.setState({ validation: { ...validation } });
+        }
 
         const { authorizationCode } = await http.put("oauth/users/password", {
             account,
@@ -55,22 +55,15 @@ class ResetPassword extends PureComponent {
         redirectCode(client, search, authorizationCode);
     };
 
-    validateField = async key => {
-        const { [key]: value, validation } = this.state;
+    validateField = async ({ target: { name: key, value } }) => {
+        const { validation } = this.state;
         try {
-            const validator = new Validator({ [key]: RULES[key] });
-            await validator.validate({ [key]: value });
-
-            validation[key].helperText = null;
-            validation[key].isError = false;
-            return true;
+            await new Validator({ [key]: RULES[key] }).validate({ [key]: value }, { first: true });
+            validation[key] = {};
         } catch ({ errors }) {
-            validation[key].helperText = errors[0].message;
-            validation[key].isError = true;
-            return false;
-        } finally {
-            this.setState({ validation: { ...validation } });
+            validation[key] = { text: errors[0].message, error: true };
         }
+        this.setState({ validation: { ...validation } });
     };
 
     back = (n = -1) => {
@@ -78,8 +71,8 @@ class ResetPassword extends PureComponent {
         history.go(n);
     };
 
-    onChange = (key, value) => {
-        this.setState({ [key]: value });
+    onChange = ({ target }) => {
+        this.setState({ [target.name]: target.value });
     };
 
     onCheckBoxChange = event => {
@@ -107,20 +100,22 @@ class ResetPassword extends PureComponent {
                 </div>
                 <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
                     <OtpInput
-                        error={validation.otp.isError}
-                        onChange={({ target: { value } }) => this.onChange("otp", value)}
-                        helperText={validation.otp.helperText}
+                        name="otp"
+                        error={validation.otp.error}
+                        onChange={this.onChange}
+                        helperText={validation.otp.text}
                         recipient={account}
                         clientId={client.id}
-                        onBlur={() => this.validateField("otp")}
+                        onBlur={this.validateField}
                         updateField="密码"
                     />
                     <PasswordInput
-                        error={validation.password.isError}
-                        onChange={({ target: { value } }) => this.onChange("password", value)}
-                        helperText={validation.password.helperText}
+                        name="password"
+                        error={validation.password.error}
+                        onChange={this.onChange}
+                        helperText={validation.password.text}
                         label="新密码"
-                        onBlur={() => this.validateField("password")}
+                        onBlur={this.validateField}
                         autoComplete="new-password"
                     />
                     {client.type !== "APP" && (

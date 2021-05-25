@@ -25,11 +25,7 @@ const RULES = {
 
 class SignUp extends PureComponent {
     state = {
-        validation: {
-            nickname: { helperText: null, isError: false },
-            otp: { helperText: null, isError: false },
-            password: { helperText: null, isError: false }
-        },
+        validation: { nickname: {}, otp: {}, password: {} },
         otp: null,
         password: null,
         nickname: null,
@@ -40,19 +36,21 @@ class SignUp extends PureComponent {
     onSubmit = async e => {
         e.preventDefault();
 
-        const { filename, nickname, otp, password, keepLoggedIn } = this.state;
+        const { filename, nickname, otp, password, keepLoggedIn, validation } = this.state;
         const {
             app: { client, account },
             location: { search }
         } = this.props;
 
         // 校验表单
-        const values = await Promise.all([
-            await this.validateField("nickname"),
-            await this.validateField("otp"),
-            await this.validateField("password")
-        ]);
-        if (values.includes(false)) return;
+        try {
+            const values = { nickname, otp, password };
+            await new Validator(RULES).validate(values, { firstFields: true });
+        } catch ({ errors }) {
+            for (const e of errors) validation[e.field] = { text: e.message, error: true };
+
+            return this.setState({ validation: { ...validation } });
+        }
 
         const { authorizationCode } = await http.post("oauth/sign-up", {
             filename,
@@ -67,22 +65,15 @@ class SignUp extends PureComponent {
         redirectCode(client, search, authorizationCode);
     };
 
-    validateField = async key => {
-        const { [key]: value, validation } = this.state;
+    validateField = async ({ target: { name: key, value } }) => {
+        const { validation } = this.state;
         try {
-            const validator = new Validator({ [key]: RULES[key] });
-            await validator.validate({ [key]: value });
-
-            validation[key].helperText = null;
-            validation[key].isError = false;
-            return true;
+            await new Validator({ [key]: RULES[key] }).validate({ [key]: value }, { first: true });
+            validation[key] = {};
         } catch ({ errors }) {
-            validation[key].helperText = errors[0].message;
-            validation[key].isError = true;
-            return false;
-        } finally {
-            this.setState({ validation: { ...validation } });
+            validation[key] = { text: errors[0].message, error: true };
         }
+        this.setState({ validation: { ...validation } });
     };
 
     back = () => {
@@ -90,8 +81,12 @@ class SignUp extends PureComponent {
         history.goBack();
     };
 
-    onChange = (key, value) => {
-        this.setState({ [key]: value });
+    onChange = ({ target }) => {
+        this.setState({ [target.name]: target.value });
+    };
+
+    onUpload = filename => {
+        this.setState({ filename });
     };
 
     onCheckBoxChange = event => {
@@ -113,7 +108,7 @@ class SignUp extends PureComponent {
                         新用户请先完成账号注册。
                     </p>
                 </Alert>
-                <AvatarUpload onChange={value => this.onChange("filename", value)} />
+                <AvatarUpload onChange={this.onUpload} />
                 <div className="accountBox">
                     <Button
                         startIcon={<Edit />}
@@ -125,30 +120,32 @@ class SignUp extends PureComponent {
                     </Button>
                 </div>
                 <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
-                    <FormControl variant="outlined" fullWidth error={validation.nickname.isError}>
+                    <FormControl variant="outlined" fullWidth error={validation.nickname.error}>
                         <InputLabel htmlFor="nickname">昵称</InputLabel>
                         <OutlinedInput
-                            id="nickname"
+                            name="nickname"
                             type="text"
-                            onChange={({ target: { value } }) => this.onChange("nickname", value)}
+                            onChange={this.onChange}
                             label="昵称"
-                            onBlur={() => this.validateField("nickname")}
+                            onBlur={this.validateField}
                         />
-                        <FormHelperText>{validation.nickname.helperText}</FormHelperText>
+                        <FormHelperText>{validation.nickname.text}</FormHelperText>
                     </FormControl>
                     <OtpInput
-                        error={validation.otp.isError}
-                        onChange={({ target: { value } }) => this.onChange("otp", value)}
-                        helperText={validation.otp.helperText}
+                        name="otp"
+                        error={validation.otp.error}
+                        onChange={this.onChange}
+                        helperText={validation.otp.text}
                         recipient={account}
                         clientId={client.id}
-                        onBlur={() => this.validateField("otp")}
+                        onBlur={this.validateField}
                     />
                     <PasswordInput
-                        error={validation.password.isError}
-                        onChange={({ target: { value } }) => this.onChange("password", value)}
-                        helperText={validation.password.helperText || "设置密码，方便下次登录"}
-                        onBlur={() => this.validateField("password")}
+                        name="password"
+                        error={validation.password.error}
+                        onChange={this.onChange}
+                        helperText={validation.password.text || "设置密码，方便下次登录"}
+                        onBlur={this.validateField}
                         autoComplete="new-password"
                     />
                     {client.type !== "APP" && (
