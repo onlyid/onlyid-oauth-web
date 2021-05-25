@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
@@ -9,6 +9,7 @@ import http from "my/http";
 import IconAndAvatar from "components/IconAndAvatar";
 import { Edit } from "@material-ui/icons";
 import { redirectCode } from "my/utils";
+import RememberMe from "components/RememberMe";
 
 class ResetPassword extends PureComponent {
     RULES = {
@@ -158,12 +159,10 @@ class ResetPassword extends PureComponent {
                         onBlur={() => this.validateField("password1")}
                     />
                     {client.type !== "APP" && (
-                        <FormControlLabel
+                        <RememberMe
                             style={{ marginTop: "0.5rem" }}
-                            control={
-                                <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
-                            }
-                            label="记住我（保持登录一个月）"
+                            onChange={this.onCheckBoxChange}
+                            checked={keepLoggedIn}
                         />
                     )}
                     <div style={{ marginTop: "0.5rem" }}>

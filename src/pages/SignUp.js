@@ -2,15 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./SignUp.module.css";
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    InputLabel,
-    OutlinedInput
-} from "@material-ui/core";
+import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
@@ -19,6 +11,7 @@ import http from "my/http";
 import AvatarUpload from "components/AvatarUpload";
 import { redirectCode } from "my/utils";
 import { Edit } from "@material-ui/icons";
+import RememberMe from "components/RememberMe";
 
 const RULES = {
     nickname: [
@@ -162,12 +155,10 @@ class SignUp extends PureComponent {
                         autoComplete="new-password"
                     />
                     {client.type !== "APP" && (
-                        <FormControlLabel
+                        <RememberMe
                             style={{ marginTop: "0.5rem" }}
-                            control={
-                                <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
-                            }
-                            label="记住我（保持登录一个月）"
+                            onChange={this.onCheckBoxChange}
+                            checked={keepLoggedIn}
                         />
                     )}
                     <div style={{ marginTop: "0.5rem" }}>

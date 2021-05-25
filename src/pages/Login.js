@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import http from "my/http";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
@@ -10,6 +10,7 @@ import IconAndAvatar from "components/IconAndAvatar";
 import { Edit } from "@material-ui/icons";
 import { redirectCode } from "my/utils";
 import CaptchaDialog from "components/CaptchaDialog";
+import RememberMe from "components/RememberMe";
 
 const RULES = [{ required: true, message: "请输入" }];
 
@@ -131,12 +132,10 @@ class Login extends PureComponent {
                         />
                     )}
                     {client.type !== "APP" && (
-                        <FormControlLabel
+                        <RememberMe
                             style={{ marginTop: "0.5rem" }}
-                            control={
-                                <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
-                            }
-                            label="记住我（保持登录一个月）"
+                            onChange={this.onCheckBoxChange}
+                            checked={keepLoggedIn}
                         />
                     )}
                     <div style={{ marginTop: "0.5rem" }}>

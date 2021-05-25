@@ -2,9 +2,10 @@ import React, { PureComponent } from "react";
 import IconAndAvatar from "components/IconAndAvatar";
 import OtpInput from "components/OtpInput";
 import PasswordInput from "components/PasswordInput";
-import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import Validator from "async-validator";
+import RememberMe from "components/RememberMe";
 
 const RULES = {
     otpSms: [{ required: true, message: "请输入" }],
@@ -117,12 +118,10 @@ class SetPassword extends PureComponent {
                         autoComplete="new-password"
                     />
                     {client.type !== "APP" && (
-                        <FormControlLabel
+                        <RememberMe
                             style={{ marginTop: "0.5rem" }}
-                            control={
-                                <Checkbox onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
-                            }
-                            label="记住我（保持登录一个月）"
+                            onChange={this.onCheckBoxChange}
+                            checked={keepLoggedIn}
                         />
                     )}
                     <div style={{ marginTop: "0.5rem" }}>
