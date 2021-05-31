@@ -119,14 +119,14 @@ class Choose extends PureComponent {
 
         if (mySessions.length === 1) history.replace("/account" + location.search);
 
-        eventEmitter.emit("app/openToast", { message: "已删除", severity: "success" });
+        eventEmitter.emit("app/openToast", { text: "已删除", timeout: 2000 });
     };
 
     logout = async session => {
         await http.post(`oauth/my-sessions/${session.user.id}/invalidate`);
         session.expireDate = moment().format(DATE_TIME_FORMAT);
         this.forceUpdate();
-        eventEmitter.emit("app/openToast", { message: "已退出", severity: "success" });
+        eventEmitter.emit("app/openToast", { text: "已退出", timeout: 2000 });
     };
 
     useNew = () => {

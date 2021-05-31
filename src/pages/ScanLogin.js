@@ -81,7 +81,7 @@ class ScanLogin extends PureComponent {
 
         if (code === "reject") {
             eventEmitter.emit("app/openToast", {
-                message: "你拒绝了本次登录请求",
+                text: "你拒绝了本次登录请求",
                 severity: "warning"
             });
             history.goBack();

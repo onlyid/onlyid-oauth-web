@@ -19,11 +19,7 @@ import Activate from "pages/Activate";
 class AccountLayout extends PureComponent {
     state = {
         loading: true,
-        toast: {
-            open: false,
-            severity: null,
-            message: null
-        }
+        toast: { open: false, text: "", severity: "", timeout: 0 }
     };
 
     componentDidMount() {
@@ -88,21 +84,23 @@ class AccountLayout extends PureComponent {
         this.setState({ loading: false });
     };
 
-    openToast = toast => {
-        this.setState({ toast: { open: true, ...toast } });
+    openToast = async toast => {
+        const {
+            toast: { open }
+        } = this.state;
+        if (open) await this.closeToast();
+
+        this.setState({ toast: { open: true, severity: "success", timeout: 4000, ...toast } });
     };
 
-    onClose = (_, reason) => {
+    closeToast = (_, reason) => {
         if (reason === "clickaway") return;
 
         this.setState(({ toast }) => ({ toast: { ...toast, open: false } }));
     };
 
     render() {
-        const {
-            toast: { open, severity, message },
-            loading
-        } = this.state;
+        const { toast, loading } = this.state;
         const {
             match,
             app: { client }
@@ -111,13 +109,13 @@ class AccountLayout extends PureComponent {
         return (
             <div className={styles.root}>
                 <Snackbar
-                    open={open}
+                    open={toast.open}
                     autoHideDuration={5000}
-                    onClose={this.onClose}
+                    onClose={this.closeToast}
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 >
-                    <Alert elevation={1} severity={severity || "error"}>
-                        {message}
+                    <Alert elevation={1} severity={toast.severity}>
+                        {toast.text}
                     </Alert>
                 </Snackbar>
                 <div className={styles.cardWrapper}>
