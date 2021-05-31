@@ -75,10 +75,10 @@ class AccountLayout extends PureComponent {
         this.setState({ loading: false });
     };
 
-    disableNext = message => {
+    disableNext = text => {
         const { dispatch } = this.props;
 
-        this.openToast({ message });
+        this.openToast({ text, severity: "error" });
         dispatch({ type: "app", nextDisabled: true });
 
         this.setState({ loading: false });
