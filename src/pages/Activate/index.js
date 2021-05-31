@@ -53,7 +53,7 @@ class Activate extends PureComponent {
 
         if (birthDate) this.setState({ birthDate: moment(birthDate) });
 
-        dispatch({ type: "app/save", payload: { avatarUrl } });
+        dispatch({ type: "app", avatarUrl });
     };
 
     onSubmit = async () => {

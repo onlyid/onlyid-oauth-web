@@ -10,15 +10,10 @@ const defaultApp = {
     mySessions: []
 };
 
-function app(state = defaultApp, action) {
-    const { type, payload } = action;
+function app(state = defaultApp, { type, ...rest }) {
+    if (type === "app") return { ...state, ...rest };
 
-    switch (type) {
-        case "app/save":
-            return { ...state, ...payload };
-        default:
-            return state;
-    }
+    return state;
 }
 
 export default combineReducers({ app });

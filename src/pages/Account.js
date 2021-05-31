@@ -27,10 +27,7 @@ class Account extends PureComponent {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch({
-            type: "app/save",
-            payload: { avatarUrl: null, nickname: null, account: "" }
-        });
+        dispatch({ type: "app", avatarUrl: null, nickname: null, account: "" });
     }
 
     onSubmit = async e => {
@@ -52,10 +49,10 @@ class Account extends PureComponent {
         if (data) {
             const { userId, nickname, avatarUrl, activated } = data;
             if (activated) {
-                dispatch({ type: "app/save", payload: { userId, nickname, avatarUrl } });
+                dispatch({ type: "app", userId, nickname, avatarUrl });
                 route = "login";
             } else {
-                dispatch({ type: "app/save", payload: { userId } });
+                dispatch({ type: "app", userId });
                 route = "activate";
             }
         } else {
@@ -66,7 +63,7 @@ class Account extends PureComponent {
 
     onChange = e => {
         const { dispatch } = this.props;
-        dispatch({ type: "app/save", payload: { account: e.target.value } });
+        dispatch({ type: "app", account: e.target.value });
     };
 
     validateField = async () => {

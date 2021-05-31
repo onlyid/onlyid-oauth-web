@@ -41,7 +41,7 @@ class AccountLayout extends PureComponent {
         const client = await http.get("oauth/clients/" + clientId);
         if (!client) return this.disableNext("应用不存在或Client ID错误，请检查");
 
-        dispatch({ type: "app/save", payload: { client } });
+        dispatch({ type: "app", client });
 
         if (client.type === "APP") {
             if (window.android) {
@@ -70,7 +70,7 @@ class AccountLayout extends PureComponent {
 
         const mySessions = await http.get("oauth/my-sessions");
         if (mySessions.length) {
-            dispatch({ type: "app/save", payload: { mySessions } });
+            dispatch({ type: "app", mySessions });
             history.replace("/account/choose" + location.search);
         } else {
             history.replace("/account" + location.search);
@@ -83,7 +83,7 @@ class AccountLayout extends PureComponent {
         const { dispatch } = this.props;
 
         this.openToast({ message });
-        dispatch({ type: "app/save", payload: { nextDisabled: true } });
+        dispatch({ type: "app", nextDisabled: true });
 
         this.setState({ loading: false });
     };

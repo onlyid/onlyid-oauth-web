@@ -56,7 +56,7 @@ class Review extends PureComponent {
         }
 
         onNext();
-        dispatch({ type: "app/save", payload: { nickname } });
+        dispatch({ type: "app", nickname });
     };
 
     onChange = ({ target }) => {

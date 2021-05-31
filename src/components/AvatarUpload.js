@@ -31,7 +31,7 @@ class AvatarUpload extends PureComponent {
         formData.append("file", blob);
         const { filename } = await http.post("oauth/image", formData);
 
-        dispatch({ type: "app/save", payload: { avatarUrl: scaledImage.toDataURL(file.type) } });
+        dispatch({ type: "app", avatarUrl: scaledImage.toDataURL(file.type) });
 
         onChange(filename);
     };

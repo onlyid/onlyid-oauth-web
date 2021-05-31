@@ -10,7 +10,7 @@ import http from "my/http";
 import { eventEmitter, redirectCode } from "my/utils";
 import ScanLoginButton from "components/ScanLoginButton";
 import moment from "moment";
-import * as constants from "my/constants";
+import { DATE_TIME_FORMAT } from "my/constants";
 
 class Item extends PureComponent {
     state = {
@@ -76,7 +76,7 @@ class Item extends PureComponent {
 class Choose extends PureComponent {
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch({ type: "app/save", payload: { avatarUrl: null, nickname: null } });
+        dispatch({ type: "app", avatarUrl: null, nickname: null });
     }
     onClick = async session => {
         const {
@@ -93,10 +93,7 @@ class Choose extends PureComponent {
             const {
                 user: { nickname, avatarUrl, mobile, email }
             } = session;
-            dispatch({
-                type: "app/save",
-                payload: { nickname, avatarUrl, account: mobile || email }
-            });
+            dispatch({ type: "app", nickname, avatarUrl, account: mobile || email });
             history.push("/account/login" + location.search);
         } else {
             const { authorizationCode } = await http.post("oauth/sso", {
@@ -118,10 +115,7 @@ class Choose extends PureComponent {
 
         await http.delete(`oauth/my-sessions/${user.id}`);
 
-        dispatch({
-            type: "app/save",
-            payload: { mySessions: mySessions.filter(s => s.user.id !== user.id) }
-        });
+        dispatch({ type: "app", mySessions: mySessions.filter(s => s.user.id !== user.id) });
 
         if (mySessions.length === 1) history.replace("/account" + location.search);
 
@@ -130,7 +124,7 @@ class Choose extends PureComponent {
 
     logout = async session => {
         await http.post(`oauth/my-sessions/${session.user.id}/invalidate`);
-        session.expireDate = moment().format(constants.DATE_TIME_FORMAT);
+        session.expireDate = moment().format(DATE_TIME_FORMAT);
         this.forceUpdate();
         eventEmitter.emit("app/openToast", { message: "已退出", severity: "success" });
     };
