@@ -8,7 +8,7 @@ import {
     OutlinedInput
 } from "@material-ui/core";
 import http from "my/http";
-import CaptchaDialog from "../CaptchaDialog";
+import CaptchaDialog from "./CaptchaDialog";
 
 class OtpInput extends PureComponent {
     static defaultProps = {

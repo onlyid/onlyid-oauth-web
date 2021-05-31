@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import styles from "./index.module.css";
+import styles from "./IconAndAvatar.module.css";
 import { connect } from "react-redux";
 import { SwapHoriz } from "@material-ui/icons";
 

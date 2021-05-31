@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Alert } from "@material-ui/lab";
 import { Divider, Link, Snackbar } from "@material-ui/core";
 import { eventEmitter } from "my/utils";
-import styles from "./index.module.css";
+import styles from "./AccountLayout.module.css";
 import qs from "qs";
 import http from "my/http";
 import { connect } from "react-redux";

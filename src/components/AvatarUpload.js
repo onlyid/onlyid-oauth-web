@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import styles from "./index.module.css";
+import styles from "./AvatarUpload.module.css";
 import defaultAvatar from "assets/default-avatar.svg";
 import http from "my/http";
 import { IMG_UPLOAD_TIP } from "my/constants";
