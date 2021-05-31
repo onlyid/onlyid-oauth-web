@@ -23,7 +23,7 @@ class OtpInput extends PureComponent {
 
     sendOtp = async () => {
         const { recipient, clientId, updateField } = this.props;
-        const data = await http.post("oauth/send-otp", { recipient, clientId, updateField });
+        const data = await http.post("send-otp", { recipient, clientId, updateField });
 
         if (data && data.requireCaptcha) {
             this.toggleCaptcha();

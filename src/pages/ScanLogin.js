@@ -58,7 +58,7 @@ class ScanLogin extends PureComponent {
             try {
                 this.source = axios.CancelToken.source();
                 params.keepLoggedIn = this.state.keepLoggedIn;
-                const { authorizationCode } = await http.post("oauth/scan-login", params, {
+                const { authorizationCode } = await http.post("scan-login", params, {
                     cancelToken: this.source.token
                 });
 

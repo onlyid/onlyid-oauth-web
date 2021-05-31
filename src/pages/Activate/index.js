@@ -45,7 +45,7 @@ class Activate extends PureComponent {
             province,
             city,
             bio
-        } = await http.get(`oauth/users/2b-activated/${userId}`);
+        } = await http.get(`users/2b-activated/${userId}`);
 
         this.setState({ nickname, mobile, email, gender, bio });
 
@@ -100,7 +100,7 @@ class Activate extends PureComponent {
             values.birthDate = birthDate.format(DATE_FORMAT);
         }
 
-        const { authorizationCode } = await http.post("oauth/activate-account", values);
+        const { authorizationCode } = await http.post("activate-account", values);
 
         redirectCode(client, search, authorizationCode);
     };

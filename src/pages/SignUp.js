@@ -52,7 +52,7 @@ class SignUp extends PureComponent {
             return this.setState({ validation: { ...validation } });
         }
 
-        const { authorizationCode } = await http.post("oauth/sign-up", {
+        const { authorizationCode } = await http.post("sign-up", {
             filename,
             nickname,
             account,

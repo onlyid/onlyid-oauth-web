@@ -34,7 +34,7 @@ class AccountLayout extends PureComponent {
         const clientId = query["client-id"];
         if (!clientId) return this.disableNext("Client ID参数错误，请检查");
 
-        const client = await http.get("oauth/clients/" + clientId);
+        const client = await http.get("clients/" + clientId);
         if (!client) return this.disableNext("应用不存在或Client ID错误，请检查");
 
         dispatch({ type: "app", client });
@@ -64,7 +64,7 @@ class AccountLayout extends PureComponent {
                 return this.disableNext("Redirect URI参数错误，请检查");
         }
 
-        const mySessions = await http.get("oauth/my-sessions");
+        const mySessions = await http.get("my-sessions");
         if (mySessions.length) {
             dispatch({ type: "app", mySessions });
             history.replace("/account/choose" + location.search);

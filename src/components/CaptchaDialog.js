@@ -18,7 +18,7 @@ class CaptchaDialog extends PureComponent {
     initData = async () => {
         this.setState({ loading: true });
 
-        const data = await http.get("oauth/geetest/register");
+        const data = await http.get("geetest/register");
         const params = {
             gt: data.gt,
             challenge: data.challenge,
@@ -41,7 +41,7 @@ class CaptchaDialog extends PureComponent {
             } = this.props;
             const result = captchaObj.getValidate();
 
-            await http.post("oauth/geetest/validate", {
+            await http.post("geetest/validate", {
                 challenge: result.geetest_challenge,
                 validate: result.geetest_validate,
                 seccode: result.geetest_seccode,

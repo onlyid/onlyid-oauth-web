@@ -44,7 +44,7 @@ class Account extends PureComponent {
         if (!(await this.validateField())) return;
 
         const params = { account };
-        const data = await http.get("oauth/check-account", { params });
+        const data = await http.get("check-account", { params });
         let route;
         if (data) {
             const { userId, nickname, avatarUrl, activated } = data;

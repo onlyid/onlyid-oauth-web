@@ -96,7 +96,7 @@ class Choose extends PureComponent {
             dispatch({ type: "app", nickname, avatarUrl, account: mobile || email });
             history.push("/account/login" + location.search);
         } else {
-            const { authorizationCode } = await http.post("oauth/sso", {
+            const { authorizationCode } = await http.post("sso", {
                 userId: session.user.id,
                 clientId: client.id
             });
@@ -113,7 +113,7 @@ class Choose extends PureComponent {
             location
         } = this.props;
 
-        await http.delete(`oauth/my-sessions/${user.id}`);
+        await http.delete(`my-sessions/${user.id}`);
 
         dispatch({ type: "app", mySessions: mySessions.filter(s => s.user.id !== user.id) });
 
@@ -123,7 +123,7 @@ class Choose extends PureComponent {
     };
 
     logout = async session => {
-        await http.post(`oauth/my-sessions/${session.user.id}/invalidate`);
+        await http.post(`my-sessions/${session.user.id}/invalidate`);
         session.expireDate = moment().format(DATE_TIME_FORMAT);
         this.forceUpdate();
         eventEmitter.emit("app/openToast", { text: "已退出", timeout: 2000 });

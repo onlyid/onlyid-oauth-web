@@ -1,7 +1,7 @@
 import axios from "axios";
 import { eventEmitter } from "./utils";
 
-export const baseURL = "/api";
+export const baseURL = "/api/oauth";
 
 const instance = axios.create({ baseURL });
 
