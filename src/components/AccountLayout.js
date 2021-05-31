@@ -110,7 +110,7 @@ class AccountLayout extends PureComponent {
             <div className={styles.root}>
                 <Snackbar
                     open={toast.open}
-                    autoHideDuration={5000}
+                    autoHideDuration={toast.timeout}
                     onClose={this.closeToast}
                     anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 >
