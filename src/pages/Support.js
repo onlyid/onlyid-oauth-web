@@ -72,10 +72,17 @@ class Support extends PureComponent {
                     </div>
                 </main>
                 <footer>
-                    &copy; 2015 - {new Date().getFullYear()}
-                    <span style={{ marginLeft: 20 }}>深圳市友全科技有限公司</span>
+                    &copy; 2017 - {new Date().getFullYear()}
+                    <span style={{ marginLeft: 25 }}>爱达斯科技 IDaaS Tech</span>
                     <Hidden xsDown>
-                        <span style={{ marginLeft: 20 }}>All rights reserved.</span>
+                        <Link
+                            style={{ marginLeft: 25 }}
+                            href="http://beian.miit.gov.cn/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            粤ICP备16120960号
+                        </Link>
                     </Hidden>
                 </footer>
             </div>

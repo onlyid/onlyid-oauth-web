@@ -56,6 +56,14 @@
     text-align: center;
 }
 
+.root footer a {
+    color: #7f7f7f;
+}
+
+.root footer a:hover {
+    color: #3f51b5;
+}
+
 .contactBox {
     display: flex;
     justify-content: center;
