@@ -67,7 +67,7 @@ class Support extends PureComponent {
                     </div>
                     <div className={styles.backBox}>
                         <Button variant="contained" color="primary" onClick={this.back}>
-                            返回
+                            返 回
                         </Button>
                     </div>
                 </main>

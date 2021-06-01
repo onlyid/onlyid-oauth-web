@@ -28,7 +28,10 @@ class AccountLayout extends PureComponent {
     }
 
     initData = async () => {
-        const { location, dispatch, history } = this.props;
+        const { location, dispatch, history, app } = this.props;
+
+        // 如果已经初始化 则不再重新初始化
+        if (app.client.id) return this.setState({ loading: false });
 
         const query = qs.parse(location.search, { ignoreQueryPrefix: true });
         const clientId = query["client-id"];
