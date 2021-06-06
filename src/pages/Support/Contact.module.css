@@ -1,0 +1,52 @@
+.root ul {
+    margin: 1.4rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.root li {
+    font-size: 1.1rem;
+}
+
+.root li :global .material-icons {
+    font-size: 1.3rem;
+    margin-right: 0.5rem;
+    vertical-align: -25%;
+    color: #444;
+}
+
+.qq {
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+    color: #444;
+}
+
+.weChat {
+    font-size: 1.4rem;
+    cursor: default;
+    vertical-align: middle;
+    margin-left: 0.6rem;
+    color: #1edc5a;
+}
+
+.popper1 {
+    pointer-events: none;
+}
+
+.popper1 img {
+    height: 13.5rem;
+    display: block;
+}
+
+@media (max-width: 599px) {
+    .root li + li {
+        margin-top: 0.8rem;
+    }
+}
+
+@media (min-width: 600px) {
+    .root ul {
+        display: flex;
+        justify-content: space-between;
+    }
+}

@@ -1,0 +1,72 @@
+.root {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.root header {
+    text-align: center;
+    margin-top: 1.25rem;
+}
+
+.root h1 {
+    color: #3f51b5;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.tipBox {
+    margin-top: 2.75rem;
+    font-size: 1rem;
+}
+
+.tipBox p {
+    margin-top: 0;
+}
+
+.root h2 {
+    margin-top: 3rem;
+}
+
+.root :global .MuiAccordionSummary-content.Mui-expanded {
+    font-weight: 500;
+}
+
+.root :global .MuiAccordionDetails-root ul {
+    padding-left: 1rem;
+    list-style: circle;
+}
+
+.root :global .MuiAccordionDetails-root ul li + li {
+    margin-top: 0.5rem;
+}
+
+.root footer {
+    color: #7f7f7f;
+    font-size: 0.8125rem;
+    margin-top: 3.5rem;
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    .bg {
+        max-width: 1400px;
+        margin: 0 auto;
+
+        background-image: url("../../assets/support-bg.svg");
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .root header {
+        margin-top: 3rem;
+    }
+
+    .tipBox {
+        margin-top: 3.5rem;
+    }
+
+    .root h2 {
+        margin-top: 3.75rem;
+    }
+}

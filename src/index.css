@@ -1,15 +1,13 @@
 body {
-    background-color: #fdfdfd;
+    background-color: white;
+    font-size: 1rem;
 }
 
 @font-face {
-    font-family: "iconfont"; /* project id 545468 */
-    src: url("//at.alicdn.com/t/font_545468_l0yekts9wjb.eot");
-    src: url("//at.alicdn.com/t/font_545468_l0yekts9wjb.eot?#iefix") format("embedded-opentype"),
-        url("//at.alicdn.com/t/font_545468_l0yekts9wjb.woff2") format("woff2"),
-        url("//at.alicdn.com/t/font_545468_l0yekts9wjb.woff") format("woff"),
-        url("//at.alicdn.com/t/font_545468_l0yekts9wjb.ttf") format("truetype"),
-        url("//at.alicdn.com/t/font_545468_l0yekts9wjb.svg#iconfont") format("svg");
+    font-family: "iconfont"; /* Project id 545468 */
+    src: url("//at.alicdn.com/t/font_545468_uxcwqgt1mw.woff2?t=1622972228087") format("woff2"),
+        url("//at.alicdn.com/t/font_545468_uxcwqgt1mw.woff?t=1622972228087") format("woff"),
+        url("//at.alicdn.com/t/font_545468_uxcwqgt1mw.ttf?t=1622972228087") format("truetype");
 }
 
 .iconfont {
@@ -64,13 +62,6 @@ body {
     z-index: 1;
     background-color: black;
     opacity: 0.3;
-}
-
-.dialogCloseButton {
-    position: absolute;
-    right: 0.2rem;
-    top: 0.2rem;
-    color: #7f7f7f;
 }
 
 .geetest_logo {

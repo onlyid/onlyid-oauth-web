@@ -6,7 +6,7 @@ import styles from "./AccountLayout.module.css";
 import qs from "qs";
 import http from "my/http";
 import { connect } from "react-redux";
-import { Link as RouterLink, Route, Switch, withRouter } from "react-router-dom";
+import { Link as RRLink, Route, Switch, withRouter } from "react-router-dom";
 import logo from "assets/logo.svg";
 import Account from "pages/Account";
 import SignUp from "pages/SignUp";
@@ -106,7 +106,8 @@ class AccountLayout extends PureComponent {
         const { toast, loading } = this.state;
         const {
             match,
-            app: { client }
+            app: { client },
+            location
         } = this.props;
 
         return (
@@ -151,7 +152,7 @@ class AccountLayout extends PureComponent {
                     </div>
                 </div>
                 <footer>
-                    <Link component={RouterLink} to="/support">
+                    <Link component={RRLink} to={`/support${location.search}`} target="_blank">
                         需要帮助？
                     </Link>
                     <Divider style={{ marginTop: 20 }} />

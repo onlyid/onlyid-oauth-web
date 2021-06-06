@@ -3,12 +3,13 @@ import { eventEmitter, getRandomValue, redirectCode } from "my/utils";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./ScanLogin.module.css";
-import { Button, Dialog, DialogTitle, IconButton, DialogContent } from "@material-ui/core";
-import { Close, Android, Check } from "@material-ui/icons";
+import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core";
+import { Android, Check } from "@material-ui/icons";
 import icon from "assets/ic_launcher.png";
 import http from "my/http";
 import axios from "axios";
 import RememberMe from "components/RememberMe";
+import DialogClose from "components/DialogClose";
 
 class ScanLogin extends PureComponent {
     source;
@@ -149,9 +150,7 @@ class ScanLogin extends PureComponent {
                 <Dialog onClose={this.closeDialog} open={dialogVisible}>
                     <DialogTitle>
                         下载 APP
-                        <IconButton className="dialogCloseButton" onClick={this.closeDialog}>
-                            <Close />
-                        </IconButton>
+                        <DialogClose onClose={this.closeDialog} />
                     </DialogTitle>
                     <DialogContent>
                         <div className={styles.dialogContent1}>
