@@ -47,12 +47,11 @@ class Home extends PureComponent {
         const data = await http.get("check-account", { params });
         let route;
         if (data) {
-            const { userId, nickname, avatarUrl, activated } = data;
+            const { nickname, avatarUrl, activated } = data;
             if (activated) {
-                dispatch({ type: "app", userId, nickname, avatarUrl });
+                dispatch({ type: "app", nickname, avatarUrl });
                 route = "login";
             } else {
-                dispatch({ type: "app", userId });
                 route = "activate";
             }
         } else {

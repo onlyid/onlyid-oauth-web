@@ -10,6 +10,7 @@ import moment from "moment";
 
 class Activate extends PureComponent {
     state = {
+        userId: null,
         filename: null,
         nickname: null,
         mobile: null,
@@ -31,11 +32,12 @@ class Activate extends PureComponent {
 
     initData = async () => {
         const {
-            app: { userId },
+            app: { account },
             dispatch
         } = this.props;
 
         const {
+            id,
             avatarUrl,
             nickname,
             mobile,
@@ -45,9 +47,9 @@ class Activate extends PureComponent {
             province,
             city,
             bio
-        } = await http.get(`users/2b-activated/${userId}`);
+        } = await http.get(`users/2b-activated/${account}`);
 
-        this.setState({ nickname, mobile, email, gender, bio });
+        this.setState({ userId: id, nickname, mobile, email, gender, bio });
 
         if (province) this.setState({ region: [province, city] });
 
@@ -58,6 +60,7 @@ class Activate extends PureComponent {
 
     onSubmit = async () => {
         const {
+            userId,
             filename,
             nickname,
             mobile,
@@ -72,7 +75,7 @@ class Activate extends PureComponent {
             keepLoggedIn
         } = this.state;
         const {
-            app: { client, userId },
+            app: { client },
             location: { search }
         } = this.props;
 
