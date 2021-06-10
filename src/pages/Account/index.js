@@ -64,6 +64,8 @@ class Account extends PureComponent {
         if (mySessions.length) {
             dispatch({ type: "app", mySessions });
             history.replace("/account/select" + location.search);
+        } else {
+            history.replace("/account" + location.search);
         }
 
         this.setState({ loading: false });
