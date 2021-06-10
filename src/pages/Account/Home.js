@@ -88,7 +88,8 @@ class Home extends PureComponent {
     render() {
         const { validation } = this.state;
         const {
-            app: { client, account, nextDisabled }
+            app: { client, account },
+            nextDisabled
         } = this.props;
 
         return (

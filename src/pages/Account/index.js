@@ -17,7 +17,8 @@ import Activate from "./Activate";
 
 class Account extends PureComponent {
     state = {
-        loading: true
+        loading: true,
+        nextDisabled: false
     };
 
     componentDidMount() {
@@ -72,16 +73,15 @@ class Account extends PureComponent {
     };
 
     disableNext = text => {
-        const { dispatch } = this.props;
+        const { history, location } = this.props;
 
         eventEmitter.emit("app/openToast", { text, severity: "error" });
-        dispatch({ type: "app", nextDisabled: true });
-
-        this.setState({ loading: false });
+        history.replace("/account" + location.search);
+        this.setState({ loading: false, nextDisabled: true });
     };
 
     render() {
-        const { loading } = this.state;
+        const { loading, nextDisabled } = this.state;
         const {
             match,
             app: { client },
@@ -113,7 +113,7 @@ class Account extends PureComponent {
                                     <Activate />
                                 </Route>
                                 <Route path={match.path}>
-                                    <Home />
+                                    <Home nextDisabled={nextDisabled} />
                                 </Route>
                             </Switch>
                         )}

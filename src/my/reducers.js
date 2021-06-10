@@ -6,7 +6,6 @@ const defaultApp = {
     userId: null,
     nickname: null,
     avatarUrl: null,
-    nextDisabled: false,
     mySessions: []
 };
 
