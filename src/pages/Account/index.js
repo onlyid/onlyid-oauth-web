@@ -54,10 +54,10 @@ class Account extends PureComponent {
             }
         } else {
             if (!client.redirectUris.length)
-                return this.disableNext("Redirect URI未配置，请登录控制台配置");
+                return this.disableNext("回调URI未配置，请到控制台配置");
 
             if (!client.redirectUris.includes(query["redirect-uri"]))
-                return this.disableNext("Redirect URI参数错误，请检查");
+                return this.disableNext("回调URI参数错误，请检查");
         }
 
         const mySessions = await http.get("my-sessions");
