@@ -2,21 +2,21 @@ import React, { PureComponent } from "react";
 import { Alert } from "@material-ui/lab";
 import { Divider, Link, Snackbar } from "@material-ui/core";
 import { eventEmitter } from "my/utils";
-import styles from "./AccountLayout.module.css";
+import styles from "./index.module.css";
 import qs from "qs";
 import http from "my/http";
 import { connect } from "react-redux";
 import { Link as RRLink, Route, Switch, withRouter } from "react-router-dom";
 import logo from "assets/logo.svg";
-import Account from "pages/Account";
-import SignUp from "pages/SignUp";
-import Login from "pages/Login";
-import ResetPassword from "pages/ResetPassword";
-import ScanLogin from "pages/ScanLogin";
-import Select from "pages/Select";
-import Activate from "pages/Activate";
+import Home from "./Home";
+import SignUp from "./SignUp";
+import Login from "./Login";
+import ResetPassword from "./ResetPassword";
+import ScanLogin from "./ScanLogin";
+import Select from "./Select";
+import Activate from "./Activate";
 
-class AccountLayout extends PureComponent {
+class Account extends PureComponent {
     state = {
         loading: true,
         toast: { open: false, text: "", severity: "", timeout: 0 }
@@ -145,7 +145,7 @@ class AccountLayout extends PureComponent {
                                     <Activate />
                                 </Route>
                                 <Route path={match.path}>
-                                    <Account />
+                                    <Home />
                                 </Route>
                             </Switch>
                         )}
@@ -173,4 +173,4 @@ class AccountLayout extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(AccountLayout));
+export default connect(({ app }) => ({ app }))(withRouter(Account));

@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
 import qs from "qs";
 
-const AccountLayout = React.lazy(() => import("components/AccountLayout"));
+const Account = React.lazy(() => import("pages/Account"));
 const Support = React.lazy(() => import("pages/Support"));
 const DownloadApp = React.lazy(() => import("pages/DownloadApp"));
 
@@ -66,7 +66,7 @@ class App extends PureComponent {
                             <DownloadApp />
                         </Route>
                         <Route path="/account">
-                            <AccountLayout />
+                            <Account />
                         </Route>
                         <Route
                             path="/"

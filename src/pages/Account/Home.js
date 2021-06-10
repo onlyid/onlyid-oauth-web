@@ -20,7 +20,7 @@ const RULES = {
     ]
 };
 
-class Account extends PureComponent {
+class Home extends PureComponent {
     state = {
         validation: {}
     };
@@ -125,4 +125,4 @@ class Account extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(Account));
+export default connect(({ app }) => ({ app }))(withRouter(Home));
