@@ -13,7 +13,7 @@ import SignUp from "pages/SignUp";
 import Login from "pages/Login";
 import ResetPassword from "pages/ResetPassword";
 import ScanLogin from "pages/ScanLogin";
-import Choose from "pages/Choose";
+import Select from "pages/Select";
 import Activate from "pages/Activate";
 
 class AccountLayout extends PureComponent {
@@ -70,7 +70,7 @@ class AccountLayout extends PureComponent {
         const mySessions = await http.get("my-sessions");
         if (mySessions.length) {
             dispatch({ type: "app", mySessions });
-            history.replace("/account/choose" + location.search);
+            history.replace("/account/select" + location.search);
         } else {
             history.replace("/account" + location.search);
         }
@@ -138,8 +138,8 @@ class AccountLayout extends PureComponent {
                                 <Route path={`${match.path}/scan-login`}>
                                     <ScanLogin />
                                 </Route>
-                                <Route path={`${match.path}/choose`}>
-                                    <Choose />
+                                <Route path={`${match.path}/select`}>
+                                    <Select />
                                 </Route>
                                 <Route path={`${match.path}/activate`}>
                                     <Activate />

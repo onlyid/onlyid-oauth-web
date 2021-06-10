@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import IconAndAvatar from "components/IconAndAvatar";
 import { connect } from "react-redux";
-import styles from "./Choose.module.css";
+import styles from "./Select.module.css";
 import { withRouter } from "react-router-dom";
 import { Add, MoreVert } from "@material-ui/icons";
 import { IconButton, ListItemText, Menu, MenuItem } from "@material-ui/core";
@@ -73,7 +73,7 @@ class Item extends PureComponent {
     }
 }
 
-class Choose extends PureComponent {
+class Select extends PureComponent {
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch({ type: "app", avatarUrl: null, nickname: null });
@@ -166,4 +166,4 @@ class Choose extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(Choose));
+export default connect(({ app }) => ({ app }))(withRouter(Select));
