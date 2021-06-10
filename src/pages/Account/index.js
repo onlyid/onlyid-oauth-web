@@ -31,11 +31,7 @@ class Account extends PureComponent {
         if (app.client.id) return this.setState({ loading: false });
 
         const query = qs.parse(location.search, { ignoreQueryPrefix: true });
-        const clientId = query["client-id"];
-        if (!clientId) return this.disableNext("Client ID参数错误，请检查");
-
-        const client = await http.get("clients/" + clientId);
-        if (!client) return this.disableNext("应用不存在或Client ID错误，请检查");
+        const client = await http.get("clients/" + query["client-id"]);
 
         dispatch({ type: "app", client });
 
@@ -68,8 +64,6 @@ class Account extends PureComponent {
         if (mySessions.length) {
             dispatch({ type: "app", mySessions });
             history.replace("/account/select" + location.search);
-        } else {
-            history.replace("/account" + location.search);
         }
 
         this.setState({ loading: false });
