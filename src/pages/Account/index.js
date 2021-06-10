@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
-import { Alert } from "@material-ui/lab";
-import { Divider, Link, Snackbar } from "@material-ui/core";
+import { Divider, Link } from "@material-ui/core";
 import { eventEmitter } from "my/utils";
 import styles from "./index.module.css";
 import qs from "qs";
@@ -18,13 +17,11 @@ import Activate from "./Activate";
 
 class Account extends PureComponent {
     state = {
-        loading: true,
-        toast: { open: false, text: "", severity: "", timeout: 0 }
+        loading: true
     };
 
     componentDidMount() {
         this.initData();
-        eventEmitter.on("app/openToast", this.openToast);
     }
 
     initData = async () => {
@@ -81,29 +78,14 @@ class Account extends PureComponent {
     disableNext = text => {
         const { dispatch } = this.props;
 
-        this.openToast({ text, severity: "error" });
+        eventEmitter.emit("app/openToast", { text, severity: "error" });
         dispatch({ type: "app", nextDisabled: true });
 
         this.setState({ loading: false });
     };
 
-    openToast = async toast => {
-        const {
-            toast: { open }
-        } = this.state;
-        if (open) await this.closeToast();
-
-        this.setState({ toast: { open: true, severity: "success", timeout: 4000, ...toast } });
-    };
-
-    closeToast = (_, reason) => {
-        if (reason === "clickaway") return;
-
-        this.setState(({ toast }) => ({ toast: { ...toast, open: false } }));
-    };
-
     render() {
-        const { toast, loading } = this.state;
+        const { loading } = this.state;
         const {
             match,
             app: { client },
@@ -112,16 +94,6 @@ class Account extends PureComponent {
 
         return (
             <div className={styles.root}>
-                <Snackbar
-                    open={toast.open}
-                    autoHideDuration={toast.timeout}
-                    onClose={this.closeToast}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                >
-                    <Alert elevation={1} severity={toast.severity}>
-                        {toast.text}
-                    </Alert>
-                </Snackbar>
                 <div className={styles.cardWrapper}>
                     <div className={styles.card}>
                         {!loading && (

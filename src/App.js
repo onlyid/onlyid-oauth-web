@@ -1,7 +1,9 @@
 import React, { Suspense, PureComponent } from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Snackbar } from "@material-ui/core";
 import qs from "qs";
+import { Alert } from "@material-ui/lab";
+import { eventEmitter } from "./my/utils";
 
 const Account = React.lazy(() => import("pages/Account"));
 const Support = React.lazy(() => import("pages/Support"));
@@ -9,6 +11,9 @@ const DownloadApp = React.lazy(() => import("pages/DownloadApp"));
 
 class App extends PureComponent {
     unlisten = null;
+    state = {
+        toast: { open: false, text: "", severity: "", timeout: 0 }
+    };
 
     componentDidMount() {
         const { search } = window.location;
@@ -17,6 +22,12 @@ class App extends PureComponent {
         if (query.view === "zoomed") import("assets/view-zoomed.css");
 
         this.listenHistory();
+
+        eventEmitter.on("app/openToast", this.openToast);
+    }
+
+    componentWillUnmount() {
+        this.unlisten();
     }
 
     listenHistory = () => {
@@ -40,11 +51,23 @@ class App extends PureComponent {
         });
     };
 
-    componentWillUnmount() {
-        this.unlisten();
-    }
+    openToast = async toast => {
+        const {
+            toast: { open }
+        } = this.state;
+        if (open) await this.closeToast();
+
+        this.setState({ toast: { open: true, severity: "success", timeout: 4000, ...toast } });
+    };
+
+    closeToast = (_, reason) => {
+        if (reason === "clickaway") return;
+
+        this.setState(({ toast }) => ({ toast: { ...toast, open: false } }));
+    };
 
     render() {
+        const { toast } = this.state;
         const { search } = window.location;
         const query = qs.parse(search, { ignoreQueryPrefix: true });
 
@@ -81,6 +104,16 @@ class App extends PureComponent {
                         />
                     </Switch>
                 </Suspense>
+                <Snackbar
+                    open={toast.open}
+                    autoHideDuration={toast.timeout}
+                    onClose={this.closeToast}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                    <Alert elevation={1} severity={toast.severity}>
+                        {toast.text}
+                    </Alert>
+                </Snackbar>
             </>
         );
     }
