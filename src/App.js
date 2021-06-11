@@ -1,7 +1,6 @@
 import React, { Suspense, PureComponent } from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { CircularProgress, Snackbar } from "@material-ui/core";
-import qs from "qs";
 import { Alert } from "@material-ui/lab";
 import { eventEmitter } from "./my/utils";
 
@@ -16,11 +15,6 @@ class App extends PureComponent {
     };
 
     componentDidMount() {
-        const { search } = window.location;
-        const query = qs.parse(search, { ignoreQueryPrefix: true });
-        // eslint-disable-next-line no-unused-expressions
-        if (query.view === "zoomed") import("assets/view-zoomed.css");
-
         this.listenHistory();
 
         eventEmitter.on("app/openToast", this.openToast);
@@ -68,8 +62,6 @@ class App extends PureComponent {
 
     render() {
         const { toast } = this.state;
-        const { search } = window.location;
-        const query = qs.parse(search, { ignoreQueryPrefix: true });
 
         const loading = (
             <div style={{ paddingTop: "40vh", textAlign: "center" }}>
@@ -79,7 +71,6 @@ class App extends PureComponent {
 
         return (
             <>
-                {query.theme === "dark" && <div className="themeDark" />}
                 <Suspense fallback={loading}>
                     <Switch>
                         <Route path="/support">
