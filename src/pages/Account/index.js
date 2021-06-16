@@ -14,12 +14,21 @@ import ResetPassword from "./ResetPassword";
 import ScanLogin from "./ScanLogin";
 import Select from "./Select";
 import Activate from "./Activate";
+import _ from "lodash";
+import classNames from "classnames";
 
 class Account extends PureComponent {
+    ref1;
+
     state = {
         loading: true,
         nextDisabled: false
     };
+
+    constructor(props) {
+        super(props);
+        this.ref1 = React.createRef();
+    }
 
     componentDidMount() {
         this.initData();
@@ -32,20 +41,21 @@ class Account extends PureComponent {
         if (app.client.id) return this.setState({ loading: false });
 
         const query = qs.parse(location.search, { ignoreQueryPrefix: true });
-        const client = await http.get("clients/" + query["client-id"]);
-
-        dispatch({ type: "app", client });
+        const clientId = query["client-id"];
+        const client = await http.get("clients/" + clientId);
+        const oauthConfig = await http.get("clients/" + clientId + "/oauth-config");
+        dispatch({ type: "app", client, oauthConfig });
 
         if (client.type === "APP") {
             if (window.android) {
-                if (client.packageName !== query["package-name"])
+                if (oauthConfig.packageName !== query["package-name"])
                     return this.disableNext("应用包名错误，请检查");
 
                 window.android.setTitle("登录" + client.name);
             }
             // ios
             else {
-                if (client.bundleId !== query["bundle-id"])
+                if (oauthConfig.bundleId !== query["bundle-id"])
                     return this.disableNext("Bundle ID错误，请检查");
 
                 window.webkit.messageHandlers.ios.postMessage({
@@ -54,11 +64,17 @@ class Account extends PureComponent {
                 });
             }
         } else {
-            if (!client.redirectUris.length)
+            if (!oauthConfig.redirectUris.length)
                 return this.disableNext("回调URI未配置，请到控制台配置");
 
-            if (!client.redirectUris.includes(query["redirect-uri"]))
+            if (!oauthConfig.redirectUris.includes(query["redirect-uri"]))
                 return this.disableNext("回调URI参数错误，请检查");
+        }
+
+        // 注入自定义背景
+        for (const item of oauthConfig.background) {
+            const array = item.split(/:(.+)/);
+            this.ref1.current.style[_.camelCase(array[0])] = array[1];
         }
 
         const mySessions = await http.get("my-sessions");
@@ -84,12 +100,17 @@ class Account extends PureComponent {
         const { loading, nextDisabled } = this.state;
         const {
             match,
-            app: { client },
+            app: { client, oauthConfig },
             location
         } = this.props;
 
         return (
-            <div className={styles.root}>
+            <div
+                className={classNames(styles.root, {
+                    [styles.bg]: !oauthConfig.background.length && !loading
+                })}
+                ref={this.ref1}
+            >
                 <div className={styles.cardWrapper}>
                     <div className={styles.card}>
                         {!loading && (

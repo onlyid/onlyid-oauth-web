@@ -29,7 +29,7 @@
 }
 
 @media (min-width: 600px) {
-    .root {
+    .root.bg {
         background-image: url("../../assets/mask.png");
         background-size: 3000px;
         background-position: center top;
