@@ -48,4 +48,9 @@
         background-color: white;
         border-radius: 4px;
     }
+
+    .root footer {
+        background-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 0 20px 25px rgba(255, 255, 255, 0.7);
+    }
 }
