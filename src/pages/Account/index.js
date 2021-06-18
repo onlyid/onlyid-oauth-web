@@ -12,7 +12,7 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 import ResetPassword from "./ResetPassword";
 import ScanLogin from "./ScanLogin";
-import Select from "./Select";
+import Choose from "./Choose";
 import Activate from "./Activate";
 import _ from "lodash";
 import classNames from "classnames";
@@ -80,7 +80,7 @@ class Account extends PureComponent {
         const mySessions = await http.get("my-sessions");
         if (mySessions.length) {
             dispatch({ type: "app", mySessions });
-            history.replace("/account/select" + location.search);
+            history.replace("/account/choose" + location.search);
         } else {
             history.replace("/account" + location.search);
         }
@@ -127,8 +127,8 @@ class Account extends PureComponent {
                                 <Route path={`${match.path}/scan-login`}>
                                     <ScanLogin />
                                 </Route>
-                                <Route path={`${match.path}/select`}>
-                                    <Select />
+                                <Route path={`${match.path}/choose`}>
+                                    <Choose />
                                 </Route>
                                 <Route path={`${match.path}/activate`}>
                                     <Activate />
