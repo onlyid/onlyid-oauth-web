@@ -22,8 +22,8 @@ class OtpInput extends PureComponent {
     };
 
     sendOtp = async () => {
-        const { recipient, clientId, updateField } = this.props;
-        const data = await http.post("send-otp", { recipient, clientId, updateField });
+        const { recipient, clientId } = this.props;
+        const data = await http.post("send-otp", { recipient, clientId });
 
         if (data && data.requireCaptcha) {
             this.toggleCaptcha();
@@ -52,7 +52,6 @@ class OtpInput extends PureComponent {
 
         delete restProps.recipient;
         delete restProps.clientId;
-        delete restProps.updateField;
 
         return (
             <FormControl variant="outlined" fullWidth error={error}>
