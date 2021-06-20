@@ -30,7 +30,8 @@ class SignUp extends PureComponent {
         password: null,
         nickname: null,
         filename: null,
-        keepLoggedIn: false
+        keepLoggedIn: false,
+        avatarRequiredVisible: false
     };
 
     onSubmit = async e => {
@@ -41,6 +42,11 @@ class SignUp extends PureComponent {
             app: { client, account },
             location: { search }
         } = this.props;
+
+        if (!filename) {
+            this.setState({ avatarRequiredVisible: true });
+            return;
+        }
 
         // 校验表单
         try {
@@ -86,7 +92,7 @@ class SignUp extends PureComponent {
     };
 
     onUpload = filename => {
-        this.setState({ filename });
+        this.setState({ filename, avatarRequiredVisible: false });
     };
 
     onCheckBoxChange = event => {
@@ -97,7 +103,7 @@ class SignUp extends PureComponent {
         const {
             app: { account, client }
         } = this.props;
-        const { validation, keepLoggedIn } = this.state;
+        const { validation, keepLoggedIn, avatarRequiredVisible } = this.state;
 
         return (
             <div className={styles.root}>
@@ -108,7 +114,7 @@ class SignUp extends PureComponent {
                         新用户请先完成账号注册。
                     </p>
                 </Alert>
-                <AvatarUpload onChange={this.onUpload} />
+                <AvatarUpload onChange={this.onUpload} requiredVisible={avatarRequiredVisible} />
                 <div className="accountBox">
                     <Button
                         startIcon={<Edit />}

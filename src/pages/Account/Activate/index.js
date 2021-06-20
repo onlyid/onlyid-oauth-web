@@ -122,6 +122,7 @@ class Activate extends PureComponent {
 
     render() {
         const {
+            filename,
             nickname,
             mobile,
             email,
@@ -138,6 +139,7 @@ class Activate extends PureComponent {
 
         return step === 1 ? (
             <Review
+                filename={filename}
                 nickname={nickname}
                 mobile={mobile}
                 email={email}

@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
 import styles from "./AvatarUpload.module.css";
-import defaultAvatar from "assets/default-avatar.svg";
 import http from "my/http";
 import { IMG_UPLOAD_TIP } from "my/constants";
 import { connect } from "react-redux";
+import classNames from "classnames";
 
 class AvatarUpload extends PureComponent {
     onChange = async e => {
@@ -38,7 +38,8 @@ class AvatarUpload extends PureComponent {
 
     render() {
         const {
-            app: { avatarUrl }
+            app: { avatarUrl },
+            requiredVisible
         } = this.props;
 
         return (
@@ -51,9 +52,17 @@ class AvatarUpload extends PureComponent {
                     onChange={this.onChange}
                 />
                 <label htmlFor="upload-file">
-                    <img src={avatarUrl || defaultAvatar} alt="avatar" width="100" height="100" />
+                    {avatarUrl ? (
+                        <img src={avatarUrl} alt="avatar" />
+                    ) : (
+                        <span className="material-icons">person</span>
+                    )}
                     <br />
-                    <span className={styles.title}>上传头像</span>
+                    <span
+                        className={classNames(styles.title, { [styles.required]: requiredVisible })}
+                    >
+                        {requiredVisible && "请"}上传头像
+                    </span>
                 </label>
                 <p className="tip">{IMG_UPLOAD_TIP}</p>
             </div>

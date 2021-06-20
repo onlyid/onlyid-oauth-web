@@ -39,12 +39,27 @@ class Review extends PureComponent {
             mobile: {},
             email: {},
             bio: {}
-        }
+        },
+        avatarRequiredVisible: false
     };
 
     next = async () => {
-        const { dispatch, nickname, mobile, email, bio, onNext } = this.props;
+        const {
+            dispatch,
+            app: { avatarUrl },
+            filename,
+            nickname,
+            mobile,
+            email,
+            bio,
+            onNext
+        } = this.props;
         const { validation } = this.state;
+
+        if (!filename && !avatarUrl) {
+            this.setState({ avatarRequiredVisible: true });
+            return;
+        }
 
         try {
             const values = { nickname, mobile, email, bio };
@@ -82,6 +97,13 @@ class Review extends PureComponent {
         history.goBack();
     };
 
+    onUpload = filename => {
+        const { onChange } = this.props;
+
+        onChange("filename", filename);
+        this.setState({ avatarRequiredVisible: false });
+    };
+
     render() {
         const {
             app: { account, client },
@@ -94,7 +116,7 @@ class Review extends PureComponent {
             region,
             bio
         } = this.props;
-        const { validation } = this.state;
+        const { validation, avatarRequiredVisible } = this.state;
 
         return (
             <div>
@@ -105,7 +127,7 @@ class Review extends PureComponent {
                         你的账号已导入，设置密码即可使用。
                     </p>
                 </Alert>
-                <AvatarUpload onChange={value => onChange("filename", value)} />
+                <AvatarUpload onChange={this.onUpload} requiredVisible={avatarRequiredVisible} />
                 <form className={styles.form1}>
                     <FormControl fullWidth error={validation.nickname.error}>
                         <Input
