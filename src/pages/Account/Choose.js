@@ -144,7 +144,7 @@ class Choose extends PureComponent {
             <div>
                 <IconAndAvatar />
                 <p className="tip" style={{ marginTop: "1.9rem" }}>
-                    正在登录「{client.name}」，选择一个账号继续。
+                    选择一个账号登录「{client.name}」
                 </p>
                 <div className={styles.listBox}>
                     {mySessions.map(s => (
