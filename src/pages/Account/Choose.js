@@ -43,7 +43,7 @@ class Item extends PureComponent {
                     onMouseEnter={() => this.setState({ isHover: true })}
                     onMouseLeave={() => this.setState({ isHover: false })}
                 >
-                    <img src={user.avatarUrl} alt="icon" className={styles.avatar} />
+                    <img src={user.avatarUrl} alt="avatar" className={styles.avatar} />
                     <div className={styles.box1}>
                         <p className={styles.nickname}>{user.nickname}</p>
                         <p className={styles.account}>{user.mobile || user.email}</p>
@@ -141,11 +141,9 @@ class Choose extends PureComponent {
         } = this.props;
 
         return (
-            <div>
+            <div className={styles.root}>
                 <IconAndAvatar />
-                <p className="tip" style={{ marginTop: "1.9rem" }}>
-                    选择一个账号登录「{client.name}」
-                </p>
+                <p className="tip">选择一个账号登录「{client.name}」</p>
                 <div className={styles.listBox}>
                     {mySessions.map(s => (
                         <Item
