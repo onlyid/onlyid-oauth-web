@@ -75,7 +75,7 @@ class Activate extends PureComponent {
             keepLoggedIn
         } = this.state;
         const {
-            app: { client },
+            app: { client, account },
             location: { search }
         } = this.props;
 
@@ -91,7 +91,8 @@ class Activate extends PureComponent {
             otpEmail,
             password,
             clientId: client.id,
-            keepLoggedIn
+            keepLoggedIn,
+            account
         };
 
         if (region) {
