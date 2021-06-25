@@ -3,12 +3,18 @@ import { eventEmitter, getRandomValue, redirectCode } from "my/utils";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./ScanLogin.module.css";
-import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core";
+import {
+    Button,
+    Checkbox,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    FormControlLabel
+} from "@material-ui/core";
 import { Android, Check } from "@material-ui/icons";
 import icon from "assets/ic_launcher.png";
 import http from "my/http";
 import axios from "axios";
-import RememberMe from "components/RememberMe";
 import DialogClose from "components/DialogClose";
 
 class ScanLogin extends PureComponent {
@@ -130,7 +136,16 @@ class ScanLogin extends PureComponent {
                 <div ref={this.ref1} className={styles.qrCodeBox1} />
                 <p className="tip">用 唯ID APP 扫码登录「{client.name}」</p>
                 <div className={styles.keepLoggedInBox}>
-                    <RememberMe onChange={this.onCheckBoxChange} checked={keepLoggedIn} />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                color="primary"
+                                onChange={this.onCheckBoxChange}
+                                checked={keepLoggedIn}
+                            />
+                        }
+                        label="保持登录一个月"
+                    />
                 </div>
                 <div className={styles.downloadButtonBox}>
                     <Button

@@ -47,7 +47,7 @@ class Activate extends PureComponent {
             province,
             city,
             bio
-        } = await http.get("users/2b-activated", { params: { account } });
+        } = await http.get("users", { params: { account } });
 
         this.setState({ userId: id, nickname, mobile, email, gender, bio });
 

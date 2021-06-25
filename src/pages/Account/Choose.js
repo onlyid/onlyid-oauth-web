@@ -42,7 +42,7 @@ class Item extends PureComponent {
                     <img src={user.avatarUrl} alt="avatar" className={styles.avatar} />
                     <div className={styles.box1}>
                         <p className={styles.nickname}>{user.nickname}</p>
-                        <p className={styles.account}>{user.mobile || user.email}</p>
+                        <p className={styles.account}>{user[user.sessionExtra.accountType]}</p>
                     </div>
                     <p className={styles.loginStatus}>{!loggedIn && "未登录"}</p>
                 </div>
