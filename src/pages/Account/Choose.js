@@ -34,10 +34,7 @@ class Item extends PureComponent {
         return (
             <div className={classNames(styles.item, { [styles.hover]: isHover })}>
                 <div
-                    className={classNames(
-                        loggedIn ? styles.loggedIn : styles.notLoggedIn,
-                        styles.mainBox
-                    )}
+                    className={styles.mainBox}
                     onClick={onClick}
                     onMouseEnter={() => this.setState({ isHover: true })}
                     onMouseLeave={() => this.setState({ isHover: false })}
@@ -47,7 +44,7 @@ class Item extends PureComponent {
                         <p className={styles.nickname}>{user.nickname}</p>
                         <p className={styles.account}>{user.mobile || user.email}</p>
                     </div>
-                    <p className={styles.loginStatus}>{loggedIn ? "已登录" : "未登录"}</p>
+                    <p className={styles.loginStatus}>{!loggedIn && "未登录"}</p>
                 </div>
                 <IconButton onClick={this.openMenu}>
                     <MoreVert />

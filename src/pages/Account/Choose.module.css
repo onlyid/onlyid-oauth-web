@@ -32,15 +32,6 @@
 
 .loginStatus {
     color: #7f7f7f;
-    visibility: hidden;
-}
-
-.mainBox:hover .loginStatus {
-    visibility: visible;
-}
-
-.mainBox.loggedIn .loginStatus {
-    color: #409eff;
 }
 
 .avatar {
@@ -52,10 +43,6 @@
 .box1 {
     flex-grow: 1;
     margin-left: 1.2rem;
-}
-
-.mainBox.loggedIn .nickname {
-    color: #409eff;
 }
 
 .nickname {
