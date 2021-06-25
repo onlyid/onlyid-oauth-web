@@ -27,10 +27,9 @@ class Item extends PureComponent {
     };
 
     render() {
-        const { session, onDelete, onLogout, onClick } = this.props;
+        const { user, onDelete, onLogout, onClick } = this.props;
         const { anchorEl, isHover } = this.state;
-        const { user } = session;
-        const loggedIn = moment(session.expireDate) > moment();
+        const loggedIn = moment(user.expireDate) > moment();
 
         return (
             <div className={classNames(styles.item, { [styles.hover]: isHover })}>
@@ -78,7 +77,8 @@ class Choose extends PureComponent {
         const { dispatch } = this.props;
         dispatch({ type: "app", avatarUrl: null, nickname: null });
     }
-    onClick = async session => {
+
+    onClick = async user => {
         const {
             app: { client },
             history,
@@ -89,15 +89,13 @@ class Choose extends PureComponent {
         // +5s是防止用户过期的那一刻点 后台报错
         const now = moment();
         now.add(5, "seconds");
-        if (moment(session.expireDate) < now) {
-            const {
-                user: { nickname, avatarUrl, mobile, email }
-            } = session;
+        if (moment(user.expireDate) < now) {
+            const { nickname, avatarUrl, mobile, email } = user;
             dispatch({ type: "app", nickname, avatarUrl, account: mobile || email });
             history.push("/account/login" + location.search);
         } else {
             const { authorizationCode } = await http.post("sso", {
-                userId: session.user.id,
+                userId: user.id,
                 clientId: client.id
             });
 
@@ -105,27 +103,24 @@ class Choose extends PureComponent {
         }
     };
 
-    delete1 = async ({ user }) => {
-        const {
-            app: { mySessions },
-            dispatch,
-            history,
-            location
-        } = this.props;
+    delete1 = async user => {
+        const { users, onDelete, history, location } = this.props;
 
-        await http.delete(`my-sessions/${user.id}`);
+        await http.delete(`users/${user.id}/sessions`);
 
-        dispatch({ type: "app", mySessions: mySessions.filter(s => s.user.id !== user.id) });
+        onDelete(user.id);
 
-        if (mySessions.length === 1) history.replace("/account" + location.search);
+        if (users.length === 1) history.replace("/account" + location.search);
 
         eventEmitter.emit("app/openToast", { text: "已删除", timeout: 2000 });
     };
 
-    logout = async session => {
-        await http.post(`my-sessions/${session.user.id}/invalidate`);
-        session.expireDate = moment().format(DATE_TIME_FORMAT);
+    logout = async user => {
+        await http.post(`users/${user.id}/logout`);
+
+        user.expireDate = moment().format(DATE_TIME_FORMAT);
         this.forceUpdate();
+
         eventEmitter.emit("app/openToast", { text: "已退出", timeout: 2000 });
     };
 
@@ -137,7 +132,8 @@ class Choose extends PureComponent {
 
     render() {
         const {
-            app: { client, mySessions }
+            app: { client },
+            users
         } = this.props;
 
         return (
@@ -145,13 +141,13 @@ class Choose extends PureComponent {
                 <IconAndAvatar />
                 <p className="tip">选择一个账号登录「{client.name}」</p>
                 <div className={styles.listBox}>
-                    {mySessions.map(s => (
+                    {users.map(user => (
                         <Item
-                            session={s}
-                            key={s.user.id}
-                            onClick={() => this.onClick(s)}
-                            onDelete={() => this.delete1(s)}
-                            onLogout={() => this.logout(s)}
+                            user={user}
+                            key={user.id}
+                            onClick={() => this.onClick(user)}
+                            onDelete={() => this.delete1(user)}
+                            onLogout={() => this.logout(user)}
                         />
                     ))}
                 </div>

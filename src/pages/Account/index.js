@@ -22,7 +22,8 @@ class Account extends PureComponent {
 
     state = {
         loading: true,
-        nextDisabled: false
+        nextDisabled: false,
+        users: []
     };
 
     constructor(props) {
@@ -77,9 +78,9 @@ class Account extends PureComponent {
             this.ref1.current.style[_.camelCase(array[0])] = array[1];
         }
 
-        const mySessions = await http.get("my-sessions");
-        if (mySessions.length) {
-            dispatch({ type: "app", mySessions });
+        const users = await http.get("users/by-session");
+        if (users.length) {
+            this.setState({ users });
             history.replace("/account/choose" + location.search);
         } else {
             history.replace("/account" + location.search);
@@ -96,8 +97,12 @@ class Account extends PureComponent {
         this.setState({ loading: false, nextDisabled: true });
     };
 
+    onDelete = userId => {
+        this.setState(({ users }) => ({ users: users.filter(u => u.id !== userId) }));
+    };
+
     render() {
-        const { loading, nextDisabled } = this.state;
+        const { loading, nextDisabled, users } = this.state;
         const {
             match,
             app: { client, oauthConfig },
@@ -128,7 +133,7 @@ class Account extends PureComponent {
                                     <ScanLogin />
                                 </Route>
                                 <Route path={`${match.path}/choose`}>
-                                    <Choose />
+                                    <Choose users={users} onDelete={this.onDelete} />
                                 </Route>
                                 <Route path={`${match.path}/activate`}>
                                     <Activate />

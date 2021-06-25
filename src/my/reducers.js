@@ -5,8 +5,7 @@ const defaultApp = {
     client: {},
     oauthConfig: { background: [] },
     nickname: null,
-    avatarUrl: null,
-    mySessions: []
+    avatarUrl: null
 };
 
 function app(state = defaultApp, { type, ...rest }) {
