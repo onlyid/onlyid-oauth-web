@@ -18,6 +18,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* reset mui start */
+.MuiFormHelperText-root {
+    font-size: 13px;
+}
+/* reset mui end */
+
 .tip {
     font-size: 0.8125rem;
     color: #7f7f7f;

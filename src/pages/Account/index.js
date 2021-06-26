@@ -150,9 +150,9 @@ class Account extends PureComponent {
                         需要帮助？
                     </Link>
                     <Divider style={{ marginTop: 20 }} />
-                    <a href="https://www.onlyid.net/home" target="_blank" rel="noopener noreferrer">
-                        <img src={logo} alt="logo" width="100" height="40.5" />
-                    </a>
+                    <Link href="https://www.onlyid.net/home" target="_blank">
+                        <img src={logo} alt="logo" width="100" />
+                    </Link>
                     <p className="tip">
                         用一个「唯ID」账号登录全球互联网。
                         {client.type !== "APP" && (

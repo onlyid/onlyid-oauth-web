@@ -175,7 +175,7 @@ class ScanLogin extends PureComponent {
                                 <span>唯ID</span>
                             </div>
                             <div className={styles.appDesc}>
-                                <p className={styles.title3}>使用唯ID 客户端：</p>
+                                <p className={styles.title3}>使用唯ID APP：</p>
                                 <ul>
                                     <li>
                                         <Check />

@@ -27,6 +27,7 @@
 
 .root h2 {
     margin-top: 3rem;
+    font-size: 21px;
 }
 
 .root :global .MuiAccordionSummary-content.Mui-expanded {
