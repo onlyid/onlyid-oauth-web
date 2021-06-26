@@ -18,7 +18,20 @@ import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 
 const store = createStore(reducers);
-const theme = createMuiTheme({ zhCN });
+const theme = createMuiTheme({
+    zhCN,
+    typography: {
+        fontFamily: [
+            "Roboto",
+            "PingFang SC",
+            "Microsoft YaHei",
+            "Noto Sans SC",
+            "Helvetica",
+            "Arial",
+            "sans-serif"
+        ].join(",")
+    }
+});
 
 const content = (
     <React.StrictMode>
