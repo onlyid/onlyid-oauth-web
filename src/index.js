@@ -21,15 +21,7 @@ const store = createStore(reducers);
 const theme = createMuiTheme({
     zhCN,
     typography: {
-        fontFamily: [
-            "Roboto",
-            "PingFang SC",
-            "Microsoft YaHei",
-            "Noto Sans SC",
-            "Helvetica",
-            "Arial",
-            "sans-serif"
-        ].join(",")
+        fontFamily: ["Roboto", "Noto Sans SC", "sans-serif"].join(",")
     }
 });
 
