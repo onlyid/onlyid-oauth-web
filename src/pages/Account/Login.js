@@ -166,8 +166,13 @@ class Login extends PureComponent {
                     >
                         {loginType === "password" ? "验证码登录" : "密码登录"}
                     </Button>
-                    <Button variant="outlined" onClick={this.resetPassword} size="small">
-                        忘记密码
+                    <Button
+                        variant="outlined"
+                        onClick={this.resetPassword}
+                        size="small"
+                        style={{ paddingRight: 3 }}
+                    >
+                        忘记密码？
                     </Button>
                 </div>
                 <CaptchaDialog
