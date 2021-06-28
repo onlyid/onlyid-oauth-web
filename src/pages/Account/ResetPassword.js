@@ -1,13 +1,20 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+    InputLabel,
+    OutlinedInput
+} from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
 import http from "my/http";
 import IconAndAvatar from "components/IconAndAvatar";
-import { Edit } from "@material-ui/icons";
 import { redirectCode } from "my/utils";
 import { NEW_PASSWORD_RULE } from "my/constants";
 
@@ -65,9 +72,9 @@ class ResetPassword extends PureComponent {
         this.setState({ validation: { ...validation } });
     };
 
-    back = (n = -1) => {
+    back = () => {
         const { history } = this.props;
-        history.go(n);
+        history.goBack();
     };
 
     onChange = ({ target }) => {
@@ -87,17 +94,12 @@ class ResetPassword extends PureComponent {
         return (
             <div>
                 <IconAndAvatar />
-                <div className="accountBox">
-                    <Button
-                        startIcon={<Edit />}
-                        size="large"
-                        variant="outlined"
-                        onClick={() => this.back(-2)}
-                    >
-                        {account}
-                    </Button>
-                </div>
                 <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
+                    <FormControl variant="outlined" fullWidth disabled>
+                        <InputLabel htmlFor="account-input">账号</InputLabel>
+                        <OutlinedInput id="account-input" label="账号" value={account} />
+                        <FormHelperText />
+                    </FormControl>
                     <OtpInput
                         name="otp"
                         error={validation.otp.error}
@@ -142,7 +144,7 @@ class ResetPassword extends PureComponent {
                     </div>
                 </form>
                 <div className="oneButtonBox">
-                    <Button variant="outlined" onClick={() => this.back()} size="small">
+                    <Button variant="outlined" onClick={this.back} size="small">
                         取 消
                     </Button>
                 </div>
