@@ -50,7 +50,7 @@ class ResetPassword extends PureComponent {
             return this.setState({ validation: { ...validation } });
         }
 
-        const { authorizationCode } = await http.put("users/password", {
+        const { authorizationCode } = await http.put("auth/reset-password", {
             account,
             otp,
             password,

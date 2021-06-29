@@ -104,7 +104,7 @@ class Activate extends PureComponent {
             values.birthDate = birthDate.format(DATE_FORMAT);
         }
 
-        const { authorizationCode } = await http.post("activate-account", values);
+        const { authorizationCode } = await http.post("auth/activate-account", values);
 
         redirectCode(client, search, authorizationCode);
     };

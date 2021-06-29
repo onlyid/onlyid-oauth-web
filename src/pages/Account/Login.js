@@ -38,7 +38,7 @@ class Login extends PureComponent {
 
         if (!(await this.validateField())) return;
 
-        const { authorizationCode, requireCaptcha } = await http.post("login", {
+        const { authorizationCode, requireCaptcha } = await http.post("auth/login", {
             account,
             [loginType]: inputValue,
             clientId: client.id,

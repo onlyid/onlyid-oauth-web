@@ -91,7 +91,7 @@ class Choose extends PureComponent {
             dispatch({ type: "app", nickname, avatarUrl, account: mobile || email });
             history.push("/account/login" + location.search);
         } else {
-            const { authorizationCode } = await http.post("sso", {
+            const { authorizationCode } = await http.post("auth/sso", {
                 userId: user.id,
                 clientId: client.id
             });
