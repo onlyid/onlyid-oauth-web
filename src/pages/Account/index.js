@@ -106,7 +106,7 @@ class Account extends PureComponent {
         const { loading, nextDisabled, users } = this.state;
         const {
             match,
-            app: { client, oauthConfig },
+            app: { oauthConfig },
             location
         } = this.props;
 
@@ -150,17 +150,12 @@ class Account extends PureComponent {
                     <Link component={RRLink} to={`/support${location.search}`} target="_blank">
                         需要帮助？
                     </Link>
-                    <Divider style={{ marginTop: 20 }} />
+                    <Divider style={{ marginTop: 20, width: 250 }} />
                     <Link href="https://www.onlyid.net/home" target="_blank">
                         <img src={logo} alt="logo" width="100" />
                     </Link>
-                    <p className="tip">
-                        用一个「唯ID」账号登录全球互联网。
-                        {client.type !== "APP" && (
-                            <Link href="https://www.onlyid.net/home" target="_blank">
-                                了解更多
-                            </Link>
-                        )}
+                    <p className="tip" style={{ marginTop: 10 }}>
+                        用一个唯ID账号登录全球互联网
                     </p>
                 </footer>
             </div>
