@@ -43,7 +43,7 @@ class AvatarUpload extends PureComponent {
         } = this.props;
 
         return (
-            <div className={styles.root}>
+            <div className={classNames(styles.root, { [styles.required]: requiredVisible })}>
                 <input
                     accept="image/jpeg,image/png"
                     id="upload-file"
@@ -58,11 +58,7 @@ class AvatarUpload extends PureComponent {
                         <span className="material-icons">person</span>
                     )}
                     <br />
-                    <span
-                        className={classNames(styles.title, { [styles.required]: requiredVisible })}
-                    >
-                        {requiredVisible && "请"}上传头像
-                    </span>
+                    <span className={styles.title}>{requiredVisible && "请"}上传头像</span>
                 </label>
                 <p className="tip">{IMG_UPLOAD_TIP}</p>
             </div>

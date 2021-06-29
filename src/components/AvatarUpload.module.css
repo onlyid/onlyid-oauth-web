@@ -21,12 +21,16 @@
     border-radius: 5%;
 }
 
+.root.required :global .material-icons {
+    border-color: #f44336;
+}
+
 .title {
     margin-top: 5px;
     display: inline-block;
 }
 
-.title.required {
+.root.required .title {
     color: #f44336;
 }
 
