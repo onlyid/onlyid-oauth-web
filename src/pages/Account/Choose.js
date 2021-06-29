@@ -29,7 +29,7 @@ class Item extends PureComponent {
     render() {
         const { user, onDelete, onLogout, onClick } = this.props;
         const { anchorEl, isHover } = this.state;
-        const loggedIn = moment(user.expireDate) > moment();
+        const loggedIn = moment(user.sessionExpireDate) > moment();
         const account = user[user.sessionExtra.accountType] || user.mobile || user.email;
 
         return (
@@ -83,14 +83,11 @@ class Choose extends PureComponent {
             location,
             dispatch
         } = this.props;
-        const { nickname, avatarUrl, mobile, email } = user;
-        const account = user[user.sessionExtra.accountType] || mobile || email;
 
-        const params = { account, tenant: client.tenant };
-        const { blocked, expireDate } = await http.get("check-account", { params });
-        if (blocked) {
+        if (user.blocked) {
             let text = `你已被屏蔽登录「${client.name}」`;
-            if (expireDate) text += `，解除时间：${moment(expireDate).format(DATE_TIME_FORMAT)}`;
+            if (user.blockedExpireDate)
+                text += `，解除时间：${moment(user.blockedExpireDate).format(DATE_TIME_FORMAT)}`;
 
             eventEmitter.emit("app/openToast", { text, severity: "error" });
             return;
@@ -99,7 +96,9 @@ class Choose extends PureComponent {
         // +5s是防止用户过期的那一刻点 后台报错
         const now = moment();
         now.add(5, "seconds");
-        if (moment(user.expireDate) < now) {
+        if (moment(user.sessionExpireDate) < now) {
+            const { nickname, avatarUrl, mobile, email } = user;
+            const account = user[user.sessionExtra.accountType] || mobile || email;
             dispatch({ type: "app", nickname, avatarUrl, account });
             history.push("/account/login" + location.search);
         } else {
@@ -127,7 +126,7 @@ class Choose extends PureComponent {
     logout = async user => {
         await http.post(`users/${user.id}/logout`);
 
-        user.expireDate = moment().format(DATE_TIME_FORMAT);
+        user.sessionExpireDate = moment().format(DATE_TIME_FORMAT);
         this.forceUpdate();
 
         eventEmitter.emit("app/openToast", { text: "已退出", timeout: 2000 });
