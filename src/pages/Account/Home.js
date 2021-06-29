@@ -4,9 +4,11 @@ import { withRouter } from "react-router-dom";
 import http from "my/http";
 import { connect } from "react-redux";
 import Validator from "async-validator";
-import { REG_EXP } from "my/constants";
+import { REG_EXP, DATE_TIME_FORMAT } from "my/constants";
 import IconAndAvatar from "components/IconAndAvatar";
 import ScanLoginButton from "components/ScanLoginButton";
+import { eventEmitter } from "my/utils";
+import moment from "moment";
 
 const RULES = {
     email: [
@@ -37,17 +39,26 @@ class Home extends PureComponent {
             history,
             match,
             location: { search },
-            app: { account },
+            app: { account, client },
             dispatch
         } = this.props;
 
         if (!(await this.validateField())) return;
 
-        const params = { account };
+        const params = { account, tenant: client.tenant };
         const data = await http.get("check-account", { params });
         let route;
         if (data) {
-            const { nickname, avatarUrl, activated } = data;
+            const { nickname, avatarUrl, activated, blocked, expireDate } = data;
+            if (blocked) {
+                let text = `你已被屏蔽登录「${client.name}」`;
+                if (expireDate)
+                    text += `，解除时间：${moment(expireDate).format(DATE_TIME_FORMAT)}`;
+
+                eventEmitter.emit("app/openToast", { text, severity: "error" });
+                return;
+            }
+
             if (activated) {
                 dispatch({ type: "app", nickname, avatarUrl });
                 route = "login";

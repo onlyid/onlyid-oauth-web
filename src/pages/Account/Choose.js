@@ -30,6 +30,7 @@ class Item extends PureComponent {
         const { user, onDelete, onLogout, onClick } = this.props;
         const { anchorEl, isHover } = this.state;
         const loggedIn = moment(user.expireDate) > moment();
+        const account = user[user.sessionExtra.accountType] || user.mobile || user.email;
 
         return (
             <div className={classNames(styles.item, { [styles.hover]: isHover })}>
@@ -42,7 +43,7 @@ class Item extends PureComponent {
                     <img src={user.avatarUrl} alt="avatar" className={styles.avatar} />
                     <div className={styles.box1}>
                         <p className={styles.nickname}>{user.nickname}</p>
-                        <p className={styles.account}>{user[user.sessionExtra.accountType]}</p>
+                        <p className={styles.account}>{account}</p>
                     </div>
                     <p className={styles.loginStatus}>{!loggedIn && "未登录"}</p>
                 </div>
@@ -82,13 +83,24 @@ class Choose extends PureComponent {
             location,
             dispatch
         } = this.props;
+        const { nickname, avatarUrl, mobile, email } = user;
+        const account = user[user.sessionExtra.accountType] || mobile || email;
+
+        const params = { account, tenant: client.tenant };
+        const { blocked, expireDate } = await http.get("check-account", { params });
+        if (blocked) {
+            let text = `你已被屏蔽登录「${client.name}」`;
+            if (expireDate) text += `，解除时间：${moment(expireDate).format(DATE_TIME_FORMAT)}`;
+
+            eventEmitter.emit("app/openToast", { text, severity: "error" });
+            return;
+        }
 
         // +5s是防止用户过期的那一刻点 后台报错
         const now = moment();
         now.add(5, "seconds");
         if (moment(user.expireDate) < now) {
-            const { nickname, avatarUrl, mobile, email } = user;
-            dispatch({ type: "app", nickname, avatarUrl, account: mobile || email });
+            dispatch({ type: "app", nickname, avatarUrl, account });
             history.push("/account/login" + location.search);
         } else {
             const { authorizationCode } = await http.post("auth/sso", {
