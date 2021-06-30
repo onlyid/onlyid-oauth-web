@@ -23,5 +23,11 @@
 .box1 :global .MuiSvgIcon-root {
     margin: 0 20px 40px;
     font-size: 60px;
-    color: #ccc;
+    color: #d9d9d9;
+}
+
+@media (min-width: 600px) {
+    .root {
+        margin-top: 5px;
+    }
 }

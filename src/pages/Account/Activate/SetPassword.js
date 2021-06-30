@@ -80,7 +80,7 @@ class SetPassword extends PureComponent {
         return (
             <div>
                 <IconAndAvatar />
-                <form style={{ marginTop: 20 }} className="form1">
+                <form style={{ marginTop: 25 }} className="form1">
                     {mobile && (
                         <OtpInput
                             name="otpSms"

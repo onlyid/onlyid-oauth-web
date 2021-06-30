@@ -94,7 +94,7 @@ class ResetPassword extends PureComponent {
         return (
             <div>
                 <IconAndAvatar />
-                <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
+                <form onSubmit={this.onSubmit} style={{ marginTop: 25 }} className="form1">
                     <FormControl variant="outlined" fullWidth disabled>
                         <InputLabel htmlFor="account-input">账号</InputLabel>
                         <OutlinedInput id="account-input" label="账号" value={account} />
