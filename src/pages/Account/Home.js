@@ -115,6 +115,7 @@ class Home extends PureComponent {
                         onChange={this.onChange}
                         value={account}
                         onBlur={this.validateField}
+                        type="email"
                     />
                     <div style={{ marginTop: 20 }}>
                         <Button
