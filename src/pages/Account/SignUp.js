@@ -130,6 +130,7 @@ class SignUp extends PureComponent {
                     <FormControl variant="outlined" fullWidth error={validation.nickname.error}>
                         <InputLabel htmlFor="nickname">昵称</InputLabel>
                         <OutlinedInput
+                            id="nickname"
                             name="nickname"
                             type="text"
                             onChange={this.onChange}
