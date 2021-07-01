@@ -9,6 +9,8 @@
 
 .box img {
     border-radius: 5%;
+    width: 100px;
+    height: 100px;
 }
 
 .box p {

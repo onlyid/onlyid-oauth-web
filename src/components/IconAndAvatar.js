@@ -12,7 +12,7 @@ class IconAndAvatar extends PureComponent {
         return (
             <div className={styles.root}>
                 <div className={styles.box}>
-                    <img src={client.iconUrl} alt="icon" width="100" />
+                    <img src={client.iconUrl} alt="icon" />
                     <p>{client.name}</p>
                 </div>
                 {avatarUrl && (
@@ -21,7 +21,7 @@ class IconAndAvatar extends PureComponent {
                             <SwapHoriz />
                         </div>
                         <div className={styles.box}>
-                            <img src={avatarUrl} alt="icon" width="100" height="100" />
+                            <img src={avatarUrl} alt="avatar" />
                             <p>{nickname}</p>
                         </div>
                     </>
