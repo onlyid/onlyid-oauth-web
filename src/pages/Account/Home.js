@@ -24,7 +24,8 @@ const RULES = {
 
 class Home extends PureComponent {
     state = {
-        validation: {}
+        validation: {},
+        account: ""
     };
 
     componentDidMount() {
@@ -39,9 +40,10 @@ class Home extends PureComponent {
             history,
             match,
             location: { search },
-            app: { account, client },
+            app: { client },
             dispatch
         } = this.props;
+        const { account } = this.state;
 
         if (!(await this.validateField())) return;
 
@@ -68,18 +70,16 @@ class Home extends PureComponent {
         } else {
             route = "sign-up";
         }
+        dispatch({ type: "app", account });
         history.push(`${match.url}/${route}${search}`);
     };
 
     onChange = e => {
-        const { dispatch } = this.props;
-        dispatch({ type: "app", account: e.target.value });
+        this.setState({ account: e.target.value });
     };
 
     validateField = async () => {
-        const {
-            app: { account }
-        } = this.props;
+        const { account } = this.state;
         let validation;
         try {
             const rules = account.includes("@") ? RULES.email : RULES.mobile;
@@ -96,9 +96,9 @@ class Home extends PureComponent {
     };
 
     render() {
-        const { validation } = this.state;
+        const { validation, account } = this.state;
         const {
-            app: { client, account },
+            app: { client },
             nextDisabled
         } = this.props;
 
