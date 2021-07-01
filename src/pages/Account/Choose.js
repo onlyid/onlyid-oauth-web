@@ -120,7 +120,7 @@ class Choose extends PureComponent {
 
         if (users.length === 1) history.replace("/account" + location.search);
 
-        eventEmitter.emit("app/openToast", { text: "已删除", timeout: 2000 });
+        eventEmitter.emit("app/openToast", { text: "已删除记录", timeout: 2000 });
     };
 
     logout = async user => {
@@ -129,7 +129,7 @@ class Choose extends PureComponent {
         user.sessionExpireDate = moment().format(DATE_TIME_FORMAT);
         this.forceUpdate();
 
-        eventEmitter.emit("app/openToast", { text: "已退出", timeout: 2000 });
+        eventEmitter.emit("app/openToast", { text: "已退出登录", timeout: 2000 });
     };
 
     useNew = () => {
