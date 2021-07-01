@@ -18,10 +18,6 @@
     padding-left: 6px;
 }
 
-.item.hover {
-    background-color: #f7f8f9;
-}
-
 .mainBox {
     display: flex;
     align-items: center;
@@ -69,8 +65,14 @@
     vertical-align: -15%;
 }
 
-.useNew:hover {
-    background-color: #f7f8f9;
-    cursor: pointer;
-    color: inherit;
+@media (hover: hover) {
+    .item.hover {
+        background-color: #f7f8f9;
+    }
+
+    .useNew:hover {
+        background-color: #f7f8f9;
+        cursor: pointer;
+        color: inherit;
+    }
 }
