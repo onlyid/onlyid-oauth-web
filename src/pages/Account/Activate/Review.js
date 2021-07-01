@@ -153,6 +153,7 @@ class Review extends PureComponent {
                             onBlur={this.validateField}
                             value={mobile || ""}
                             disabled={account === mobile}
+                            type="tel"
                         />
                         <FormHelperText>{validation.mobile.text}</FormHelperText>
                     </FormControl>
@@ -164,6 +165,7 @@ class Review extends PureComponent {
                             onBlur={this.validateField}
                             value={email || ""}
                             disabled={account === email}
+                            type="email"
                         />
                         <FormHelperText>{validation.email.text}</FormHelperText>
                     </FormControl>
