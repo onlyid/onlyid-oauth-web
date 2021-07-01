@@ -29,7 +29,7 @@ class Home extends PureComponent {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch({ type: "app", avatarUrl: null, nickname: null, account: "" });
+        dispatch({ type: "app", avatarUrl: null, nickname: null });
     }
 
     onSubmit = async e => {
