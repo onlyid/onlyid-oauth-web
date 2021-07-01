@@ -127,7 +127,7 @@ class Review extends PureComponent {
                         你的账号已导入，设置密码即可使用。
                     </p>
                 </Alert>
-                <AvatarUpload onChange={this.onUpload} requiredVisible={avatarRequiredVisible} />
+                <AvatarUpload onUpload={this.onUpload} requiredVisible={avatarRequiredVisible} />
                 <form className={styles.form1}>
                     <FormControl fullWidth error={validation.nickname.error}>
                         <Input

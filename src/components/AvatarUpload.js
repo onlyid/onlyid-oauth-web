@@ -8,7 +8,7 @@ import classNames from "classnames";
 class AvatarUpload extends PureComponent {
     onChange = async e => {
         const { files } = e.target;
-        const { onChange, dispatch } = this.props;
+        const { onUpload, dispatch } = this.props;
 
         if (!files.length) return;
 
@@ -33,7 +33,7 @@ class AvatarUpload extends PureComponent {
 
         dispatch({ type: "app", avatarUrl: scaledImage.toDataURL(file.type) });
 
-        onChange(filename);
+        onUpload(filename);
     };
 
     render() {
