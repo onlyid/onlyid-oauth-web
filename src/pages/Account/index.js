@@ -147,7 +147,12 @@ class Account extends PureComponent {
                     </div>
                 </div>
                 <footer>
-                    <Link component={RRLink} to={`/support${location.search}`} target="_blank">
+                    <Link
+                        component={RRLink}
+                        to={`/support${location.search}`}
+                        target="_blank"
+                        style={{ marginRight: -8 }}
+                    >
                         需要帮助？
                     </Link>
                     <Divider style={{ marginTop: 20, width: 250 }} />
