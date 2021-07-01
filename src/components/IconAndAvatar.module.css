@@ -1,6 +1,9 @@
 .root {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 320px;
+    margin: 0 auto;
 }
 
 .box {
@@ -17,13 +20,8 @@
     margin-top: 5px;
 }
 
-.box1 {
-    display: flex;
-    align-items: center;
-}
-
-.box1 :global .MuiSvgIcon-root {
-    margin: 0 20px 40px;
+.swapIcon {
+    margin-bottom: 40px;
     font-size: 60px;
     color: #d9d9d9;
 }

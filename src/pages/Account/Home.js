@@ -105,7 +105,7 @@ class Home extends PureComponent {
         return (
             <div>
                 <IconAndAvatar />
-                <form onSubmit={this.onSubmit} style={{ marginTop: 30 }}>
+                <form onSubmit={this.onSubmit} style={{ marginTop: 30 }} noValidate>
                     <TextField
                         label="手机号 / 邮箱"
                         variant="outlined"

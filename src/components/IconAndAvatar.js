@@ -17,9 +17,7 @@ class IconAndAvatar extends PureComponent {
                 </div>
                 {avatarUrl && (
                     <>
-                        <div className={styles.box1}>
-                            <SwapHoriz />
-                        </div>
+                        <SwapHoriz className={styles.swapIcon} />
                         <div className={styles.box}>
                             <img src={avatarUrl} alt="avatar" />
                             <p>{nickname}</p>
