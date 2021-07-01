@@ -18,7 +18,6 @@ import Validator from "async-validator";
 import http from "my/http";
 import AvatarUpload from "components/AvatarUpload";
 import { redirectCode } from "my/utils";
-import { Edit } from "@material-ui/icons";
 import { NEW_PASSWORD_RULE } from "my/constants";
 
 const RULES = {
@@ -122,17 +121,12 @@ class SignUp extends PureComponent {
                     </p>
                 </Alert>
                 <AvatarUpload onChange={this.onUpload} requiredVisible={avatarRequiredVisible} />
-                <div className="accountBox">
-                    <Button
-                        startIcon={<Edit />}
-                        size="large"
-                        variant="outlined"
-                        onClick={this.back}
-                    >
-                        {account}
-                    </Button>
-                </div>
-                <form onSubmit={this.onSubmit} style={{ marginTop: 20 }} className="form1">
+                <form onSubmit={this.onSubmit} style={{ marginTop: 25 }} className="form1">
+                    <FormControl variant="outlined" fullWidth disabled>
+                        <InputLabel htmlFor="account-input">账号</InputLabel>
+                        <OutlinedInput id="account-input" label="账号" value={account} />
+                        <FormHelperText />
+                    </FormControl>
                     <FormControl variant="outlined" fullWidth error={validation.nickname.error}>
                         <InputLabel htmlFor="nickname">昵称</InputLabel>
                         <OutlinedInput
