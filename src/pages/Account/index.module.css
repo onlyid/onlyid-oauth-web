@@ -13,6 +13,7 @@
     display: flex;
     align-items: center;
     width: 100%;
+    max-width: 400px;
 }
 
 .card {
@@ -34,10 +35,6 @@
         background-size: 3000px;
         background-position: center top;
         background-repeat: no-repeat;
-    }
-
-    .cardWrapper {
-        width: 400px;
     }
 
     .card {
