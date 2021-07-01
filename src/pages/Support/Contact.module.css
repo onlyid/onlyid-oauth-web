@@ -19,6 +19,8 @@
     font-size: 1.1rem;
     margin-right: 0.5rem;
     color: #444;
+    display: inline-block;
+    min-width: 20px;
 }
 
 .weChat {
