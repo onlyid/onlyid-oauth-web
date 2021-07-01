@@ -4,6 +4,7 @@
 
 .root label {
     cursor: pointer;
+    display: inline-block;
 }
 
 .root img {
