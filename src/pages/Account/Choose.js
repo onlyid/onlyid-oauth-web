@@ -58,10 +58,10 @@ class Item extends PureComponent {
                     onClose={this.closeMenu}
                     getContentAnchorEl={null}
                 >
-                    <MenuItem onClick={onLogout} disabled={!loggedIn}>
+                    <MenuItem onClick={() => onLogout() && this.closeMenu()} disabled={!loggedIn}>
                         <ListItemText>退出登录</ListItemText>
                     </MenuItem>
-                    <MenuItem onClick={onDelete}>
+                    <MenuItem onClick={() => onDelete() && this.closeMenu()}>
                         <ListItemText>删除记录</ListItemText>
                     </MenuItem>
                 </Menu>
