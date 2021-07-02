@@ -58,7 +58,8 @@ class OtpInput extends PureComponent {
                 <InputLabel htmlFor="otp-input">{label}</InputLabel>
                 <OutlinedInput
                     id="otp-input"
-                    type="text"
+                    type="tel"
+                    autoComplete="off"
                     onChange={onChange}
                     endAdornment={
                         <InputAdornment position="end">
