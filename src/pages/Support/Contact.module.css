@@ -5,30 +5,27 @@
 }
 
 .root li {
-    font-size: 1.1rem;
+    font-size: 17px;
 }
 
 .root li :global .material-icons {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     margin-right: 0.5rem;
-    vertical-align: -25%;
+    vertical-align: -20%;
     color: #444;
 }
 
 .qq {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-right: 0.5rem;
     color: #444;
     display: inline-block;
     min-width: 20px;
 }
 
-.weChat {
-    font-size: 1.4rem;
-    cursor: default;
-    vertical-align: middle;
-    margin-left: 0.6rem;
-    color: #1edc5a;
+.mailTo {
+    text-decoration: none;
+    color: inherit;
 }
 
 .popper1 {
@@ -36,6 +33,7 @@
 }
 
 .popper1 img {
+    width: 13.5rem;
     height: 13.5rem;
     display: block;
 }

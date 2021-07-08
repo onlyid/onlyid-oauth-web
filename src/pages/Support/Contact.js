@@ -6,10 +6,10 @@ import classNames from "classnames";
 
 export default class extends PureComponent {
     state = {
-        anchorEl: null
+        anchorEl: null,
     };
 
-    showWeChat = e => {
+    showWeChat = (e) => {
         this.setState({ anchorEl: e.currentTarget });
     };
 
@@ -27,23 +27,28 @@ export default class extends PureComponent {
                     <p>如果以上信息不能解决你的问题，欢迎联系我们。</p>
                     <ul>
                         <li>
-                            <span className="material-icons">phone</span>电话/微信：15521312099
+                            <span className="material-icons">phone</span>电话 / 微信
                             <Hidden xsDown>
                                 <span
-                                    className={classNames("iconfont", styles.weChat)}
+                                    className="material-icons"
+                                    style={{ margin: 0 }}
                                     onMouseEnter={this.showWeChat}
                                     onMouseLeave={this.closeWeChat}
                                 >
-                                    &#xe7e5;
+                                    qr_code
                                 </span>
                             </Hidden>
+                            ：15521312099
                         </li>
                         <li>
                             <span className={classNames("iconfont", styles.qq)}>&#xe676;</span>
                             QQ：452391310
                         </li>
                         <li>
-                            <span className="material-icons">mail</span>邮箱：help@onlyid.net
+                            <span className="material-icons">mail</span>邮箱：
+                            <a href="mailto:help@onlyid.net" className={styles.mailTo}>
+                                help@onlyid.net
+                            </a>
                         </li>
                     </ul>
                     <p>客服时间是每天9:00-21:00（国家法定节假日除外）。</p>
@@ -56,7 +61,7 @@ export default class extends PureComponent {
                 <Popper
                     open={!!anchorEl}
                     anchorEl={anchorEl}
-                    placement="right"
+                    placement="top"
                     className={styles.popper1}
                 >
                     <Paper>

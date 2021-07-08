@@ -12,7 +12,7 @@ import Contact from "./Contact";
 
 class Support extends PureComponent {
     state = {
-        clientName: null
+        clientName: null,
     };
 
     back = () => {
