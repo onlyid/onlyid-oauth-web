@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 
 class AvatarUpload extends PureComponent {
-    onChange = async e => {
+    onChange = async (e) => {
         const { files } = e.target;
         const { onUpload, dispatch } = this.props;
 
@@ -21,7 +21,7 @@ class AvatarUpload extends PureComponent {
         });
         const scaledImage = window.loadImage.scale(image, { maxWidth: 256, minWidth: 256 });
 
-        const blob = await new Promise(resolve => {
+        const blob = await new Promise((resolve) => {
             // 兼容IE11
             if (scaledImage.toBlob) scaledImage.toBlob(resolve, file.type);
             else resolve(scaledImage.msToBlob());

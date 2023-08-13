@@ -40,7 +40,7 @@ class SignUp extends PureComponent {
         avatarRequiredVisible: false
     };
 
-    onSubmit = async e => {
+    onSubmit = async (e) => {
         e.preventDefault();
 
         const { filename, nickname, otp, password, keepLoggedIn, validation } = this.state;
@@ -97,11 +97,11 @@ class SignUp extends PureComponent {
         this.setState({ [target.name]: target.value });
     };
 
-    onUpload = filename => {
+    onUpload = (filename) => {
         this.setState({ filename, avatarRequiredVisible: false });
     };
 
-    onCheckBoxChange = event => {
+    onCheckBoxChange = (event) => {
         this.setState({ keepLoggedIn: event.target.checked });
     };
 

@@ -90,7 +90,7 @@ class Account extends PureComponent {
         this.setState({ loading: false });
     };
 
-    disableNext = text => {
+    disableNext = (text) => {
         const { history, location } = this.props;
 
         eventEmitter.emit("app/openToast", { text, severity: "error" });
@@ -98,8 +98,8 @@ class Account extends PureComponent {
         this.setState({ loading: false, nextDisabled: true });
     };
 
-    onDelete = userId => {
-        this.setState(({ users }) => ({ users: users.filter(u => u.id !== userId) }));
+    onDelete = (userId) => {
+        this.setState(({ users }) => ({ users: users.filter((u) => u.id !== userId) }));
     };
 
     render() {

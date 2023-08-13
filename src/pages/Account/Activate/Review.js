@@ -97,7 +97,7 @@ class Review extends PureComponent {
         history.goBack();
     };
 
-    onUpload = filename => {
+    onUpload = (filename) => {
         const { onChange } = this.props;
 
         onChange("filename", filename);
@@ -176,7 +176,7 @@ class Review extends PureComponent {
                             onChange={this.onChange}
                             startAdornment={<InputAdornment position="start">性别</InputAdornment>}
                         >
-                            {Object.keys(GENDER_TEXT).map(key => (
+                            {Object.keys(GENDER_TEXT).map((key) => (
                                 <MenuItem value={key} key={key}>
                                     {GENDER_TEXT[key]}
                                 </MenuItem>
@@ -196,7 +196,7 @@ class Review extends PureComponent {
                             name="date-picker"
                             format="YYYY-MM-DD"
                             value={birthDate}
-                            onChange={date => onChange("birthDate", date)}
+                            onChange={(date) => onChange("birthDate", date)}
                             disableFuture
                             disableToolbar
                             openTo="year"
@@ -210,7 +210,7 @@ class Review extends PureComponent {
                             }}
                         />
                     </MuiPickersUtilsProvider>
-                    <RegionInput value={region} onChange={value => onChange("region", value)} />
+                    <RegionInput value={region} onChange={(value) => onChange("region", value)} />
                     <FormControl fullWidth error={validation.bio.error}>
                         <Input
                             name="bio"

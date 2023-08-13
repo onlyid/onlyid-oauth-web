@@ -36,18 +36,8 @@ class Activate extends PureComponent {
             dispatch
         } = this.props;
 
-        const {
-            id,
-            avatarUrl,
-            nickname,
-            mobile,
-            email,
-            gender,
-            birthDate,
-            province,
-            city,
-            bio
-        } = await http.get("users", { params: { account } });
+        const { id, avatarUrl, nickname, mobile, email, gender, birthDate, province, city, bio } =
+            await http.get("users", { params: { account } });
 
         this.setState({ userId: id, nickname, mobile, email, gender, bio });
 
