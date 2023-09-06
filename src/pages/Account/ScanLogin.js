@@ -53,7 +53,7 @@ class ScanLogin extends PureComponent {
         this.source.cancel("unmount");
     }
 
-    startLoop = async params => {
+    startLoop = async (params) => {
         const {
             app: { client },
             location: { search },
@@ -119,7 +119,7 @@ class ScanLogin extends PureComponent {
         history.goBack();
     };
 
-    onCheckBoxChange = event => {
+    onCheckBoxChange = (event) => {
         this.source.cancel();
         this.setState({ keepLoggedIn: event.target.checked });
     };

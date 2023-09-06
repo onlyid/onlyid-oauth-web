@@ -27,7 +27,7 @@ class Login extends PureComponent {
         history.goBack();
     };
 
-    onSubmit = async e => {
+    onSubmit = async (e) => {
         e && e.preventDefault();
 
         const { inputValue, loginType, keepLoggedIn } = this.state;
@@ -53,7 +53,7 @@ class Login extends PureComponent {
         redirectCode(client, search, authorizationCode);
     };
 
-    onChange = e => {
+    onChange = (e) => {
         this.setState({ inputValue: e.target.value });
     };
 
@@ -87,7 +87,7 @@ class Login extends PureComponent {
         history.push("/account/reset-password" + search);
     };
 
-    onCheckBoxChange = event => {
+    onCheckBoxChange = (event) => {
         this.setState({ keepLoggedIn: event.target.checked });
     };
 

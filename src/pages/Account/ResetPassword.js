@@ -31,7 +31,7 @@ class ResetPassword extends PureComponent {
         keepLoggedIn: false
     };
 
-    onSubmit = async e => {
+    onSubmit = async (e) => {
         e.preventDefault();
 
         const { otp, password, keepLoggedIn, validation } = this.state;
@@ -81,7 +81,7 @@ class ResetPassword extends PureComponent {
         this.setState({ [target.name]: target.value });
     };
 
-    onCheckBoxChange = event => {
+    onCheckBoxChange = (event) => {
         this.setState({ keepLoggedIn: event.target.checked });
     };
 

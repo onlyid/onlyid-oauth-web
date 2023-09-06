@@ -1,4 +1,4 @@
-import React, { Suspense, PureComponent } from "react";
+import React, { PureComponent, Suspense } from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { CircularProgress, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
@@ -45,7 +45,7 @@ class App extends PureComponent {
         });
     };
 
-    openToast = async toast => {
+    openToast = async (toast) => {
         const {
             toast: { open }
         } = this.state;
@@ -84,7 +84,7 @@ class App extends PureComponent {
                         </Route>
                         <Route
                             path="/"
-                            render={props => (
+                            render={(props) => (
                                 <Redirect
                                     to={{
                                         pathname: "/account",

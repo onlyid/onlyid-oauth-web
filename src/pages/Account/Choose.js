@@ -18,7 +18,7 @@ class Item extends PureComponent {
         isHover: false
     };
 
-    openMenu = event => {
+    openMenu = (event) => {
         this.setState({ anchorEl: event.currentTarget });
     };
 
@@ -76,7 +76,7 @@ class Choose extends PureComponent {
         dispatch({ type: "app", avatarUrl: null, nickname: null });
     }
 
-    onClick = async user => {
+    onClick = async (user) => {
         const {
             app: { client },
             history,
@@ -111,7 +111,7 @@ class Choose extends PureComponent {
         }
     };
 
-    delete1 = async user => {
+    delete1 = async (user) => {
         const { users, onDelete, history, location } = this.props;
 
         await http.delete(`users/${user.id}/sessions`);
@@ -123,7 +123,7 @@ class Choose extends PureComponent {
         eventEmitter.emit("app/openToast", { text: "已删除记录", timeout: 2000 });
     };
 
-    logout = async user => {
+    logout = async (user) => {
         await http.post(`users/${user.id}/logout`);
 
         user.sessionExpireDate = moment().format(DATE_TIME_FORMAT);
@@ -149,7 +149,7 @@ class Choose extends PureComponent {
                 <IconAndAvatar />
                 <p className="tip">选择一个账号登录「{client.name}」</p>
                 <div className={styles.listBox}>
-                    {users.map(user => (
+                    {users.map((user) => (
                         <Item
                             user={user}
                             key={user.id}

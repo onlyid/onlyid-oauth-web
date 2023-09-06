@@ -1,5 +1,5 @@
 import "react-app-polyfill/ie11";
-import 'react-app-polyfill/stable';
+import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import reducers from "my/reducers";
 import { createMuiTheme, CssBaseline } from "@material-ui/core";
-import { ThemeProvider, StylesProvider } from "@material-ui/core/styles";
+import { StylesProvider, ThemeProvider } from "@material-ui/core/styles";
 import { zhCN } from "@material-ui/core/locale";
 import { BrowserRouter } from "react-router-dom";
 import moment from "moment";

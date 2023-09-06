@@ -6,9 +6,7 @@ export const eventEmitter = new EventEmitter();
 export function getRandomValue(length = 32) {
     let s = "";
     while (s.length < length) {
-        s += Math.random()
-            .toString(36)
-            .substr(2);
+        s += Math.random().toString(36).substr(2);
     }
 
     // 可能超长 截取一下

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { LinearProgress, Dialog, DialogContent } from "@material-ui/core";
+import { Dialog, DialogContent, LinearProgress } from "@material-ui/core";
 import http from "../my/http";
 import { connect } from "react-redux";
 import styles from "./CaptchaDialog.module.css";
@@ -29,7 +29,7 @@ class CaptchaDialog extends PureComponent {
         window.initGeetest(params, this.handleCaptchaObj);
     };
 
-    handleCaptchaObj = captchaObj => {
+    handleCaptchaObj = (captchaObj) => {
         captchaObj.appendTo("#captcha");
         captchaObj.onReady(() => {
             this.setState({ loading: false });

@@ -4,11 +4,12 @@ import { withRouter } from "react-router-dom";
 import http from "my/http";
 import { connect } from "react-redux";
 import Validator from "async-validator";
-import { REG_EXP, DATE_TIME_FORMAT } from "my/constants";
+import { DATE_TIME_FORMAT, REG_EXP } from "my/constants";
 import IconAndAvatar from "components/IconAndAvatar";
 import ScanLoginButton from "components/ScanLoginButton";
 import { eventEmitter } from "my/utils";
 import moment from "moment";
+import TermsCheckbox from "./TermsCheckbox";
 
 const RULES = {
     email: [
@@ -25,7 +26,8 @@ const RULES = {
 class Home extends PureComponent {
     state = {
         validation: {},
-        account: ""
+        account: "",
+        termsChecked: false
     };
 
     componentDidMount() {
@@ -33,7 +35,7 @@ class Home extends PureComponent {
         dispatch({ type: "app", avatarUrl: null, nickname: null });
     }
 
-    onSubmit = async e => {
+    onSubmit = async (e) => {
         e.preventDefault();
 
         const {
@@ -43,9 +45,15 @@ class Home extends PureComponent {
             app: { client },
             dispatch
         } = this.props;
-        const { account } = this.state;
+        const { account, termsChecked } = this.state;
 
         if (!(await this.validateField())) return;
+
+        if (!termsChecked) {
+            const text = "请阅读并同意服务协议和隐私政策";
+            eventEmitter.emit("app/openToast", { text, severity: "warning" });
+            return;
+        }
 
         const params = { account, tenant: client.tenant };
         const data = await http.get("check-account", { params });
@@ -74,8 +82,12 @@ class Home extends PureComponent {
         history.push(`${match.url}/${route}${search}`);
     };
 
-    onChange = e => {
+    onChange = (e) => {
         this.setState({ account: e.target.value });
+    };
+
+    onCheckChange = (event) => {
+        this.setState({ termsChecked: event.target.checked });
     };
 
     validateField = async () => {
@@ -96,7 +108,7 @@ class Home extends PureComponent {
     };
 
     render() {
-        const { validation, account } = this.state;
+        const { validation, account, termsChecked } = this.state;
         const {
             app: { client },
             nextDisabled
@@ -117,7 +129,8 @@ class Home extends PureComponent {
                         onBlur={this.validateField}
                         type="email"
                     />
-                    <div style={{ marginTop: 20 }}>
+                    <TermsCheckbox onChange={this.onCheckChange} checked={termsChecked} />
+                    <div>
                         <Button
                             variant="contained"
                             color="primary"

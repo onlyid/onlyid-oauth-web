@@ -26,10 +26,10 @@ class RegionInput extends PureComponent {
     };
 
     toggleDialog = () => {
-        this.setState(state => ({ dialogVisible: !state.dialogVisible, provinceIndex: -1 }));
+        this.setState((state) => ({ dialogVisible: !state.dialogVisible, provinceIndex: -1 }));
     };
 
-    select = city => {
+    select = (city) => {
         const { provinceIndex } = this.state;
         const { onChange } = this.props;
 
@@ -61,7 +61,7 @@ class RegionInput extends PureComponent {
                           <KeyboardArrowRight />
                       </ListItem>
                   ))
-                : CHINA_CITY_LIST[provinceIndex].city.map(city => (
+                : CHINA_CITY_LIST[provinceIndex].city.map((city) => (
                       <ListItem
                           className={styles.item1}
                           button
