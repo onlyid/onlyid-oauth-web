@@ -35,8 +35,9 @@
     "extends": "react-app"
   },
   "browserslist": [
-    ">1%"
+    ">1%",
+    "not op_mini all"
   ],
-  "proxy": "http://localhost:8000",
+  "proxy": "http://localhost:8001",
   "homepage": "https://www.onlyid.net/oauth"
 }

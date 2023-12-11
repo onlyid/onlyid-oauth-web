@@ -3,14 +3,7 @@ import { eventEmitter, getRandomValue, redirectCode } from "my/utils";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./ScanLogin.module.css";
-import {
-    Button,
-    Checkbox,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    FormControlLabel
-} from "@material-ui/core";
+import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { Android, Check } from "@material-ui/icons";
 import icon from "assets/ic_launcher.png";
 import http from "my/http";
@@ -21,8 +14,7 @@ class ScanLogin extends PureComponent {
     source;
 
     state = {
-        dialogVisible: false,
-        keepLoggedIn: false
+        dialogVisible: false
     };
 
     constructor(props) {
@@ -64,7 +56,6 @@ class ScanLogin extends PureComponent {
         while (true) {
             try {
                 this.source = axios.CancelToken.source();
-                params.keepLoggedIn = this.state.keepLoggedIn;
                 const { authorizationCode } = await http.post("auth/scan-login", params, {
                     cancelToken: this.source.token
                 });
@@ -119,34 +110,17 @@ class ScanLogin extends PureComponent {
         history.goBack();
     };
 
-    onCheckBoxChange = (event) => {
-        this.source.cancel();
-        this.setState({ keepLoggedIn: event.target.checked });
-    };
-
     render() {
         const {
             app: { client }
         } = this.props;
-        const { dialogVisible, keepLoggedIn } = this.state;
+        const { dialogVisible } = this.state;
 
         return (
             <div className={styles.root}>
                 <p className={styles.title1}>扫码登录</p>
                 <div ref={this.ref1} className={styles.qrCodeBox1} />
                 <p className="tip">用 唯ID APP 扫码登录「{client.name}」</p>
-                <div className={styles.keepLoggedInBox}>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                color="primary"
-                                onChange={this.onCheckBoxChange}
-                                checked={keepLoggedIn}
-                            />
-                        }
-                        label="保持登录一个月"
-                    />
-                </div>
                 <div className={styles.downloadButtonBox}>
                     <Button
                         variant="outlined"

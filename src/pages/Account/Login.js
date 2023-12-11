@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import http from "my/http";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
@@ -18,7 +18,6 @@ class Login extends PureComponent {
         validation: {},
         inputValue: "",
         loginType: "password",
-        keepLoggedIn: false,
         captchaOpen: false
     };
 
@@ -30,7 +29,7 @@ class Login extends PureComponent {
     onSubmit = async (e) => {
         e && e.preventDefault();
 
-        const { inputValue, loginType, keepLoggedIn } = this.state;
+        const { inputValue, loginType } = this.state;
         const {
             app: { account, client },
             location: { search }
@@ -41,8 +40,7 @@ class Login extends PureComponent {
         const { authorizationCode, requireCaptcha } = await http.post("auth/login", {
             account,
             [loginType]: inputValue,
-            clientId: client.id,
-            keepLoggedIn
+            clientId: client.id
         });
 
         if (requireCaptcha) {
@@ -87,16 +85,12 @@ class Login extends PureComponent {
         history.push("/account/reset-password" + search);
     };
 
-    onCheckBoxChange = (event) => {
-        this.setState({ keepLoggedIn: event.target.checked });
-    };
-
     toggleCaptcha = () => {
         this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }));
     };
 
     render() {
-        const { validation, loginType, keepLoggedIn, captchaOpen } = this.state;
+        const { validation, loginType, captchaOpen } = this.state;
         const {
             app: { account, client }
         } = this.props;
@@ -132,20 +126,7 @@ class Login extends PureComponent {
                             onBlur={this.validateField}
                         />
                     )}
-                    {client.type !== "APP" && (
-                        <FormControlLabel
-                            style={{ marginTop: "0.5rem" }}
-                            control={
-                                <Checkbox
-                                    color="primary"
-                                    onChange={this.onCheckBoxChange}
-                                    checked={keepLoggedIn}
-                                />
-                            }
-                            label="保持登录一个月"
-                        />
-                    )}
-                    <div style={{ marginTop: "0.5rem" }}>
+                    <div style={{ marginTop: 20 }}>
                         <Button
                             variant="contained"
                             color="primary"

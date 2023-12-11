@@ -79,7 +79,7 @@ class Account extends PureComponent {
         }
 
         const params = { tenant: client.tenant };
-        const users = await http.get("users/by-session", { params });
+        const users = await http.get("user-sessions", { params });
         if (users.length) {
             this.setState({ users });
             history.replace("/account/choose" + location.search);

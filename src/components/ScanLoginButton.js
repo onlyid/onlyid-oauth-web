@@ -13,9 +13,11 @@ class ScanLoginButton extends PureComponent {
     };
 
     render() {
+        const { style } = this.props;
+
         return (
             <Hidden xsDown>
-                <div className={styles.root}>
+                <div className={styles.root} style={style}>
                     <div className={styles.button} onClick={this.scanLogin}>
                         <span className="material-icons">qr_code</span>
                         <p>扫码登录</p>

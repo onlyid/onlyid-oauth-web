@@ -1,6 +1,17 @@
 import EventEmitter from "eventemitter3";
 import qs from "qs";
 
+Storage.prototype.getObj = function (key) {
+    const s = this.getItem(key);
+    if (!s) return null;
+
+    return JSON.parse(s);
+};
+
+Storage.prototype.setObj = function (key, value) {
+    this.setItem(key, JSON.stringify(value));
+};
+
 export const eventEmitter = new EventEmitter();
 
 export function getRandomValue(length = 32) {
@@ -16,21 +27,19 @@ export function getRandomValue(length = 32) {
 
 export function redirectCode(client, search, code) {
     const query = qs.parse(search, { ignoreQueryPrefix: true });
-    const state = query["state"];
+    const state = query["state"] || null;
     if (client.type === "APP") {
-        if (window.android) window.android.onCode(code, state || null);
-        else {
+        if (window.android) {
+            window.android.onCode(code, state);
+        } else {
             window.webkit.messageHandlers.ios.postMessage({
                 method: "onCode",
-                data: {
-                    code,
-                    state: state || null
-                }
+                data: { code, state }
             });
         }
     } else {
         let url = query["redirect-uri"] + "?code=" + code;
-        if (query["state"]) url += "&state=" + query["state"];
+        if (state) url += "&state=" + state;
 
         window.location.assign(url);
     }

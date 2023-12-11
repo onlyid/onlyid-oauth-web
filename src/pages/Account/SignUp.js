@@ -2,15 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import styles from "./SignUp.module.css";
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    InputLabel,
-    OutlinedInput
-} from "@material-ui/core";
+import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
@@ -35,14 +27,13 @@ class SignUp extends PureComponent {
         otp: null,
         password: null,
         nickname: null,
-        filename: null,
-        keepLoggedIn: false
+        filename: null
     };
 
     onSubmit = async (e) => {
         e.preventDefault();
 
-        const { filename, nickname, otp, password, keepLoggedIn, validation } = this.state;
+        const { filename, nickname, otp, password, validation } = this.state;
         const {
             app: { client, account },
             location: { search }
@@ -64,8 +55,7 @@ class SignUp extends PureComponent {
             account,
             otp,
             password,
-            clientId: client.id,
-            keepLoggedIn
+            clientId: client.id
         });
 
         redirectCode(client, search, authorizationCode);
@@ -95,22 +85,17 @@ class SignUp extends PureComponent {
         this.setState({ filename });
     };
 
-    onCheckBoxChange = (event) => {
-        this.setState({ keepLoggedIn: event.target.checked });
-    };
-
     render() {
         const {
             app: { account, client }
         } = this.props;
-        const { validation, keepLoggedIn } = this.state;
+        const { validation } = this.state;
 
         return (
             <div className={styles.root}>
                 <Alert severity="info" className={styles.tipBox} icon={false}>
                     <p>
-                        「{client.name}
-                        」支持用唯ID登录，和微信、微博登录一样，用唯ID也可以登录各种网站、APP。
+                        和微信登录、微博登录一样，用唯ID也可以登录各种网站、APP。
                         新用户请先完成账号注册。
                     </p>
                 </Alert>
@@ -150,20 +135,7 @@ class SignUp extends PureComponent {
                         onBlur={this.validateField}
                         autoComplete="new-password"
                     />
-                    {client.type !== "APP" && (
-                        <FormControlLabel
-                            style={{ marginTop: "0.5rem" }}
-                            control={
-                                <Checkbox
-                                    color="primary"
-                                    onChange={this.onCheckBoxChange}
-                                    checked={keepLoggedIn}
-                                />
-                            }
-                            label="保持登录一个月"
-                        />
-                    )}
-                    <div style={{ marginTop: "0.5rem" }}>
+                    <div style={{ marginTop: 20 }}>
                         <Button
                             variant="contained"
                             color="primary"

@@ -4,11 +4,10 @@ import { withRouter } from "react-router-dom";
 import http from "my/http";
 import { connect } from "react-redux";
 import Validator from "async-validator";
-import { DATE_TIME_FORMAT, REG_EXP } from "my/constants";
+import { REG_EXP } from "my/constants";
 import IconAndAvatar from "components/IconAndAvatar";
 import ScanLoginButton from "components/ScanLoginButton";
 import { eventEmitter } from "my/utils";
-import moment from "moment";
 import TermsCheckbox from "./TermsCheckbox";
 
 const RULES = {
@@ -59,16 +58,7 @@ class Home extends PureComponent {
         const data = await http.get("check-account", { params });
         let route;
         if (data) {
-            const { nickname, avatarUrl, activated, blocked, expireDate } = data;
-            if (blocked) {
-                let text = `你已被屏蔽登录「${client.name}」`;
-                if (expireDate)
-                    text += `，解除时间：${moment(expireDate).format(DATE_TIME_FORMAT)}`;
-
-                eventEmitter.emit("app/openToast", { text, severity: "error" });
-                return;
-            }
-
+            const { nickname, avatarUrl, activated } = data;
             if (activated) {
                 dispatch({ type: "app", nickname, avatarUrl });
                 route = "login";
@@ -109,15 +99,12 @@ class Home extends PureComponent {
 
     render() {
         const { validation, account, termsChecked } = this.state;
-        const {
-            app: { client },
-            nextDisabled
-        } = this.props;
+        const { nextDisabled } = this.props;
 
         return (
             <div>
                 <IconAndAvatar />
-                <form onSubmit={this.onSubmit} style={{ marginTop: 30 }} noValidate>
+                <form onSubmit={this.onSubmit} style={{ marginTop: 40 }} noValidate>
                     <TextField
                         label="手机号 / 邮箱"
                         variant="outlined"
@@ -141,10 +128,9 @@ class Home extends PureComponent {
                         >
                             下 一 步
                         </Button>
-                        <p className="tip">「{client.name}」将获得你的手机号、昵称等账号信息。</p>
                     </div>
                 </form>
-                <ScanLoginButton />
+                <ScanLoginButton style={{ marginTop: 85 }} />
             </div>
         );
     }

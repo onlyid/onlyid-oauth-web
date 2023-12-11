@@ -3,7 +3,6 @@ import styles from "./index.module.css";
 import { Alert } from "@material-ui/lab";
 import { Hidden } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import TitleIcon from "./TitleIcon";
 import http from "my/http";
 import qs from "qs";
 import Faq from "./Faq";
@@ -39,7 +38,6 @@ class Support extends PureComponent {
             <div className={styles.bg}>
                 <div className={styles.root}>
                     <header>
-                        <TitleIcon />
                         <h1>需要帮助？</h1>
                     </header>
                     <Alert severity="info" className={styles.tipBox}>
@@ -48,7 +46,7 @@ class Support extends PureComponent {
                             」支持用唯ID登录。
                         </p>
                         <p>
-                            和微信、微博登录一样，用唯ID也可以登录各种网站、APP，不同的是，唯ID本身没有其他业务，是专业的身份认证产品。
+                            和微信、微博登录一样，用唯ID也可以登录各种网站、APP。不同的是，唯ID本身没有其他业务，是专业的身份认证产品。
                         </p>
                         <p style={{ marginBottom: 0 }}>
                             你的唯ID账号是一张网上“通行证”，可以登录所有支持唯ID的网站和APP。

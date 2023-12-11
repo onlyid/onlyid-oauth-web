@@ -1,15 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    InputLabel,
-    OutlinedInput
-} from "@material-ui/core";
+import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core";
 import PasswordInput from "components/PasswordInput";
 import OtpInput from "components/OtpInput";
 import Validator from "async-validator";
@@ -27,14 +19,13 @@ class ResetPassword extends PureComponent {
     state = {
         validation: { otp: {}, password: {} },
         otp: null,
-        password: null,
-        keepLoggedIn: false
+        password: null
     };
 
     onSubmit = async (e) => {
         e.preventDefault();
 
-        const { otp, password, keepLoggedIn, validation } = this.state;
+        const { otp, password, validation } = this.state;
         const {
             app: { account, client },
             location: { search }
@@ -54,8 +45,7 @@ class ResetPassword extends PureComponent {
             account,
             otp,
             password,
-            clientId: client.id,
-            keepLoggedIn
+            clientId: client.id
         });
 
         redirectCode(client, search, authorizationCode);
@@ -81,20 +71,16 @@ class ResetPassword extends PureComponent {
         this.setState({ [target.name]: target.value });
     };
 
-    onCheckBoxChange = (event) => {
-        this.setState({ keepLoggedIn: event.target.checked });
-    };
-
     render() {
         const {
             app: { account, client }
         } = this.props;
-        const { validation, keepLoggedIn } = this.state;
+        const { validation } = this.state;
 
         return (
             <div>
                 <IconAndAvatar />
-                <form onSubmit={this.onSubmit} style={{ marginTop: 25 }} className="form1">
+                <form onSubmit={this.onSubmit} style={{ marginTop: 30 }} className="form1">
                     <FormControl variant="outlined" fullWidth disabled>
                         <InputLabel htmlFor="account-input">账号</InputLabel>
                         <OutlinedInput id="account-input" label="账号" value={account} />
@@ -118,20 +104,7 @@ class ResetPassword extends PureComponent {
                         onBlur={this.validateField}
                         autoComplete="new-password"
                     />
-                    {client.type !== "APP" && (
-                        <FormControlLabel
-                            style={{ marginTop: "0.5rem" }}
-                            control={
-                                <Checkbox
-                                    color="primary"
-                                    onChange={this.onCheckBoxChange}
-                                    checked={keepLoggedIn}
-                                />
-                            }
-                            label="保持登录一个月"
-                        />
-                    )}
-                    <div style={{ marginTop: "0.5rem" }}>
+                    <div style={{ marginTop: 20 }}>
                         <Button
                             variant="contained"
                             color="primary"
@@ -143,7 +116,7 @@ class ResetPassword extends PureComponent {
                         </Button>
                     </div>
                 </form>
-                <div className="oneButtonBox">
+                <div className="oneButtonBox" style={{ marginTop: 35 }}>
                     <Button variant="outlined" onClick={this.back} size="small">
                         取 消
                     </Button>
