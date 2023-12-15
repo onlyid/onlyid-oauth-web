@@ -13,7 +13,6 @@ import Login from "./Login";
 import ResetPassword from "./ResetPassword";
 import ScanLogin from "./ScanLogin";
 import Choose from "./Choose";
-import Activate from "./Activate";
 import _ from "lodash";
 import classNames from "classnames";
 
@@ -135,9 +134,6 @@ class Account extends PureComponent {
                                 </Route>
                                 <Route path={`${match.path}/choose`}>
                                     <Choose users={users} onDelete={this.onDelete} />
-                                </Route>
-                                <Route path={`${match.path}/activate`}>
-                                    <Activate />
                                 </Route>
                                 <Route path={match.path}>
                                     <Home nextDisabled={nextDisabled} />

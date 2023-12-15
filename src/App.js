@@ -9,41 +9,13 @@ const Support = React.lazy(() => import("pages/Support"));
 const DownloadApp = React.lazy(() => import("pages/DownloadApp"));
 
 class App extends PureComponent {
-    unlisten = null;
     state = {
         toast: { open: false, text: "", severity: "", timeout: 0 }
     };
 
     componentDidMount() {
-        this.listenHistory();
-
         eventEmitter.on("app/openToast", this.openToast);
     }
-
-    componentWillUnmount() {
-        this.unlisten();
-    }
-
-    listenHistory = () => {
-        const { history } = this.props;
-
-        this.unlisten = history.listen((location, action) => {
-            // 如果是返回 则让浏览器自动处理
-            if (action === "POP") return;
-
-            const { hash } = location;
-            if (hash) {
-                setTimeout(() => {
-                    const element = document.getElementById(hash.substr(1));
-                    if (!element) return;
-
-                    element.scrollIntoView();
-                }, 100);
-            } else {
-                window.scrollTo(0, 0);
-            }
-        });
-    };
 
     openToast = async (toast) => {
         const {
