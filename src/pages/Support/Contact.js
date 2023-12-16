@@ -4,7 +4,7 @@ import weChat155 from "assets/wechat-155.jpeg";
 import { Hidden, Paper, Popper } from "@material-ui/core";
 import classNames from "classnames";
 
-export default class extends PureComponent {
+export default class Contact extends PureComponent {
     state = {
         anchorEl: null
     };

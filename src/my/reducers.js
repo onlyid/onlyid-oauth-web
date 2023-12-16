@@ -2,10 +2,10 @@ import { combineReducers } from "redux";
 
 const defaultApp = {
     account: "",
-    client: {},
-    oauthConfig: { background: [] },
     nickname: null,
-    avatarUrl: null
+    avatarUrl: null,
+    client: {},
+    oauthConfig: { background: [] }
 };
 
 function app(state = defaultApp, { type, ...rest }) {

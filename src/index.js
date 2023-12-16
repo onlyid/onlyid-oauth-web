@@ -1,15 +1,11 @@
-import "react-app-polyfill/ie11";
-import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import "./fonts.css";
 import App from "./App";
-import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { legacy_createStore as createStore } from "redux";
 import reducers from "my/reducers";
-import { createMuiTheme, CssBaseline } from "@material-ui/core";
+import { createTheme, CssBaseline } from "@material-ui/core";
 import { StylesProvider, ThemeProvider } from "@material-ui/core/styles";
 import { zhCN } from "@material-ui/core/locale";
 import { BrowserRouter } from "react-router-dom";
@@ -19,11 +15,11 @@ import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 
 const store = createStore(reducers);
-const theme = createMuiTheme({
+const fontFamily =
+    'Roboto,"Noto Sans SC","Helvetica Neue","PingFang SC","Segoe UI","Microsoft YaHei",sans-serif';
+const theme = createTheme({
     zhCN,
-    typography: {
-        fontFamily: ["Roboto", "Noto Sans SC", "sans-serif"].join(",")
-    }
+    typography: { fontFamily }
 });
 
 const content = (
@@ -41,8 +37,3 @@ const content = (
     </React.StrictMode>
 );
 ReactDOM.render(content, document.getElementById("root"));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

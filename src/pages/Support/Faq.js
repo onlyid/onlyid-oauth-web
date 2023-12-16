@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 
-export default class extends PureComponent {
+export default class Faq extends PureComponent {
     state = {
         expanded: false
     };
