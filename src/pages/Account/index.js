@@ -20,9 +20,7 @@ class Account extends PureComponent {
     ref1;
 
     state = {
-        loading: true,
-        nextDisabled: false,
-        users: []
+        loading: true
     };
 
     constructor(props) {
@@ -80,7 +78,7 @@ class Account extends PureComponent {
         const params = { tenant: client.tenant };
         const users = await http.get("user-sessions", { params });
         if (users.length) {
-            this.setState({ users });
+            dispatch({ type: "app", users });
             history.replace("/account/choose" + location.search);
         } else {
             history.replace("/account" + location.search);
@@ -90,24 +88,18 @@ class Account extends PureComponent {
     };
 
     disableNext = (text) => {
-        const { history, location } = this.props;
+        const { history, location, dispatch } = this.props;
 
         eventEmitter.emit("app/openToast", { text, severity: "error" });
         history.replace("/account" + location.search);
-        this.setState({ loading: false, nextDisabled: true });
-    };
-
-    onDelete = (userId) => {
-        this.setState(({ users }) => ({ users: users.filter((u) => u.id !== userId) }));
+        this.setState({ loading: false });
+        dispatch({ type: "app", nextDisabled: true });
     };
 
     render() {
-        const { loading, nextDisabled, users } = this.state;
-        const {
-            match,
-            app: { oauthConfig },
-            location
-        } = this.props;
+        const { loading } = this.state;
+        const { match, app, location } = this.props;
+        const { oauthConfig } = app;
 
         return (
             <div
@@ -133,10 +125,10 @@ class Account extends PureComponent {
                                     <ScanLogin />
                                 </Route>
                                 <Route path={`${match.path}/choose`}>
-                                    <Choose users={users} onDelete={this.onDelete} />
+                                    <Choose />
                                 </Route>
                                 <Route path={match.path}>
-                                    <Home nextDisabled={nextDisabled} />
+                                    <Home />
                                 </Route>
                             </Switch>
                         )}

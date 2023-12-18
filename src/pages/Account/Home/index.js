@@ -99,7 +99,7 @@ class Home extends PureComponent {
 
     render() {
         const { validation, account, termsChecked } = this.state;
-        const { nextDisabled } = this.props;
+        const { app } = this.props;
 
         return (
             <div>
@@ -124,7 +124,7 @@ class Home extends PureComponent {
                             fullWidth
                             onClick={this.onSubmit}
                             size="large"
-                            disabled={nextDisabled}
+                            disabled={app.nextDisabled}
                         >
                             下 一 步
                         </Button>

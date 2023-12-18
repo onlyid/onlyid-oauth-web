@@ -75,12 +75,13 @@ class Choose extends PureComponent {
         history.push("/account/login" + location.search);
     };
 
-    delete1 = async (user) => {
-        const { users, onDelete, history, location } = this.props;
+    onDelete = async ({ id }) => {
+        const { dispatch, app, history, location } = this.props;
+        const { users } = app;
 
-        await http.delete(`user-sessions/${user.id}`);
+        await http.delete(`user-sessions/${id}`);
 
-        onDelete(user.id);
+        dispatch({ type: "app", users: users.filter((u) => u.id !== id) });
 
         if (users.length === 1) history.replace("/account" + location.search);
     };
@@ -92,19 +93,19 @@ class Choose extends PureComponent {
     };
 
     render() {
-        const { users } = this.props;
+        const { app } = this.props;
 
         return (
             <div className={styles.root}>
                 <IconAndAvatar />
                 <p className="tip">选择一个账号登录</p>
                 <div className={styles.listBox}>
-                    {users.map((user) => (
+                    {app.users.map((user) => (
                         <Item
                             user={user}
                             key={user.id}
                             onClick={() => this.onClick(user)}
-                            onDelete={() => this.delete1(user)}
+                            onDelete={() => this.onDelete(user)}
                         />
                     ))}
                 </div>

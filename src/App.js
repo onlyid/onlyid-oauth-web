@@ -58,10 +58,7 @@ class App extends PureComponent {
                             path="/"
                             render={(props) => (
                                 <Redirect
-                                    to={{
-                                        pathname: "/account",
-                                        search: props.location.search
-                                    }}
+                                    to={{ pathname: "/account", search: props.location.search }}
                                 />
                             )}
                         />
