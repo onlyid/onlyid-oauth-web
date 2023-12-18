@@ -9,6 +9,7 @@ import icon from "assets/ic_launcher.png";
 import http from "my/http";
 import axios from "axios";
 import DialogClose from "components/DialogClose";
+import withLayout from "components/MyLayout";
 
 class ScanLogin extends PureComponent {
     source;
@@ -204,4 +205,4 @@ class ScanLogin extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(ScanLogin));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(ScanLogin)));

@@ -9,7 +9,7 @@ class ScanLoginButton extends PureComponent {
             history,
             location: { search }
         } = this.props;
-        history.push("/account/scan-login" + search);
+        history.push("/scan-login" + search);
     };
 
     render() {

@@ -9,6 +9,7 @@ import IconAndAvatar from "components/IconAndAvatar";
 import ScanLoginButton from "components/ScanLoginButton";
 import { eventEmitter } from "my/utils";
 import TermsCheckbox from "./TermsCheckbox";
+import withLayout from "components/MyLayout";
 
 const RULES = {
     email: [
@@ -37,13 +38,7 @@ class Home extends PureComponent {
     onSubmit = async (e) => {
         e.preventDefault();
 
-        const {
-            history,
-            match,
-            location: { search },
-            app: { client },
-            dispatch
-        } = this.props;
+        const { history, location, dispatch } = this.props;
         const { account, termsChecked } = this.state;
 
         if (!(await this.validateField())) return;
@@ -54,22 +49,17 @@ class Home extends PureComponent {
             return;
         }
 
-        const params = { account, tenant: client.tenant };
+        const params = { account };
         const data = await http.get("check-account", { params });
         let route;
         if (data) {
-            const { nickname, avatarUrl, activated } = data;
-            if (activated) {
-                dispatch({ type: "app", nickname, avatarUrl });
-                route = "login";
-            } else {
-                route = "activate";
-            }
+            dispatch({ type: "app", ...data });
+            route = "login";
         } else {
             route = "sign-up";
         }
         dispatch({ type: "app", account });
-        history.push(`${match.url}/${route}${search}`);
+        history.push(`/${route}${location.search}`);
     };
 
     onChange = (e) => {
@@ -136,4 +126,4 @@ class Home extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(Home));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(Home)));

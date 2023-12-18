@@ -22,9 +22,7 @@ class AvatarUpload extends PureComponent {
         const scaledImage = window.loadImage.scale(image, { maxWidth: 256, minWidth: 256 });
 
         const blob = await new Promise((resolve) => {
-            // 兼容IE11
-            if (scaledImage.toBlob) scaledImage.toBlob(resolve, file.type);
-            else resolve(scaledImage.msToBlob());
+            scaledImage.toBlob(resolve, file.type);
         });
 
         const formData = new FormData();

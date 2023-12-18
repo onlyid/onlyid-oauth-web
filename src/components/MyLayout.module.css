@@ -29,16 +29,24 @@
     margin-top: 20px;
 }
 
+.divider {
+    margin-top: 20px;
+    width: 250px;
+    background-color: #e8e8e8;
+}
+
 @media (min-width: 600px) {
     .root.bg {
-        background-image: url("../../assets/mask.png");
+        background-image: url("../assets/mask.png");
         background-size: 3000px;
         background-position: center top;
         background-repeat: no-repeat;
     }
 
     .card {
-        box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+        box-shadow:
+            0 2px 1px -1px rgba(0, 0, 0, 0.2),
+            0 1px 1px 0 rgba(0, 0, 0, 0.14),
             0 1px 3px 0 rgba(0, 0, 0, 0.12);
         min-height: 600px;
         padding: 40px 25px;

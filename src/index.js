@@ -15,12 +15,8 @@ import "moment/locale/zh-cn";
 moment.locale("zh-cn");
 
 const store = createStore(reducers);
-const fontFamily =
-    'Roboto,"Noto Sans SC","Helvetica Neue","PingFang SC","Segoe UI","Microsoft YaHei",sans-serif';
-const theme = createTheme({
-    zhCN,
-    typography: { fontFamily }
-});
+const fontFamily = `Roboto,"Noto Sans SC","Helvetica Neue","PingFang SC","Segoe UI","Microsoft YaHei",sans-serif`;
+const theme = createTheme({ zhCN, typography: { fontFamily } });
 
 const content = (
     <React.StrictMode>

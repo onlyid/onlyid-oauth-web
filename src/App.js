@@ -4,7 +4,14 @@ import { CircularProgress, Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { eventEmitter } from "./my/utils";
 
-const Account = React.lazy(() => import("pages/Account"));
+// 关键页面不要延迟加载
+import Home from "pages/Home";
+import SignUp from "pages/SignUp";
+import Login from "pages/Login";
+import ResetPassword from "pages/ResetPassword";
+import ScanLogin from "pages/ScanLogin";
+import Choose from "pages/Choose";
+
 const Support = React.lazy(() => import("pages/Support"));
 const DownloadApp = React.lazy(() => import("pages/DownloadApp"));
 
@@ -45,20 +52,34 @@ class App extends PureComponent {
             <>
                 <Suspense fallback={loading}>
                     <Switch>
+                        <Route path="/login">
+                            <Login />
+                        </Route>
+                        <Route path="/sign-up">
+                            <SignUp />
+                        </Route>
+                        <Route path="/reset-password">
+                            <ResetPassword />
+                        </Route>
+                        <Route path="/scan-login">
+                            <ScanLogin />
+                        </Route>
+                        <Route path="/choose">
+                            <Choose />
+                        </Route>
+                        <Route path="/home">
+                            <Home />
+                        </Route>
                         <Route path="/support">
                             <Support />
                         </Route>
                         <Route path="/download-app">
                             <DownloadApp />
                         </Route>
-                        <Route path="/account">
-                            <Account />
-                        </Route>
                         <Route
-                            path="/"
                             render={(props) => (
                                 <Redirect
-                                    to={{ pathname: "/account", search: props.location.search }}
+                                    to={{ pathname: "/home", search: props.location.search }}
                                 />
                             )}
                         />

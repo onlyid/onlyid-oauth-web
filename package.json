@@ -20,12 +20,15 @@
     "react-scripts": "^4.0.3",
     "redux": "^4.2.1"
   },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  },
   "overrides": {
     "react-error-overlay": "6.0.9"
   },
   "scripts": {
     "start": "PORT=3001 react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

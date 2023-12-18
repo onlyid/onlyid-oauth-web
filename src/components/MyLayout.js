@@ -1,32 +1,19 @@
 import React, { PureComponent } from "react";
 import { Divider, Link } from "@material-ui/core";
 import { eventEmitter } from "my/utils";
-import styles from "./index.module.css";
+import styles from "./MyLayout.module.css";
 import qs from "qs";
 import http from "my/http";
 import { connect } from "react-redux";
-import { Link as RRLink, Route, Switch, withRouter } from "react-router-dom";
+import { Link as RRLink, withRouter } from "react-router-dom";
 import logo from "assets/logo.svg";
-import Home from "./Home";
-import SignUp from "./SignUp";
-import Login from "./Login";
-import ResetPassword from "./ResetPassword";
-import ScanLogin from "./ScanLogin";
-import Choose from "./Choose";
 import _ from "lodash";
-import classNames from "classnames";
+import cn from "classnames";
 
-class Account extends PureComponent {
-    ref1;
-
+class Layout extends PureComponent {
     state = {
         loading: true
     };
-
-    constructor(props) {
-        super(props);
-        this.ref1 = React.createRef();
-    }
 
     componentDidMount() {
         this.initData();
@@ -69,19 +56,13 @@ class Account extends PureComponent {
                 return this.disableNext("回调URI参数错误，请检查");
         }
 
-        // 注入自定义背景
-        for (const item of oauthConfig.background) {
-            const array = item.split(/:(.+)/);
-            this.ref1.current.style[_.camelCase(array[0])] = array[1];
-        }
-
         const params = { tenant: client.tenant };
         const users = await http.get("user-sessions", { params });
         if (users.length) {
             dispatch({ type: "app", users });
-            history.replace("/account/choose" + location.search);
+            history.replace("/choose" + location.search);
         } else {
-            history.replace("/account" + location.search);
+            history.replace("/home" + location.search);
         }
 
         this.setState({ loading: false });
@@ -91,48 +72,35 @@ class Account extends PureComponent {
         const { history, location, dispatch } = this.props;
 
         eventEmitter.emit("app/openToast", { text, severity: "error" });
-        history.replace("/account" + location.search);
+        history.replace("/home" + location.search);
         this.setState({ loading: false });
         dispatch({ type: "app", nextDisabled: true });
     };
 
     render() {
         const { loading } = this.state;
-        const { match, app, location } = this.props;
+        const { app, location, children, contentClass } = this.props;
         const { oauthConfig } = app;
 
+        const bgStyle = {};
+        const bgClass = {};
+        // 如果有自定义背景，优先使用
+        if (oauthConfig.background.length) {
+            for (const item of oauthConfig.background) {
+                // 正则是为了只在第一个冒号处split，剩余字符串放到数组第二个元素
+                const [p, v] = item.split(/:(.+)/);
+                bgStyle[_.camelCase(p)] = v;
+            }
+        }
+        // 如果还在加载中，不apply默认背景
+        else if (!loading) {
+            bgClass[styles.bg] = true;
+        }
+
         return (
-            <div
-                className={classNames(styles.root, {
-                    [styles.bg]: !oauthConfig.background.length && !loading
-                })}
-                ref={this.ref1}
-            >
+            <div className={cn(styles.root, bgClass)} style={bgStyle}>
                 <div className={styles.cardWrapper}>
-                    <div className={styles.card}>
-                        {!loading && (
-                            <Switch>
-                                <Route path={`${match.path}/login`}>
-                                    <Login />
-                                </Route>
-                                <Route path={`${match.path}/sign-up`}>
-                                    <SignUp />
-                                </Route>
-                                <Route path={`${match.path}/reset-password`}>
-                                    <ResetPassword />
-                                </Route>
-                                <Route path={`${match.path}/scan-login`}>
-                                    <ScanLogin />
-                                </Route>
-                                <Route path={`${match.path}/choose`}>
-                                    <Choose />
-                                </Route>
-                                <Route path={match.path}>
-                                    <Home />
-                                </Route>
-                            </Switch>
-                        )}
-                    </div>
+                    <div className={cn(styles.card, contentClass)}>{!loading && children}</div>
                 </div>
                 <footer>
                     <Link
@@ -143,7 +111,7 @@ class Account extends PureComponent {
                     >
                         需要帮助？
                     </Link>
-                    <Divider style={{ marginTop: 20, width: 250 }} />
+                    <Divider className={styles.divider} />
                     <Link href="https://www.onlyid.net/home" target="_blank">
                         <img src={logo} alt="logo" width="100" />
                     </Link>
@@ -156,4 +124,15 @@ class Account extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(Account));
+const MyLayout = connect(({ app }) => ({ app }))(withRouter(Layout));
+
+// 使用高阶组件，在loading时渲染layout，但不渲染子组件
+export default function withLayout(WrappedComponent) {
+    return function () {
+        return (
+            <MyLayout>
+                <WrappedComponent />
+            </MyLayout>
+        );
+    };
+}

@@ -10,6 +10,7 @@ import IconAndAvatar from "components/IconAndAvatar";
 import { Edit } from "@material-ui/icons";
 import { redirectCode } from "my/utils";
 import CaptchaDialog from "components/CaptchaDialog";
+import withLayout from "components/MyLayout";
 
 const RULES = [{ required: true, message: "请输入" }];
 
@@ -82,7 +83,7 @@ class Login extends PureComponent {
             history,
             location: { search }
         } = this.props;
-        history.push("/account/reset-password" + search);
+        history.push("/reset-password" + search);
     };
 
     toggleCaptcha = () => {
@@ -169,4 +170,4 @@ class Login extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(Login));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(Login)));

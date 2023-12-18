@@ -8,6 +8,7 @@ import { IconButton, ListItemText, Menu, MenuItem } from "@material-ui/core";
 import classNames from "classnames";
 import http from "my/http";
 import ScanLoginButton from "components/ScanLoginButton";
+import withLayout from "components/MyLayout";
 
 class Item extends PureComponent {
     state = {
@@ -72,7 +73,7 @@ class Choose extends PureComponent {
 
         const { nickname, avatarUrl, account } = user;
         dispatch({ type: "app", nickname, avatarUrl, account });
-        history.push("/account/login" + location.search);
+        history.push("/login" + location.search);
     };
 
     onDelete = async ({ id }) => {
@@ -83,13 +84,13 @@ class Choose extends PureComponent {
 
         dispatch({ type: "app", users: users.filter((u) => u.id !== id) });
 
-        if (users.length === 1) history.replace("/account" + location.search);
+        if (users.length === 1) history.replace("/home" + location.search);
     };
 
     useNew = () => {
         const { history, location } = this.props;
 
-        history.push("/account" + location.search);
+        history.push("/home" + location.search);
     };
 
     render() {
@@ -118,4 +119,4 @@ class Choose extends PureComponent {
     }
 }
 
-export default connect(({ app }) => ({ app }))(withRouter(Choose));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(Choose)));
