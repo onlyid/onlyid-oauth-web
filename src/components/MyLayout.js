@@ -56,8 +56,7 @@ class Layout extends PureComponent {
                 return this.disableNext("回调URI参数错误，请检查");
         }
 
-        const params = { tenant: client.tenant };
-        const users = await http.get("user-sessions", { params });
+        const users = await http.get("user-sessions");
         if (users.length) {
             dispatch({ type: "app", users });
             history.replace("/choose" + location.search);

@@ -6,7 +6,7 @@ import { SwapHoriz } from "@material-ui/icons";
 class IconAndAvatar extends PureComponent {
     render() {
         const {
-            app: { client, avatarUrl, nickname }
+            app: { client, avatar, nickname }
         } = this.props;
 
         return (
@@ -15,11 +15,11 @@ class IconAndAvatar extends PureComponent {
                     <img src={client.iconUrl} alt="icon" />
                     <p>{client.name}</p>
                 </div>
-                {avatarUrl && (
+                {avatar && (
                     <>
                         <SwapHoriz className={styles.swapIcon} />
                         <div className={styles.box}>
-                            <img src={avatarUrl} alt="avatar" />
+                            <img src={avatar} alt="avatar" />
                             <p>{nickname}</p>
                         </div>
                     </>

@@ -14,11 +14,7 @@ class AvatarUpload extends PureComponent {
 
         const file = files[0];
         e.target.value = null;
-        const { image } = await window.loadImage(file, {
-            orientation: true,
-            aspectRatio: 1,
-            canvas: true
-        });
+        const { image } = await window.loadImage(file, { orientation: true, aspectRatio: 1 });
         const scaledImage = window.loadImage.scale(image, { maxWidth: 256, minWidth: 256 });
 
         const blob = await new Promise((resolve) => {
@@ -29,14 +25,14 @@ class AvatarUpload extends PureComponent {
         formData.append("file", blob);
         const { filename } = await http.post("image", formData);
 
-        dispatch({ type: "app", avatarUrl: scaledImage.toDataURL(file.type) });
+        dispatch({ type: "app", avatar: scaledImage.toDataURL(file.type) });
 
         onUpload(filename);
     };
 
     render() {
         const {
-            app: { avatarUrl },
+            app: { avatar },
             requiredVisible
         } = this.props;
 
@@ -50,8 +46,8 @@ class AvatarUpload extends PureComponent {
                     onChange={this.onChange}
                 />
                 <label htmlFor="upload-file">
-                    {avatarUrl ? (
-                        <img src={avatarUrl} alt="avatar" />
+                    {avatar ? (
+                        <img src={avatar} alt="avatar" />
                     ) : (
                         <span className="material-icons">person</span>
                     )}

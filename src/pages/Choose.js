@@ -36,7 +36,7 @@ class Item extends PureComponent {
                     onMouseEnter={() => this.setState({ isHover: true })}
                     onMouseLeave={() => this.setState({ isHover: false })}
                 >
-                    <img src={user.avatarUrl} alt="avatar" className={styles.avatar} />
+                    <img src={user.avatar} alt="avatar" className={styles.avatar} />
                     <div className={styles.box1}>
                         <p className={styles.nickname}>{user.nickname}</p>
                         <p className={styles.account}>{user.account}</p>
@@ -65,14 +65,14 @@ class Item extends PureComponent {
 class Choose extends PureComponent {
     componentDidMount() {
         const { dispatch } = this.props;
-        dispatch({ type: "app", avatarUrl: null, nickname: null });
+        dispatch({ type: "app", avatar: null, nickname: null });
     }
 
     onClick = async (user) => {
         const { history, location, dispatch } = this.props;
 
-        const { nickname, avatarUrl, account } = user;
-        dispatch({ type: "app", nickname, avatarUrl, account });
+        const { nickname, avatar, account } = user;
+        dispatch({ type: "app", nickname, avatar, account });
         history.push("/login" + location.search);
     };
 
