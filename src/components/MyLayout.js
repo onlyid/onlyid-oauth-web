@@ -79,7 +79,7 @@ class Layout extends PureComponent {
     render() {
         const { loading } = this.state;
         const { app, location, children, contentClass } = this.props;
-        const { oauthConfig } = app;
+        const { oauthConfig, client } = app;
 
         const bgStyle = {};
         const bgClass = {};
@@ -96,8 +96,10 @@ class Layout extends PureComponent {
             bgClass[styles.bg] = true;
         }
 
+        const sdkClass = { [styles.sdk]: client.type === "APP" };
+
         return (
-            <div className={cn(styles.root, bgClass)} style={bgStyle}>
+            <div className={cn(styles.root, bgClass, sdkClass)} style={bgStyle}>
                 <div className={styles.cardWrapper}>
                     <div className={cn(styles.card, contentClass)}>{!loading && children}</div>
                 </div>

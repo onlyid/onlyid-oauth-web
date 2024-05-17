@@ -7,6 +7,11 @@
     align-items: center;
 }
 
+/* sdk顶部有标题栏，适当减少paddingTop */
+.root.sdk {
+    padding-top: 15px;
+}
+
 .cardWrapper {
     flex-grow: 1;
 
