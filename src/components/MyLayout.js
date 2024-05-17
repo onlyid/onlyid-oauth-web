@@ -36,17 +36,17 @@ class Layout extends PureComponent {
                 if (oauthConfig.packageName !== query["package-name"])
                     return this.disableNext("应用包名错误，请检查");
 
-                window.android.setTitle("登录" + client.name);
+                // window.android.setTitle("登录" + client.name);
             }
             // ios
             else {
                 if (oauthConfig.bundleId !== query["bundle-id"])
                     return this.disableNext("Bundle ID错误，请检查");
 
-                window.webkit.messageHandlers.ios.postMessage({
-                    method: "setTitle",
-                    data: { title: "登录" + client.name }
-                });
+                // window.webkit.messageHandlers.ios.postMessage({
+                //     method: "setTitle",
+                //     data: { title: "登录" + client.name }
+                // });
             }
         } else {
             if (!oauthConfig.redirectUris.length)
