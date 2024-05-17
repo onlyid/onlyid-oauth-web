@@ -30,12 +30,9 @@ export function redirectCode(client, search, code) {
     const state = query["state"] || null;
     if (client.type === "APP") {
         if (window.android) {
-            window.android.onCode(code, state);
+            window.android.onSuccess(code, state);
         } else {
-            window.webkit.messageHandlers.ios.postMessage({
-                method: "onCode",
-                data: { code, state }
-            });
+            window.webkit.messageHandlers.ios.postMessage({ method: "onSuccess", code, state });
         }
     } else {
         let url = query["redirect-uri"] + "?code=" + code;
