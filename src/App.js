@@ -11,6 +11,7 @@ import Login from "pages/Login";
 import ResetPassword from "pages/ResetPassword";
 import ScanLogin from "pages/ScanLogin";
 import Choose from "pages/Choose";
+import Hi from "pages/Hi";
 
 const Support = React.lazy(() => import("pages/Support"));
 const DownloadApp = React.lazy(() => import("pages/DownloadApp"));
@@ -75,6 +76,9 @@ class App extends PureComponent {
                         </Route>
                         <Route path="/download-app">
                             <DownloadApp />
+                        </Route>
+                        <Route path="/hi">
+                            <Hi />
                         </Route>
                         <Route
                             render={(props) => (
