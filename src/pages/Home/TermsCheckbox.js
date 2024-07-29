@@ -28,11 +28,11 @@ function TermsCheckbox({ checked, onChange, app }) {
                 )}
                 {(termsUrl || privacyUrl) && <> 以及</>}
                 <>唯ID </>
-                <Link href="https://www.onlyid.net/static/terms.html" target="_blank">
+                <Link href="https://onlyid.net/static/terms.html" target="_blank">
                     服务协议
                 </Link>
                 、
-                <Link href="https://www.onlyid.net/static/privacy.html" target="_blank">
+                <Link href="https://onlyid.net/static/privacy.html" target="_blank">
                     隐私政策
                 </Link>
             </p>

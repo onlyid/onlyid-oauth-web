@@ -113,11 +113,11 @@ class Layout extends PureComponent {
                         需要帮助？
                     </Link>
                     <Divider className={styles.divider} />
-                    <Link href="https://www.onlyid.net/home" target="_blank">
+                    <Link href="https://onlyid.net/web" target="_blank">
                         <img src={logo} alt="logo" width="100" />
                     </Link>
                     <p className="tip" style={{ marginTop: 10 }}>
-                        用一个唯ID账号登录全球互联网
+                        用一个账号登录全球互联网
                     </p>
                 </footer>
             </div>
