@@ -1,18 +1,18 @@
-import React, { PureComponent } from "react";
-import { Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core";
-import { ExpandMore } from "@material-ui/icons";
+import React, { PureComponent } from "react"
+import { Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core"
+import { ExpandMore } from "@material-ui/icons"
 
 export default class Faq extends PureComponent {
     state = {
         expanded: false
-    };
+    }
 
     onChange = (panel, expanded1) => {
-        this.setState({ expanded: expanded1 ? panel : false });
-    };
+        this.setState({ expanded: expanded1 ? panel : false })
+    }
 
     render() {
-        const { expanded } = this.state;
+        const { expanded } = this.state
 
         return (
             <>
@@ -115,6 +115,6 @@ export default class Faq extends PureComponent {
                     </Accordion>
                 </div>
             </>
-        );
+        )
     }
 }

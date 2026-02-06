@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from "redux"
 
 const defaultApp = {
     account: "",
@@ -8,12 +8,12 @@ const defaultApp = {
     oauthConfig: { background: [] },
     users: [],
     nextDisabled: false
-};
-
-function app(state = defaultApp, { type, ...rest }) {
-    if (type === "app") return { ...state, ...rest };
-
-    return state;
 }
 
-export default combineReducers({ app });
+function app(state = defaultApp, { type, ...rest }) {
+    if (type === "app") return { ...state, ...rest }
+
+    return state
+}
+
+export default combineReducers({ app })

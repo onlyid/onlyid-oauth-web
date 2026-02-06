@@ -1,24 +1,24 @@
-import React, { PureComponent } from "react";
-import styles from "./Contact.module.css";
-import weChat155 from "assets/wechat-155.jpeg";
-import { Hidden, Paper, Popper } from "@material-ui/core";
-import classNames from "classnames";
+import React, { PureComponent } from "react"
+import styles from "./Contact.module.css"
+import weChat155 from "assets/wechat-155.jpeg"
+import { Hidden, Paper, Popper } from "@material-ui/core"
+import classNames from "classnames"
 
 export default class Contact extends PureComponent {
     state = {
         anchorEl: null
-    };
+    }
 
     showWeChat = (e) => {
-        this.setState({ anchorEl: e.currentTarget });
-    };
+        this.setState({ anchorEl: e.currentTarget })
+    }
 
     closeWeChat = () => {
-        this.setState({ anchorEl: null });
-    };
+        this.setState({ anchorEl: null })
+    }
 
     render() {
-        const { anchorEl } = this.state;
+        const { anchorEl } = this.state
 
         return (
             <div className={styles.root}>
@@ -69,6 +69,6 @@ export default class Contact extends PureComponent {
                     </Paper>
                 </Popper>
             </div>
-        );
+        )
     }
 }

@@ -619,4 +619,4 @@ export default [
         province: "澳门特别行政区",
         city: ["凼仔岛", "路环岛", "澳门半岛"]
     }
-];
+]

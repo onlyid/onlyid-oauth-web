@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from "react"
 import {
     Button,
     FormControl,
@@ -6,52 +6,52 @@ import {
     InputAdornment,
     InputLabel,
     OutlinedInput
-} from "@material-ui/core";
-import http from "my/http";
-import CaptchaDialog from "./CaptchaDialog";
+} from "@material-ui/core"
+import http from "my/http"
+import CaptchaDialog from "./CaptchaDialog"
 
 class OtpInput extends PureComponent {
     static defaultProps = {
         label: "验证码"
-    };
+    }
 
     state = {
         sent: false,
         countDown: 60,
         captchaOpen: false
-    };
+    }
 
     sendOtp = async () => {
-        const { recipient, clientId } = this.props;
-        const data = await http.post("send-otp", { recipient, clientId });
+        const { recipient, clientId } = this.props
+        const data = await http.post("send-otp", { recipient, clientId })
 
         if (data && data.requireCaptcha) {
-            this.toggleCaptcha();
-            return;
+            this.toggleCaptcha()
+            return
         }
 
-        this.setState({ countDown: 60, sent: true });
+        this.setState({ countDown: 60, sent: true })
         const h = setInterval(() => {
-            let { countDown } = this.state;
-            countDown--;
-            this.setState({ countDown });
+            let { countDown } = this.state
+            countDown--
+            this.setState({ countDown })
             if (countDown === 0) {
-                clearInterval(h);
-                this.setState({ sent: false });
+                clearInterval(h)
+                this.setState({ sent: false })
             }
-        }, 1000);
-    };
+        }, 1000)
+    }
 
     toggleCaptcha = () => {
-        this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }));
-    };
+        this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }))
+    }
 
     render() {
-        const { error, onChange, helperText, label, ...restProps } = this.props;
-        const { sent, countDown, captchaOpen } = this.state;
+        const { error, onChange, helperText, label, ...restProps } = this.props
+        const { sent, countDown, captchaOpen } = this.state
 
-        delete restProps.recipient;
-        delete restProps.clientId;
+        delete restProps.recipient
+        delete restProps.clientId
 
         return (
             <FormControl variant="outlined" fullWidth error={error}>
@@ -76,13 +76,13 @@ class OtpInput extends PureComponent {
                     open={captchaOpen}
                     onCancel={this.toggleCaptcha}
                     onSuccess={() => {
-                        this.toggleCaptcha();
-                        this.sendOtp();
+                        this.toggleCaptcha()
+                        this.sendOtp()
                     }}
                 />
             </FormControl>
-        );
+        )
     }
 }
 
-export default OtpInput;
+export default OtpInput

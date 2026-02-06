@@ -1,49 +1,49 @@
-import React, { PureComponent } from "react";
-import { eventEmitter, getRandomValue, redirectCode } from "my/utils";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import styles from "./ScanLogin.module.css";
-import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core";
-import { Android, Check } from "@material-ui/icons";
-import icon from "assets/ic_launcher.png";
-import http from "my/http";
-import axios from "axios";
-import DialogClose from "components/DialogClose";
-import withLayout from "components/MyLayout";
+import React, { PureComponent } from "react"
+import { eventEmitter, getRandomValue, redirectCode } from "my/utils"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
+import styles from "./ScanLogin.module.css"
+import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core"
+import { Android, Check } from "@material-ui/icons"
+import icon from "assets/ic_launcher.png"
+import http from "my/http"
+import axios from "axios"
+import DialogClose from "components/DialogClose"
+import withLayout from "components/MyLayout"
 
 class ScanLogin extends PureComponent {
-    source;
+    source
 
     state = {
         dialogVisible: false
-    };
+    }
 
     constructor(props) {
-        super(props);
-        this.ref1 = React.createRef();
-        this.ref2 = React.createRef();
+        super(props)
+        this.ref1 = React.createRef()
+        this.ref2 = React.createRef()
     }
 
     componentDidMount() {
         const {
             app: { client }
-        } = this.props;
+        } = this.props
 
         const text = {
             uid: getRandomValue(),
             clientId: client.id
-        };
+        }
         new window.QRCode(this.ref1.current, {
             text: JSON.stringify(text),
             width: 256,
             height: 256
-        });
+        })
 
-        this.startLoop(text);
+        this.startLoop(text)
     }
 
     componentWillUnmount() {
-        this.source.cancel("unmount");
+        this.source.cancel("unmount")
     }
 
     startLoop = async (params) => {
@@ -51,29 +51,29 @@ class ScanLogin extends PureComponent {
             app: { client },
             location: { search },
             history
-        } = this.props;
+        } = this.props
 
-        let code;
+        let code
         while (true) {
             try {
-                this.source = axios.CancelToken.source();
+                this.source = axios.CancelToken.source()
                 const { authorizationCode } = await http.post("auth/scan-login", params, {
                     cancelToken: this.source.token
-                });
+                })
 
                 if (authorizationCode) {
-                    code = authorizationCode;
-                    break;
+                    code = authorizationCode
+                    break
                 }
             } catch (err) {
                 if (axios.isCancel(err)) {
                     if (err.message === "unmount") {
-                        return;
+                        return
                     } else {
                         // do nothing
                     }
                 } else {
-                    throw err;
+                    throw err
                 }
             }
         }
@@ -82,40 +82,40 @@ class ScanLogin extends PureComponent {
             eventEmitter.emit("app/openToast", {
                 text: "你拒绝了本次登录请求",
                 severity: "warning"
-            });
-            history.goBack();
-            return;
+            })
+            history.goBack()
+            return
         }
 
-        redirectCode(client, search, code);
-    };
+        redirectCode(client, search, code)
+    }
 
     showDialog = () => {
-        this.setState({ dialogVisible: true });
+        this.setState({ dialogVisible: true })
 
         setTimeout(() => {
             this.code = new window.QRCode(this.ref2.current, {
                 text: window.location.origin + "/oauth/download-app",
                 width: 128,
                 height: 128
-            });
-        }, 100);
-    };
+            })
+        }, 100)
+    }
 
     closeDialog = () => {
-        this.setState({ dialogVisible: false });
-    };
+        this.setState({ dialogVisible: false })
+    }
 
     back = () => {
-        const { history } = this.props;
-        history.goBack();
-    };
+        const { history } = this.props
+        history.goBack()
+    }
 
     render() {
         const {
             app: { client }
-        } = this.props;
-        const { dialogVisible } = this.state;
+        } = this.props
+        const { dialogVisible } = this.state
 
         return (
             <div className={styles.root}>
@@ -201,8 +201,8 @@ class ScanLogin extends PureComponent {
                     </DialogContent>
                 </Dialog>
             </div>
-        );
+        )
     }
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(ScanLogin)));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(ScanLogin)))

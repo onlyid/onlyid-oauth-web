@@ -1,10 +1,10 @@
-import React from "react";
-import styles from "./index.module.css";
-import { Alert } from "@material-ui/lab";
-import { Hidden } from "@material-ui/core";
-import Faq from "./Faq";
-import Security from "./Security";
-import Contact from "./Contact";
+import React from "react"
+import styles from "./index.module.css"
+import { Alert } from "@material-ui/lab"
+import { Hidden } from "@material-ui/core"
+import Faq from "./Faq"
+import Security from "./Security"
+import Contact from "./Contact"
 
 export default function Support() {
     return (
@@ -34,5 +34,5 @@ export default function Support() {
                 </footer>
             </div>
         </div>
-    );
+    )
 }

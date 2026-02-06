@@ -1,18 +1,18 @@
-import React, { PureComponent } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { Button } from "@material-ui/core";
-import http from "my/http";
-import PasswordInput from "components/PasswordInput";
-import OtpInput from "components/OtpInput";
-import Validator from "async-validator";
-import IconAndAvatar from "components/IconAndAvatar";
-import { Edit } from "@material-ui/icons";
-import { redirectCode } from "my/utils";
-import CaptchaDialog from "components/CaptchaDialog";
-import withLayout from "components/MyLayout";
+import React, { PureComponent } from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
+import { Button } from "@material-ui/core"
+import http from "my/http"
+import PasswordInput from "components/PasswordInput"
+import OtpInput from "components/OtpInput"
+import Validator from "async-validator"
+import IconAndAvatar from "components/IconAndAvatar"
+import { Edit } from "@material-ui/icons"
+import { redirectCode } from "my/utils"
+import CaptchaDialog from "components/CaptchaDialog"
+import withLayout from "components/MyLayout"
 
-const RULES = [{ required: true, message: "请输入" }];
+const RULES = [{ required: true, message: "请输入" }]
 
 class Login extends PureComponent {
     state = {
@@ -20,81 +20,81 @@ class Login extends PureComponent {
         inputValue: "",
         loginType: "password",
         captchaOpen: false
-    };
+    }
 
     back = () => {
-        const { history } = this.props;
-        history.goBack();
-    };
+        const { history } = this.props
+        history.goBack()
+    }
 
     onSubmit = async (e) => {
-        e && e.preventDefault();
+        e && e.preventDefault()
 
-        const { inputValue, loginType } = this.state;
+        const { inputValue, loginType } = this.state
         const {
             app: { account, client },
             location: { search }
-        } = this.props;
+        } = this.props
 
-        if (!(await this.validateField())) return;
+        if (!(await this.validateField())) return
 
         const { authorizationCode, requireCaptcha } = await http.post("auth/login", {
             account,
             [loginType]: inputValue,
             clientId: client.id
-        });
+        })
 
         if (requireCaptcha) {
-            this.toggleCaptcha();
-            return;
+            this.toggleCaptcha()
+            return
         }
 
-        redirectCode(client, search, authorizationCode);
-    };
+        redirectCode(client, search, authorizationCode)
+    }
 
     onChange = (e) => {
-        this.setState({ inputValue: e.target.value });
-    };
+        this.setState({ inputValue: e.target.value })
+    }
 
     validateField = async () => {
-        const { inputValue } = this.state;
-        let validation;
+        const { inputValue } = this.state
+        let validation
         try {
-            const validator = new Validator({ inputValue: RULES });
-            await validator.validate({ inputValue }, { first: true });
-            validation = {};
-            return true;
+            const validator = new Validator({ inputValue: RULES })
+            await validator.validate({ inputValue }, { first: true })
+            validation = {}
+            return true
         } catch ({ errors }) {
-            validation = { text: errors[0].message, error: true };
-            return false;
+            validation = { text: errors[0].message, error: true }
+            return false
         } finally {
-            this.setState({ validation });
+            this.setState({ validation })
         }
-    };
+    }
 
     toggleLoginType = () => {
         this.setState(({ loginType }) => ({
             loginType: loginType === "password" ? "otp" : "password"
-        }));
-    };
+        }))
+    }
 
     resetPassword = () => {
         const {
             history,
             location: { search }
-        } = this.props;
-        history.push("/reset-password" + search);
-    };
+        } = this.props
+        history.push("/reset-password" + search)
+    }
 
     toggleCaptcha = () => {
-        this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }));
-    };
+        this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }))
+    }
 
     render() {
-        const { validation, loginType, captchaOpen } = this.state;
+        const { validation, loginType, captchaOpen } = this.state
         const {
             app: { account, client }
-        } = this.props;
+        } = this.props
 
         return (
             <div>
@@ -161,13 +161,13 @@ class Login extends PureComponent {
                     open={captchaOpen}
                     onCancel={this.toggleCaptcha}
                     onSuccess={() => {
-                        this.toggleCaptcha();
-                        this.onSubmit();
+                        this.toggleCaptcha()
+                        this.onSubmit()
                     }}
                 />
             </div>
-        );
+        )
     }
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(Login)));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(Login)))

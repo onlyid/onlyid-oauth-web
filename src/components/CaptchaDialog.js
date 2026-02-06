@@ -1,60 +1,60 @@
-import React, { PureComponent } from "react";
-import { Dialog, DialogContent, LinearProgress } from "@material-ui/core";
-import http from "../my/http";
-import { connect } from "react-redux";
-import styles from "./CaptchaDialog.module.css";
+import React, { PureComponent } from "react"
+import { Dialog, DialogContent, LinearProgress } from "@material-ui/core"
+import http from "../my/http"
+import { connect } from "react-redux"
+import styles from "./CaptchaDialog.module.css"
 
 class CaptchaDialog extends PureComponent {
     state = {
         loading: true
-    };
+    }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const { open } = this.props;
+        const { open } = this.props
         // 每次打开都init一次
-        if (open && !prevProps.open) this.initData();
+        if (open && !prevProps.open) this.initData()
     }
 
     initData = async () => {
-        this.setState({ loading: true });
+        this.setState({ loading: true })
 
-        const data = await http.get("geetest/register");
+        const data = await http.get("geetest/register")
         const params = {
             gt: data.gt,
             challenge: data.challenge,
             new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
             offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
             width: "100%"
-        };
-        window.initGeetest(params, this.handleCaptchaObj);
-    };
+        }
+        window.initGeetest(params, this.handleCaptchaObj)
+    }
 
     handleCaptchaObj = (captchaObj) => {
-        captchaObj.appendTo("#captcha");
+        captchaObj.appendTo("#captcha")
         captchaObj.onReady(() => {
-            this.setState({ loading: false });
-        });
+            this.setState({ loading: false })
+        })
         captchaObj.onSuccess(async () => {
             const {
                 onSuccess,
                 app: { account }
-            } = this.props;
-            const result = captchaObj.getValidate();
+            } = this.props
+            const result = captchaObj.getValidate()
 
             await http.post("geetest/validate", {
                 challenge: result.geetest_challenge,
                 validate: result.geetest_validate,
                 seccode: result.geetest_seccode,
                 account
-            });
+            })
 
-            onSuccess();
-        });
-    };
+            onSuccess()
+        })
+    }
 
     render() {
-        const { open, onCancel } = this.props;
-        const { loading } = this.state;
+        const { open, onCancel } = this.props
+        const { loading } = this.state
 
         return (
             <Dialog open={open} onClose={onCancel}>
@@ -68,8 +68,8 @@ class CaptchaDialog extends PureComponent {
                     <div id="captcha" />
                 </DialogContent>
             </Dialog>
-        );
+        )
     }
 }
 
-export default connect(({ app }) => ({ app }))(CaptchaDialog);
+export default connect(({ app }) => ({ app }))(CaptchaDialog)

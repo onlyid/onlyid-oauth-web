@@ -1,45 +1,45 @@
-import React, { PureComponent } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core";
-import PasswordInput from "components/PasswordInput";
-import OtpInput from "components/OtpInput";
-import Validator from "async-validator";
-import http from "my/http";
-import IconAndAvatar from "components/IconAndAvatar";
-import { redirectCode } from "my/utils";
-import { NEW_PASSWORD_RULE } from "my/constants";
-import withLayout from "components/MyLayout";
+import React, { PureComponent } from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
+import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core"
+import PasswordInput from "components/PasswordInput"
+import OtpInput from "components/OtpInput"
+import Validator from "async-validator"
+import http from "my/http"
+import IconAndAvatar from "components/IconAndAvatar"
+import { redirectCode } from "my/utils"
+import { NEW_PASSWORD_RULE } from "my/constants"
+import withLayout from "components/MyLayout"
 
 const RULES = {
     otp: [{ required: true, message: "请输入" }],
     password: NEW_PASSWORD_RULE
-};
+}
 
 class ResetPassword extends PureComponent {
     state = {
         validation: { otp: {}, password: {} },
         otp: null,
         password: null
-    };
+    }
 
     onSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const { otp, password, validation } = this.state;
+        const { otp, password, validation } = this.state
         const {
             app: { account, client },
             location: { search }
-        } = this.props;
+        } = this.props
 
         // 校验表单
         try {
-            const values = { otp, password };
-            await new Validator(RULES).validate(values, { firstFields: true });
+            const values = { otp, password }
+            await new Validator(RULES).validate(values, { firstFields: true })
         } catch ({ errors }) {
-            for (const e of errors) validation[e.field] = { text: e.message, error: true };
+            for (const e of errors) validation[e.field] = { text: e.message, error: true }
 
-            return this.setState({ validation: { ...validation } });
+            return this.setState({ validation: { ...validation } })
         }
 
         const { authorizationCode } = await http.put("auth/reset-password", {
@@ -47,36 +47,36 @@ class ResetPassword extends PureComponent {
             otp,
             password,
             clientId: client.id
-        });
+        })
 
-        redirectCode(client, search, authorizationCode);
-    };
+        redirectCode(client, search, authorizationCode)
+    }
 
     validateField = async ({ target: { name: key, value } }) => {
-        const { validation } = this.state;
+        const { validation } = this.state
         try {
-            await new Validator({ [key]: RULES[key] }).validate({ [key]: value }, { first: true });
-            validation[key] = {};
+            await new Validator({ [key]: RULES[key] }).validate({ [key]: value }, { first: true })
+            validation[key] = {}
         } catch ({ errors }) {
-            validation[key] = { text: errors[0].message, error: true };
+            validation[key] = { text: errors[0].message, error: true }
         }
-        this.setState({ validation: { ...validation } });
-    };
+        this.setState({ validation: { ...validation } })
+    }
 
     back = () => {
-        const { history } = this.props;
-        history.goBack();
-    };
+        const { history } = this.props
+        history.goBack()
+    }
 
     onChange = ({ target }) => {
-        this.setState({ [target.name]: target.value });
-    };
+        this.setState({ [target.name]: target.value })
+    }
 
     render() {
         const {
             app: { account, client }
-        } = this.props;
-        const { validation } = this.state;
+        } = this.props
+        const { validation } = this.state
 
         return (
             <div>
@@ -123,8 +123,8 @@ class ResetPassword extends PureComponent {
                     </Button>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(ResetPassword)));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(ResetPassword)))

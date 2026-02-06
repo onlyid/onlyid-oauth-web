@@ -1,19 +1,19 @@
-import React, { PureComponent } from "react";
-import styles from "./ScanLoginButton.module.css";
-import { Hidden } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
+import React, { PureComponent } from "react"
+import styles from "./ScanLoginButton.module.css"
+import { Hidden } from "@material-ui/core"
+import { withRouter } from "react-router-dom"
 
 class ScanLoginButton extends PureComponent {
     scanLogin = () => {
         const {
             history,
             location: { search }
-        } = this.props;
-        history.push("/scan-login" + search);
-    };
+        } = this.props
+        history.push("/scan-login" + search)
+    }
 
     render() {
-        const { style } = this.props;
+        const { style } = this.props
 
         return (
             <Hidden xsDown>
@@ -24,8 +24,8 @@ class ScanLoginButton extends PureComponent {
                     </div>
                 </div>
             </Hidden>
-        );
+        )
     }
 }
 
-export default withRouter(ScanLoginButton);
+export default withRouter(ScanLoginButton)

@@ -1,13 +1,13 @@
-import { Checkbox, Link } from "@material-ui/core";
-import React from "react";
-import styles from "./TermsCheckbox.module.css";
-import { connect } from "react-redux";
+import { Checkbox, Link } from "@material-ui/core"
+import React from "react"
+import styles from "./TermsCheckbox.module.css"
+import { connect } from "react-redux"
 
 function TermsCheckbox({ checked, onChange, app }) {
     const {
         oauthConfig: { termsUrl, privacyUrl },
         client
-    } = app;
+    } = app
 
     return (
         <div className={styles.root}>
@@ -37,7 +37,7 @@ function TermsCheckbox({ checked, onChange, app }) {
                 </Link>
             </p>
         </div>
-    );
+    )
 }
 
-export default connect(({ app }) => ({ app }))(TermsCheckbox);
+export default connect(({ app }) => ({ app }))(TermsCheckbox)

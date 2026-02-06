@@ -1,26 +1,26 @@
-import React, { PureComponent } from "react";
-import openWithBrowser from "assets/open-with-browser.png";
-import styles from "./DownloadApp.module.css";
-import guideArrow from "assets/guide-arrow.png";
+import React, { PureComponent } from "react"
+import openWithBrowser from "assets/open-with-browser.png"
+import styles from "./DownloadApp.module.css"
+import guideArrow from "assets/guide-arrow.png"
 
 class DownloadApp extends PureComponent {
     state = {
         isWeChat: true
-    };
+    }
 
     componentDidMount() {
-        document.title = "下载 唯ID APP";
+        document.title = "下载 唯ID APP"
 
         if (!navigator.userAgent.includes("MicroMessenger")) {
-            window.location.replace(window.location.origin + "/static/downloads/onlyid.apk");
-            this.setState({ isWeChat: false });
+            window.location.replace(window.location.origin + "/static/downloads/onlyid.apk")
+            this.setState({ isWeChat: false })
         }
     }
 
     render() {
-        const { isWeChat } = this.state;
+        const { isWeChat } = this.state
 
-        if (!isWeChat) return null;
+        if (!isWeChat) return null
 
         return (
             <div className={styles.root}>
@@ -36,8 +36,8 @@ class DownloadApp extends PureComponent {
                     />
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default DownloadApp;
+export default DownloadApp

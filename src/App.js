@@ -1,53 +1,53 @@
-import React, { PureComponent, Suspense } from "react";
-import { Redirect, Route, Switch, withRouter } from "react-router-dom";
-import { CircularProgress, Snackbar } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { eventEmitter } from "./my/utils";
+import React, { PureComponent, Suspense } from "react"
+import { Redirect, Route, Switch, withRouter } from "react-router-dom"
+import { CircularProgress, Snackbar } from "@material-ui/core"
+import { Alert } from "@material-ui/lab"
+import { eventEmitter } from "./my/utils"
 
 // 关键页面不要延迟加载
-import Home from "pages/Home";
-import SignUp from "pages/SignUp";
-import Login from "pages/Login";
-import ResetPassword from "pages/ResetPassword";
-import ScanLogin from "pages/ScanLogin";
-import Choose from "pages/Choose";
-import Hi from "pages/Hi";
+import Home from "pages/Home"
+import SignUp from "pages/SignUp"
+import Login from "pages/Login"
+import ResetPassword from "pages/ResetPassword"
+import ScanLogin from "pages/ScanLogin"
+import Choose from "pages/Choose"
+import Hi from "pages/Hi"
 
-const Support = React.lazy(() => import("pages/Support"));
-const DownloadApp = React.lazy(() => import("pages/DownloadApp"));
+const Support = React.lazy(() => import("pages/Support"))
+const DownloadApp = React.lazy(() => import("pages/DownloadApp"))
 
 class App extends PureComponent {
     state = {
         toast: { open: false, text: "", severity: "", timeout: 0 }
-    };
+    }
 
     componentDidMount() {
-        eventEmitter.on("app/openToast", this.openToast);
+        eventEmitter.on("app/openToast", this.openToast)
     }
 
     openToast = async (toast) => {
         const {
             toast: { open }
-        } = this.state;
-        if (open) await this.closeToast();
+        } = this.state
+        if (open) await this.closeToast()
 
-        this.setState({ toast: { open: true, severity: "success", timeout: 4000, ...toast } });
-    };
+        this.setState({ toast: { open: true, severity: "success", timeout: 4000, ...toast } })
+    }
 
     closeToast = (_, reason) => {
-        if (reason === "clickaway") return;
+        if (reason === "clickaway") return
 
-        this.setState(({ toast }) => ({ toast: { ...toast, open: false } }));
-    };
+        this.setState(({ toast }) => ({ toast: { ...toast, open: false } }))
+    }
 
     render() {
-        const { toast } = this.state;
+        const { toast } = this.state
 
         const loading = (
             <div style={{ paddingTop: "40vh", textAlign: "center" }}>
                 <CircularProgress />
             </div>
-        );
+        )
 
         return (
             <>
@@ -100,8 +100,8 @@ class App extends PureComponent {
                     </Alert>
                 </Snackbar>
             </>
-        );
+        )
     }
 }
 
-export default withRouter(App);
+export default withRouter(App)

@@ -1,32 +1,32 @@
-import React, { PureComponent } from "react";
-import IconAndAvatar from "components/IconAndAvatar";
-import { connect } from "react-redux";
-import styles from "./Choose.module.css";
-import { withRouter } from "react-router-dom";
-import { Add, MoreVert } from "@material-ui/icons";
-import { IconButton, ListItemText, Menu, MenuItem } from "@material-ui/core";
-import classNames from "classnames";
-import http from "my/http";
-import ScanLoginButton from "components/ScanLoginButton";
-import withLayout from "components/MyLayout";
+import React, { PureComponent } from "react"
+import IconAndAvatar from "components/IconAndAvatar"
+import { connect } from "react-redux"
+import styles from "./Choose.module.css"
+import { withRouter } from "react-router-dom"
+import { Add, MoreVert } from "@material-ui/icons"
+import { IconButton, ListItemText, Menu, MenuItem } from "@material-ui/core"
+import classNames from "classnames"
+import http from "my/http"
+import ScanLoginButton from "components/ScanLoginButton"
+import withLayout from "components/MyLayout"
 
 class Item extends PureComponent {
     state = {
         anchorEl: null,
         isHover: false
-    };
+    }
 
     openMenu = (event) => {
-        this.setState({ anchorEl: event.currentTarget });
-    };
+        this.setState({ anchorEl: event.currentTarget })
+    }
 
     closeMenu = () => {
-        this.setState({ anchorEl: null });
-    };
+        this.setState({ anchorEl: null })
+    }
 
     render() {
-        const { user, onDelete, onClick } = this.props;
-        const { anchorEl, isHover } = this.state;
+        const { user, onDelete, onClick } = this.props
+        const { anchorEl, isHover } = this.state
 
         return (
             <div className={classNames(styles.item, { [styles.hover]: isHover })}>
@@ -58,43 +58,43 @@ class Item extends PureComponent {
                     </MenuItem>
                 </Menu>
             </div>
-        );
+        )
     }
 }
 
 class Choose extends PureComponent {
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch({ type: "app", avatar: null, nickname: null });
+        const { dispatch } = this.props
+        dispatch({ type: "app", avatar: null, nickname: null })
     }
 
     onClick = async (user) => {
-        const { history, location, dispatch } = this.props;
+        const { history, location, dispatch } = this.props
 
-        const { nickname, avatar, account } = user;
-        dispatch({ type: "app", nickname, avatar, account });
-        history.push("/login" + location.search);
-    };
+        const { nickname, avatar, account } = user
+        dispatch({ type: "app", nickname, avatar, account })
+        history.push("/login" + location.search)
+    }
 
     onDelete = async ({ id }) => {
-        const { dispatch, app, history, location } = this.props;
-        const { users } = app;
+        const { dispatch, app, history, location } = this.props
+        const { users } = app
 
-        await http.delete(`user-sessions/${id}`);
+        await http.delete(`user-sessions/${id}`)
 
-        dispatch({ type: "app", users: users.filter((u) => u.id !== id) });
+        dispatch({ type: "app", users: users.filter((u) => u.id !== id) })
 
-        if (users.length === 1) history.replace("/home" + location.search);
-    };
+        if (users.length === 1) history.replace("/home" + location.search)
+    }
 
     useNew = () => {
-        const { history, location } = this.props;
+        const { history, location } = this.props
 
-        history.push("/home" + location.search);
-    };
+        history.push("/home" + location.search)
+    }
 
     render() {
-        const { app } = this.props;
+        const { app } = this.props
 
         return (
             <div className={styles.root}>
@@ -115,8 +115,8 @@ class Choose extends PureComponent {
                 </div>
                 <ScanLoginButton style={{ marginTop: "4rem" }} />
             </div>
-        );
+        )
     }
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(Choose)));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(Choose)))

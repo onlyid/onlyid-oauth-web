@@ -1,15 +1,15 @@
-import React, { PureComponent } from "react";
-import { Button, TextField } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
-import http from "my/http";
-import { connect } from "react-redux";
-import Validator from "async-validator";
-import { REG_EXP } from "my/constants";
-import IconAndAvatar from "components/IconAndAvatar";
-import ScanLoginButton from "components/ScanLoginButton";
-import { eventEmitter } from "my/utils";
-import TermsCheckbox from "./TermsCheckbox";
-import withLayout from "components/MyLayout";
+import React, { PureComponent } from "react"
+import { Button, TextField } from "@material-ui/core"
+import { withRouter } from "react-router-dom"
+import http from "my/http"
+import { connect } from "react-redux"
+import Validator from "async-validator"
+import { REG_EXP } from "my/constants"
+import IconAndAvatar from "components/IconAndAvatar"
+import ScanLoginButton from "components/ScanLoginButton"
+import { eventEmitter } from "my/utils"
+import TermsCheckbox from "./TermsCheckbox"
+import withLayout from "components/MyLayout"
 
 const RULES = {
     email: [
@@ -21,75 +21,75 @@ const RULES = {
         { required: true, message: "请输入" },
         { pattern: REG_EXP.mobile, message: "手机号格式不正确" }
     ]
-};
+}
 
 class Home extends PureComponent {
     state = {
         validation: {},
         account: "",
         termsChecked: false
-    };
+    }
 
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch({ type: "app", avatar: null, nickname: null });
+        const { dispatch } = this.props
+        dispatch({ type: "app", avatar: null, nickname: null })
     }
 
     onSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const { history, location, dispatch } = this.props;
-        const { account, termsChecked } = this.state;
+        const { history, location, dispatch } = this.props
+        const { account, termsChecked } = this.state
 
-        if (!(await this.validateField())) return;
+        if (!(await this.validateField())) return
 
         if (!termsChecked) {
-            const text = "请阅读并同意服务协议和隐私政策";
-            eventEmitter.emit("app/openToast", { text, severity: "warning" });
-            return;
+            const text = "请阅读并同意服务协议和隐私政策"
+            eventEmitter.emit("app/openToast", { text, severity: "warning" })
+            return
         }
 
-        const params = { account };
-        const data = await http.get("check-account", { params });
-        let route;
+        const params = { account }
+        const data = await http.get("check-account", { params })
+        let route
         if (data) {
-            dispatch({ type: "app", ...data });
-            route = "login";
+            dispatch({ type: "app", ...data })
+            route = "login"
         } else {
-            route = "sign-up";
+            route = "sign-up"
         }
-        dispatch({ type: "app", account });
-        history.push(`/${route}${location.search}`);
-    };
+        dispatch({ type: "app", account })
+        history.push(`/${route}${location.search}`)
+    }
 
     onChange = (e) => {
-        this.setState({ account: e.target.value });
-    };
+        this.setState({ account: e.target.value })
+    }
 
     onCheckChange = (event) => {
-        this.setState({ termsChecked: event.target.checked });
-    };
+        this.setState({ termsChecked: event.target.checked })
+    }
 
     validateField = async () => {
-        const { account } = this.state;
-        let validation;
+        const { account } = this.state
+        let validation
         try {
-            const rules = account.includes("@") ? RULES.email : RULES.mobile;
-            const validator = new Validator({ account: rules });
-            await validator.validate({ account }, { first: true });
-            validation = {};
-            return true;
+            const rules = account.includes("@") ? RULES.email : RULES.mobile
+            const validator = new Validator({ account: rules })
+            await validator.validate({ account }, { first: true })
+            validation = {}
+            return true
         } catch ({ errors }) {
-            validation = { text: errors[0].message, error: true };
-            return false;
+            validation = { text: errors[0].message, error: true }
+            return false
         } finally {
-            this.setState({ validation });
+            this.setState({ validation })
         }
-    };
+    }
 
     render() {
-        const { validation, account, termsChecked } = this.state;
-        const { app } = this.props;
+        const { validation, account, termsChecked } = this.state
+        const { app } = this.props
 
         return (
             <div>
@@ -122,8 +122,8 @@ class Home extends PureComponent {
                 </form>
                 <ScanLoginButton style={{ marginTop: 85 }} />
             </div>
-        );
+        )
     }
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(Home)));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(Home)))

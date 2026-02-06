@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from "react"
 import {
     Button,
     Dialog,
@@ -10,43 +10,43 @@ import {
     List,
     ListItem,
     ListItemText
-} from "@material-ui/core";
-import { KeyboardArrowRight } from "@material-ui/icons";
-import styles from "./RegionInput.module.css";
-import CHINA_CITY_LIST from "my/china-city-list";
+} from "@material-ui/core"
+import { KeyboardArrowRight } from "@material-ui/icons"
+import styles from "./RegionInput.module.css"
+import CHINA_CITY_LIST from "my/china-city-list"
 
 class RegionInput extends PureComponent {
     static defaultProps = {
         label: "地区"
-    };
+    }
 
     state = {
         dialogVisible: false,
         provinceIndex: -1
-    };
+    }
 
     toggleDialog = () => {
-        this.setState((state) => ({ dialogVisible: !state.dialogVisible, provinceIndex: -1 }));
-    };
+        this.setState((state) => ({ dialogVisible: !state.dialogVisible, provinceIndex: -1 }))
+    }
 
     select = (city) => {
-        const { provinceIndex } = this.state;
-        const { onChange } = this.props;
+        const { provinceIndex } = this.state
+        const { onChange } = this.props
 
-        onChange([CHINA_CITY_LIST[provinceIndex].province, city]);
-        this.toggleDialog();
-    };
+        onChange([CHINA_CITY_LIST[provinceIndex].province, city])
+        this.toggleDialog()
+    }
 
     clear = () => {
-        const { onChange } = this.props;
+        const { onChange } = this.props
 
-        onChange("");
-        this.toggleDialog();
-    };
+        onChange("")
+        this.toggleDialog()
+    }
 
     render() {
-        const { dialogVisible, provinceIndex } = this.state;
-        const { value, label } = this.props;
+        const { dialogVisible, provinceIndex } = this.state
+        const { value, label } = this.props
 
         const listItems =
             provinceIndex <= -1
@@ -70,7 +70,7 @@ class RegionInput extends PureComponent {
                       >
                           <ListItemText primary={city} />
                       </ListItem>
-                  ));
+                  ))
 
         return (
             <>
@@ -95,8 +95,8 @@ class RegionInput extends PureComponent {
                     </DialogActions>
                 </Dialog>
             </>
-        );
+        )
     }
 }
 
-export default RegionInput;
+export default RegionInput

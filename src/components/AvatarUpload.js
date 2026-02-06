@@ -1,40 +1,40 @@
-import React, { PureComponent } from "react";
-import styles from "./AvatarUpload.module.css";
-import http from "my/http";
-import { IMG_UPLOAD_TIP } from "my/constants";
-import { connect } from "react-redux";
-import classNames from "classnames";
+import React, { PureComponent } from "react"
+import styles from "./AvatarUpload.module.css"
+import http from "my/http"
+import { IMG_UPLOAD_TIP } from "my/constants"
+import { connect } from "react-redux"
+import classNames from "classnames"
 
 class AvatarUpload extends PureComponent {
     onChange = async (e) => {
-        const { files } = e.target;
-        const { onUpload, dispatch } = this.props;
+        const { files } = e.target
+        const { onUpload, dispatch } = this.props
 
-        if (!files.length) return;
+        if (!files.length) return
 
-        const file = files[0];
-        e.target.value = null;
-        const { image } = await window.loadImage(file, { orientation: true, aspectRatio: 1 });
-        const scaledImage = window.loadImage.scale(image, { maxWidth: 256, minWidth: 256 });
+        const file = files[0]
+        e.target.value = null
+        const { image } = await window.loadImage(file, { orientation: true, aspectRatio: 1 })
+        const scaledImage = window.loadImage.scale(image, { maxWidth: 256, minWidth: 256 })
 
         const blob = await new Promise((resolve) => {
-            scaledImage.toBlob(resolve, file.type);
-        });
+            scaledImage.toBlob(resolve, file.type)
+        })
 
-        const formData = new FormData();
-        formData.append("file", blob);
-        const { filename } = await http.post("image", formData);
+        const formData = new FormData()
+        formData.append("file", blob)
+        const { filename } = await http.post("image", formData)
 
-        dispatch({ type: "app", avatar: scaledImage.toDataURL(file.type) });
+        dispatch({ type: "app", avatar: scaledImage.toDataURL(file.type) })
 
-        onUpload(filename);
-    };
+        onUpload(filename)
+    }
 
     render() {
         const {
             app: { avatar },
             requiredVisible
-        } = this.props;
+        } = this.props
 
         return (
             <div className={classNames(styles.root, { [styles.required]: requiredVisible })}>
@@ -56,8 +56,8 @@ class AvatarUpload extends PureComponent {
                 </label>
                 <p className="tip">{IMG_UPLOAD_TIP}</p>
             </div>
-        );
+        )
     }
 }
 
-export default connect(({ app }) => ({ app }))(AvatarUpload);
+export default connect(({ app }) => ({ app }))(AvatarUpload)

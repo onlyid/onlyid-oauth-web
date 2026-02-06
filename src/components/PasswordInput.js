@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from "react"
 import {
     FormControl,
     FormHelperText,
@@ -6,25 +6,25 @@ import {
     InputAdornment,
     InputLabel,
     OutlinedInput
-} from "@material-ui/core";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
+} from "@material-ui/core"
+import { Visibility, VisibilityOff } from "@material-ui/icons"
 
 class PasswordInput extends PureComponent {
     static defaultProps = {
         label: "密码"
-    };
+    }
 
     state = {
         showPassword: false
-    };
+    }
 
     toggleShowPassword = () => {
-        this.setState(({ showPassword }) => ({ showPassword: !showPassword }));
-    };
+        this.setState(({ showPassword }) => ({ showPassword: !showPassword }))
+    }
 
     render() {
-        const { error, onChange, helperText, label, ...restProps } = this.props;
-        const { showPassword } = this.state;
+        const { error, onChange, helperText, label, ...restProps } = this.props
+        const { showPassword } = this.state
 
         return (
             <FormControl variant="outlined" fullWidth error={error}>
@@ -45,8 +45,8 @@ class PasswordInput extends PureComponent {
                 />
                 <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
-        );
+        )
     }
 }
 
-export default PasswordInput;
+export default PasswordInput

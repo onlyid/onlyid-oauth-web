@@ -1,13 +1,13 @@
-import React, { PureComponent } from "react";
-import styles from "./IconAndAvatar.module.css";
-import { connect } from "react-redux";
-import { SwapHoriz } from "@material-ui/icons";
+import React, { PureComponent } from "react"
+import styles from "./IconAndAvatar.module.css"
+import { connect } from "react-redux"
+import { SwapHoriz } from "@material-ui/icons"
 
 class IconAndAvatar extends PureComponent {
     render() {
         const {
             app: { client, avatar, nickname }
-        } = this.props;
+        } = this.props
 
         return (
             <div className={styles.root}>
@@ -25,8 +25,8 @@ class IconAndAvatar extends PureComponent {
                     </>
                 )}
             </div>
-        );
+        )
     }
 }
 
-export default connect(({ app }) => ({ app }))(IconAndAvatar);
+export default connect(({ app }) => ({ app }))(IconAndAvatar)

@@ -1,17 +1,17 @@
-import React, { PureComponent } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import styles from "./SignUp.module.css";
-import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import PasswordInput from "components/PasswordInput";
-import OtpInput from "components/OtpInput";
-import Validator from "async-validator";
-import http from "my/http";
-import AvatarUpload from "components/AvatarUpload";
-import { redirectCode } from "my/utils";
-import { NEW_PASSWORD_RULE } from "my/constants";
-import withLayout from "components/MyLayout";
+import React, { PureComponent } from "react"
+import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
+import styles from "./SignUp.module.css"
+import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core"
+import { Alert } from "@material-ui/lab"
+import PasswordInput from "components/PasswordInput"
+import OtpInput from "components/OtpInput"
+import Validator from "async-validator"
+import http from "my/http"
+import AvatarUpload from "components/AvatarUpload"
+import { redirectCode } from "my/utils"
+import { NEW_PASSWORD_RULE } from "my/constants"
+import withLayout from "components/MyLayout"
 
 const RULES = {
     nickname: [
@@ -20,7 +20,7 @@ const RULES = {
     ],
     otp: [{ required: true, message: "请输入" }],
     password: NEW_PASSWORD_RULE
-};
+}
 
 class SignUp extends PureComponent {
     state = {
@@ -29,25 +29,25 @@ class SignUp extends PureComponent {
         password: null,
         nickname: null,
         filename: null
-    };
+    }
 
     onSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const { filename, nickname, otp, password, validation } = this.state;
+        const { filename, nickname, otp, password, validation } = this.state
         const {
             app: { client, account },
             location: { search }
-        } = this.props;
+        } = this.props
 
         // 校验表单
         try {
-            const values = { nickname, otp, password };
-            await new Validator(RULES).validate(values, { firstFields: true });
+            const values = { nickname, otp, password }
+            await new Validator(RULES).validate(values, { firstFields: true })
         } catch ({ errors }) {
-            for (const e of errors) validation[e.field] = { text: e.message, error: true };
+            for (const e of errors) validation[e.field] = { text: e.message, error: true }
 
-            return this.setState({ validation: { ...validation } });
+            return this.setState({ validation: { ...validation } })
         }
 
         const { authorizationCode } = await http.post("auth/sign-up", {
@@ -57,40 +57,40 @@ class SignUp extends PureComponent {
             otp,
             password,
             clientId: client.id
-        });
+        })
 
-        redirectCode(client, search, authorizationCode);
-    };
+        redirectCode(client, search, authorizationCode)
+    }
 
     validateField = async ({ target: { name: key, value } }) => {
-        const { validation } = this.state;
+        const { validation } = this.state
         try {
-            await new Validator({ [key]: RULES[key] }).validate({ [key]: value }, { first: true });
-            validation[key] = {};
+            await new Validator({ [key]: RULES[key] }).validate({ [key]: value }, { first: true })
+            validation[key] = {}
         } catch ({ errors }) {
-            validation[key] = { text: errors[0].message, error: true };
+            validation[key] = { text: errors[0].message, error: true }
         }
-        this.setState({ validation: { ...validation } });
-    };
+        this.setState({ validation: { ...validation } })
+    }
 
     back = () => {
-        const { history } = this.props;
-        history.goBack();
-    };
+        const { history } = this.props
+        history.goBack()
+    }
 
     onChange = ({ target }) => {
-        this.setState({ [target.name]: target.value });
-    };
+        this.setState({ [target.name]: target.value })
+    }
 
     onUpload = (filename) => {
-        this.setState({ filename });
-    };
+        this.setState({ filename })
+    }
 
     render() {
         const {
             app: { account, client }
-        } = this.props;
-        const { validation } = this.state;
+        } = this.props
+        const { validation } = this.state
 
         return (
             <div className={styles.root}>
@@ -154,8 +154,8 @@ class SignUp extends PureComponent {
                     </Button>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(SignUp)));
+export default withLayout(connect(({ app }) => ({ app }))(withRouter(SignUp)))
