@@ -1,8 +1,8 @@
-import React, { PureComponent } from "react"
+import React, { useState, useEffect } from "react"
 import IconAndAvatar from "components/IconAndAvatar"
-import { connect } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import styles from "./Choose.module.css"
-import { withRouter } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 import { Add, MoreVert } from "@material-ui/icons"
 import { IconButton, ListItemText, Menu, MenuItem } from "@material-ui/core"
 import classNames from "classnames"
@@ -10,74 +10,68 @@ import http from "my/http"
 import ScanLoginButton from "components/ScanLoginButton"
 import withLayout from "components/MyLayout"
 
-class Item extends PureComponent {
-    state = {
-        anchorEl: null,
-        isHover: false
+function Item({ user, onDelete, onClick }) {
+    const [anchorEl, setAnchorEl] = useState(null)
+    const [isHover, setIsHover] = useState(false)
+
+    const openMenu = (event) => {
+        setAnchorEl(event.currentTarget)
     }
 
-    openMenu = (event) => {
-        this.setState({ anchorEl: event.currentTarget })
+    const closeMenu = () => {
+        setAnchorEl(null)
     }
 
-    closeMenu = () => {
-        this.setState({ anchorEl: null })
-    }
-
-    render() {
-        const { user, onDelete, onClick } = this.props
-        const { anchorEl, isHover } = this.state
-
-        return (
-            <div className={classNames(styles.item, { [styles.hover]: isHover })}>
-                <div
-                    className={styles.mainBox}
-                    onClick={onClick}
-                    onMouseEnter={() => this.setState({ isHover: true })}
-                    onMouseLeave={() => this.setState({ isHover: false })}
-                >
-                    <img src={user.avatar} alt="avatar" className={styles.avatar} />
-                    <div className={styles.box1}>
-                        <p className={styles.nickname}>{user.nickname}</p>
-                        <p className={styles.account}>{user.account}</p>
-                    </div>
+    return (
+        <div className={classNames(styles.item, { [styles.hover]: isHover })}>
+            <div
+                className={styles.mainBox}
+                onClick={onClick}
+                onMouseEnter={() => setIsHover(true)}
+                onMouseLeave={() => setIsHover(false)}
+            >
+                <img src={user.avatar} alt="avatar" className={styles.avatar} />
+                <div className={styles.box1}>
+                    <p className={styles.nickname}>{user.nickname}</p>
+                    <p className={styles.account}>{user.account}</p>
                 </div>
-                <IconButton onClick={this.openMenu}>
-                    <MoreVert />
-                </IconButton>
-                <Menu
-                    anchorEl={anchorEl}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                    transformOrigin={{ vertical: "top", horizontal: "center" }}
-                    open={Boolean(anchorEl)}
-                    onClose={this.closeMenu}
-                    getContentAnchorEl={null}
-                >
-                    <MenuItem onClick={() => onDelete() && this.closeMenu()}>
-                        <ListItemText>删除记录</ListItemText>
-                    </MenuItem>
-                </Menu>
             </div>
-        )
-    }
+            <IconButton onClick={openMenu}>
+                <MoreVert />
+            </IconButton>
+            <Menu
+                anchorEl={anchorEl}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                transformOrigin={{ vertical: "top", horizontal: "center" }}
+                open={Boolean(anchorEl)}
+                onClose={closeMenu}
+                getContentAnchorEl={null}
+            >
+                <MenuItem onClick={() => onDelete() && closeMenu()}>
+                    <ListItemText>删除记录</ListItemText>
+                </MenuItem>
+            </Menu>
+        </div>
+    )
 }
 
-class Choose extends PureComponent {
-    componentDidMount() {
-        const { dispatch } = this.props
+function Choose() {
+    const dispatch = useDispatch()
+    const app = useSelector((state) => state.app)
+    const history = useHistory()
+    const location = useLocation()
+
+    useEffect(() => {
         dispatch({ type: "app", avatar: null, nickname: null })
-    }
+    }, [])
 
-    onClick = async (user) => {
-        const { history, location, dispatch } = this.props
-
+    const onClick = async (user) => {
         const { nickname, avatar, account } = user
         dispatch({ type: "app", nickname, avatar, account })
         history.push("/login" + location.search)
     }
 
-    onDelete = async ({ id }) => {
-        const { dispatch, app, history, location } = this.props
+    const onDelete = async ({ id }) => {
         const { users } = app
 
         await http.delete(`user-sessions/${id}`)
@@ -87,36 +81,30 @@ class Choose extends PureComponent {
         if (users.length === 1) history.replace("/home" + location.search)
     }
 
-    useNew = () => {
-        const { history, location } = this.props
-
+    const useNew = () => {
         history.push("/home" + location.search)
     }
 
-    render() {
-        const { app } = this.props
-
-        return (
-            <div className={styles.root}>
-                <IconAndAvatar />
-                <p className="tip">选择一个账号登录</p>
-                <div className={styles.listBox}>
-                    {app.users.map((user) => (
-                        <Item
-                            user={user}
-                            key={user.id}
-                            onClick={() => this.onClick(user)}
-                            onDelete={() => this.onDelete(user)}
-                        />
-                    ))}
-                </div>
-                <div className={styles.useNew} onClick={this.useNew}>
-                    <Add /> 使用新账号
-                </div>
-                <ScanLoginButton style={{ marginTop: "4rem" }} />
+    return (
+        <div className={styles.root}>
+            <IconAndAvatar />
+            <p className="tip">选择一个账号登录</p>
+            <div className={styles.listBox}>
+                {app.users.map((user) => (
+                    <Item
+                        user={user}
+                        key={user.id}
+                        onClick={() => onClick(user)}
+                        onDelete={() => onDelete(user)}
+                    />
+                ))}
             </div>
-        )
-    }
+            <div className={styles.useNew} onClick={useNew}>
+                <Add /> 使用新账号
+            </div>
+            <ScanLoginButton style={{ marginTop: "4rem" }} />
+        </div>
+    )
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(Choose)))
+export default withLayout(Choose)

@@ -1,14 +1,15 @@
-import React, { PureComponent } from "react"
 import styles from "./AvatarUpload.module.css"
 import http from "my/http"
 import { IMG_UPLOAD_TIP } from "my/constants"
-import { connect } from "react-redux"
-import classNames from "classnames"
+import { useSelector, useDispatch } from "react-redux"
+import cn from "classnames"
 
-class AvatarUpload extends PureComponent {
-    onChange = async (e) => {
+function AvatarUpload({ onUpload, requiredVisible }) {
+    const app = useSelector((state) => state.app)
+    const dispatch = useDispatch()
+
+    const onChange = async (e) => {
         const { files } = e.target
-        const { onUpload, dispatch } = this.props
 
         if (!files.length) return
 
@@ -30,34 +31,29 @@ class AvatarUpload extends PureComponent {
         onUpload(filename)
     }
 
-    render() {
-        const {
-            app: { avatar },
-            requiredVisible
-        } = this.props
+    const { avatar } = app
 
-        return (
-            <div className={classNames(styles.root, { [styles.required]: requiredVisible })}>
-                <input
-                    accept="image/jpeg,image/png"
-                    id="upload-file"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={this.onChange}
-                />
-                <label htmlFor="upload-file">
-                    {avatar ? (
-                        <img src={avatar} alt="avatar" />
-                    ) : (
-                        <span className="material-icons">person</span>
-                    )}
-                    <br />
-                    <span className={styles.title}>{requiredVisible && "请"}上传头像</span>
-                </label>
-                <p className="tip">{IMG_UPLOAD_TIP}</p>
-            </div>
-        )
-    }
+    return (
+        <div className={cn(styles.root, { [styles.required]: requiredVisible })}>
+            <input
+                accept="image/jpeg,image/png"
+                id="upload-file"
+                type="file"
+                style={{ display: "none" }}
+                onChange={onChange}
+            />
+            <label htmlFor="upload-file">
+                {avatar ? (
+                    <img src={avatar} alt="avatar" />
+                ) : (
+                    <span className="material-icons">person</span>
+                )}
+                <br />
+                <span className={styles.title}>{requiredVisible && "请"}上传头像</span>
+            </label>
+            <p className="tip">{IMG_UPLOAD_TIP}</p>
+        </div>
+    )
 }
 
-export default connect(({ app }) => ({ app }))(AvatarUpload)
+export default AvatarUpload

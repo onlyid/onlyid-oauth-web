@@ -26,7 +26,7 @@ export default function Support() {
                     <Contact />
                 </main>
                 <footer>
-                    &copy; 2017 - {new Date().getFullYear()}
+                    &copy; 2021 ~ {new Date().getFullYear()}
                     <span style={{ marginLeft: 25 }}>爱达斯科技 IDaaS Tech</span>
                     <Hidden xsDown>
                         <span style={{ marginLeft: 25 }}>粤ICP备16120960号</span>

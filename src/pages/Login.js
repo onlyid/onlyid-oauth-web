@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react"
-import { connect } from "react-redux"
-import { withRouter } from "react-router-dom"
+import React, { useState } from "react"
+import { useSelector } from "react-redux"
+import { useLocation, useHistory } from "react-router-dom"
 import { Button } from "@material-ui/core"
 import http from "my/http"
 import PasswordInput from "components/PasswordInput"
@@ -12,31 +12,32 @@ import { redirectCode } from "my/utils"
 import CaptchaDialog from "components/CaptchaDialog"
 import withLayout from "components/MyLayout"
 
-const RULES = [{ required: true, message: "请输入" }]
+const RULES = {
+    otp: [{ required: true, message: "请输入" }],
+    password: [{ required: true, message: "请输入" }]
+}
+const validator = new Validator(RULES)
 
-class Login extends PureComponent {
-    state = {
-        validation: {},
-        inputValue: "",
-        loginType: "password",
-        captchaOpen: false
-    }
+function Login() {
+    const [validation, setValidation] = useState({})
+    const [inputValue, setInputValue] = useState("")
+    const [loginType, setLoginType] = useState("password")
+    const [captchaOpen, setCaptchaOpen] = useState(false)
+    const history = useHistory()
+    const location = useLocation()
+    const app = useSelector((state) => state.app)
 
-    back = () => {
-        const { history } = this.props
+    const back = () => {
         history.goBack()
     }
 
-    onSubmit = async (e) => {
+    const onSubmit = async (e) => {
         e && e.preventDefault()
 
-        const { inputValue, loginType } = this.state
-        const {
-            app: { account, client },
-            location: { search }
-        } = this.props
+        const { account, client } = app
+        const { search } = location
 
-        if (!(await this.validateField())) return
+        if (!(await validateField())) return
 
         const { authorizationCode, requireCaptcha } = await http.post("auth/login", {
             account,
@@ -45,129 +46,113 @@ class Login extends PureComponent {
         })
 
         if (requireCaptcha) {
-            this.toggleCaptcha()
+            openCaptcha()
             return
         }
 
         redirectCode(client, search, authorizationCode)
     }
 
-    onChange = (e) => {
-        this.setState({ inputValue: e.target.value })
+    const onChange = (e) => {
+        setInputValue(e.target.value)
     }
 
-    validateField = async () => {
-        const { inputValue } = this.state
+    const validateField = async () => {
         let validation
         try {
-            const validator = new Validator({ inputValue: RULES })
-            await validator.validate({ inputValue }, { first: true })
+            const key = loginType
+            await validator.validate({ [key]: inputValue }, { keys: [key], first: true })
             validation = {}
             return true
         } catch ({ errors }) {
             validation = { text: errors[0].message, error: true }
             return false
         } finally {
-            this.setState({ validation })
+            setValidation(validation)
         }
     }
 
-    toggleLoginType = () => {
-        this.setState(({ loginType }) => ({
-            loginType: loginType === "password" ? "otp" : "password"
-        }))
+    const toggleLoginType = () => {
+        setLoginType(loginType === "password" ? "otp" : "password")
+        setInputValue("")
     }
 
-    resetPassword = () => {
-        const {
-            history,
-            location: { search }
-        } = this.props
+    const resetPassword = () => {
+        const { search } = location
         history.push("/reset-password" + search)
     }
 
-    toggleCaptcha = () => {
-        this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }))
+    const openCaptcha = () => {
+        setCaptchaOpen(true)
     }
 
-    render() {
-        const { validation, loginType, captchaOpen } = this.state
-        const {
-            app: { account, client }
-        } = this.props
+    const closeCaptcha = () => {
+        setCaptchaOpen(false)
+    }
 
-        return (
-            <div>
-                <IconAndAvatar />
-                <div className="accountBox">
-                    <Button
-                        startIcon={<Edit />}
-                        size="large"
-                        variant="outlined"
-                        onClick={this.back}
-                    >
-                        {account}
-                    </Button>
-                </div>
-                <form onSubmit={this.onSubmit} style={{ marginTop: 20 }}>
-                    {loginType === "password" ? (
-                        <PasswordInput
-                            error={validation.error}
-                            onChange={this.onChange}
-                            helperText={validation.text}
-                            onBlur={this.validateField}
-                        />
-                    ) : (
-                        <OtpInput
-                            error={validation.error}
-                            onChange={this.onChange}
-                            helperText={validation.text}
-                            recipient={account}
-                            clientId={client.id}
-                            onBlur={this.validateField}
-                        />
-                    )}
-                    <div style={{ marginTop: 20 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            onClick={this.onSubmit}
-                            size="large"
-                        >
-                            登 录
-                        </Button>
-                    </div>
-                </form>
-                <div className="twoButtonBox">
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={this.toggleLoginType}
-                        size="small"
-                    >
-                        {loginType === "password" ? "验证码登录" : "密码登录"}
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        onClick={this.resetPassword}
-                        size="small"
-                        style={{ paddingRight: 3 }}
-                    >
-                        忘记密码？
-                    </Button>
-                </div>
-                <CaptchaDialog
-                    open={captchaOpen}
-                    onCancel={this.toggleCaptcha}
-                    onSuccess={() => {
-                        this.toggleCaptcha()
-                        this.onSubmit()
-                    }}
-                />
+    const { account, client } = app
+
+    return (
+        <div>
+            <IconAndAvatar />
+            <div className="accountBox">
+                <Button startIcon={<Edit />} size="large" variant="outlined" onClick={back}>
+                    {account}
+                </Button>
             </div>
-        )
-    }
+            <form onSubmit={onSubmit} style={{ marginTop: 20 }}>
+                {loginType === "password" ? (
+                    <PasswordInput
+                        error={validation.error}
+                        onChange={onChange}
+                        helperText={validation.text}
+                        onBlur={validateField}
+                    />
+                ) : (
+                    <OtpInput
+                        error={validation.error}
+                        onChange={onChange}
+                        helperText={validation.text}
+                        recipient={account}
+                        clientId={client.id}
+                        onBlur={validateField}
+                    />
+                )}
+                <div style={{ marginTop: 20 }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        onClick={onSubmit}
+                        size="large"
+                    >
+                        登 录
+                    </Button>
+                </div>
+            </form>
+            <div className="twoButtonBox">
+                <Button variant="outlined" color="primary" onClick={toggleLoginType} size="small">
+                    {loginType === "password" ? "验证码登录" : "密码登录"}
+                </Button>
+                <Button
+                    variant="outlined"
+                    onClick={resetPassword}
+                    size="small"
+                    style={{ paddingRight: 3 }}
+                >
+                    忘记密码？
+                </Button>
+            </div>
+            <CaptchaDialog
+                open={captchaOpen}
+                onCancel={closeCaptcha}
+                onSuccess={() => {
+                    closeCaptcha()
+                    onSubmit()
+                }}
+            />
+        </div>
+    )
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(Login)))
+export default withLayout(Login)

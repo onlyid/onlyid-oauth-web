@@ -1,31 +1,26 @@
-import React, { PureComponent } from "react"
 import styles from "./ScanLoginButton.module.css"
 import { Hidden } from "@material-ui/core"
-import { withRouter } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 
-class ScanLoginButton extends PureComponent {
-    scanLogin = () => {
-        const {
-            history,
-            location: { search }
-        } = this.props
+function ScanLoginButton({ style }) {
+    const history = useHistory()
+    const location = useLocation()
+
+    const scanLogin = () => {
+        const { search } = location
         history.push("/scan-login" + search)
     }
 
-    render() {
-        const { style } = this.props
-
-        return (
-            <Hidden xsDown>
-                <div className={styles.root} style={style}>
-                    <div className={styles.button} onClick={this.scanLogin}>
-                        <span className="material-icons">qr_code</span>
-                        <p>扫码登录</p>
-                    </div>
+    return (
+        <Hidden xsDown>
+            <div className={styles.root} style={style}>
+                <div className={styles.button} onClick={scanLogin}>
+                    <span className="material-icons">qr_code</span>
+                    <p>扫码登录</p>
                 </div>
-            </Hidden>
-        )
-    }
+            </div>
+        </Hidden>
+    )
 }
 
-export default withRouter(ScanLoginButton)
+export default ScanLoginButton

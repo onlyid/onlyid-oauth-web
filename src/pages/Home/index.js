@@ -1,8 +1,8 @@
-import React, { PureComponent } from "react"
+import React, { useState, useEffect } from "react"
 import { Button, TextField } from "@material-ui/core"
-import { withRouter } from "react-router-dom"
+import { useLocation, useHistory } from "react-router-dom"
 import http from "my/http"
-import { connect } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import Validator from "async-validator"
 import { REG_EXP } from "my/constants"
 import IconAndAvatar from "components/IconAndAvatar"
@@ -22,30 +22,29 @@ const RULES = {
         { pattern: REG_EXP.mobile, message: "手机号格式不正确" }
     ]
 }
+const validator = new Validator(RULES)
 
-class Home extends PureComponent {
-    state = {
-        validation: {},
-        account: "",
-        termsChecked: false
-    }
+function Home() {
+    const [validation, setValidation] = useState({})
+    const [account, setAccount] = useState("")
+    const [termsChecked, setTermsChecked] = useState(false)
+    const app = useSelector((state) => state.app)
+    const dispatch = useDispatch()
+    const location = useLocation()
+    const history = useHistory()
 
-    componentDidMount() {
-        const { dispatch } = this.props
+    useEffect(() => {
         dispatch({ type: "app", avatar: null, nickname: null })
-    }
+    }, [])
 
-    onSubmit = async (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
 
-        const { history, location, dispatch } = this.props
-        const { account, termsChecked } = this.state
-
-        if (!(await this.validateField())) return
+        if (!(await validateField())) return
 
         if (!termsChecked) {
             const text = "请阅读并同意服务协议和隐私政策"
-            eventEmitter.emit("app/openToast", { text, severity: "warning" })
+            eventEmitter.emit("openToast", { text, severity: "warning" })
             return
         }
 
@@ -60,70 +59,65 @@ class Home extends PureComponent {
         }
         dispatch({ type: "app", account })
         history.push(`/${route}${location.search}`)
+
+        eventEmitter.emit("closeToast")
     }
 
-    onChange = (e) => {
-        this.setState({ account: e.target.value })
+    const onChange = (e) => {
+        setAccount(e.target.value)
     }
 
-    onCheckChange = (event) => {
-        this.setState({ termsChecked: event.target.checked })
+    const onCheckChange = (event) => {
+        setTermsChecked(event.target.checked)
     }
 
-    validateField = async () => {
-        const { account } = this.state
+    const validateField = async () => {
         let validation
         try {
-            const rules = account.includes("@") ? RULES.email : RULES.mobile
-            const validator = new Validator({ account: rules })
-            await validator.validate({ account }, { first: true })
+            const key = account.includes("@") ? "email" : "mobile"
+            await validator.validate({ [key]: account }, { keys: [key], first: true })
             validation = {}
             return true
         } catch ({ errors }) {
             validation = { text: errors[0].message, error: true }
             return false
         } finally {
-            this.setState({ validation })
+            setValidation(validation)
         }
     }
 
-    render() {
-        const { validation, account, termsChecked } = this.state
-        const { app } = this.props
-
-        return (
-            <div>
-                <IconAndAvatar />
-                <form onSubmit={this.onSubmit} style={{ marginTop: 40 }} noValidate>
-                    <TextField
-                        label="手机号 / 邮箱"
-                        variant="outlined"
-                        error={validation.error}
-                        helperText={validation.text}
+    return (
+        <div>
+            <IconAndAvatar />
+            <form onSubmit={onSubmit} style={{ marginTop: 40 }} noValidate>
+                <TextField
+                    label="手机号 / 邮箱"
+                    variant="outlined"
+                    error={validation.error}
+                    helperText={validation.text}
+                    fullWidth
+                    onChange={onChange}
+                    value={account}
+                    onBlur={validateField}
+                    type="email"
+                />
+                <TermsCheckbox onChange={onCheckChange} checked={termsChecked} />
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
                         fullWidth
-                        onChange={this.onChange}
-                        value={account}
-                        onBlur={this.validateField}
-                        type="email"
-                    />
-                    <TermsCheckbox onChange={this.onCheckChange} checked={termsChecked} />
-                    <div>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            onClick={this.onSubmit}
-                            size="large"
-                            disabled={app.nextDisabled}
-                        >
-                            下 一 步
-                        </Button>
-                    </div>
-                </form>
-                <ScanLoginButton style={{ marginTop: 85 }} />
-            </div>
-        )
-    }
+                        onClick={onSubmit}
+                        size="large"
+                        disabled={app.nextDisabled}
+                    >
+                        下 一 步
+                    </Button>
+                </div>
+            </form>
+            <ScanLoginButton style={{ marginTop: 85 }} />
+        </div>
+    )
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(Home)))
+export default withLayout(Home)

@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react"
-import { connect } from "react-redux"
-import { withRouter } from "react-router-dom"
+import React, { useState } from "react"
+import { useSelector } from "react-redux"
+import { useHistory, useLocation } from "react-router-dom"
 import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core"
 import PasswordInput from "components/PasswordInput"
 import OtpInput from "components/OtpInput"
@@ -15,31 +15,30 @@ const RULES = {
     otp: [{ required: true, message: "请输入" }],
     password: NEW_PASSWORD_RULE
 }
+const validator = new Validator(RULES)
 
-class ResetPassword extends PureComponent {
-    state = {
-        validation: { otp: {}, password: {} },
-        otp: null,
-        password: null
-    }
+function ResetPassword() {
+    const [validation, setValidation] = useState({ otp: {}, password: {} })
+    const [otp, setOtp] = useState(null)
+    const [password, setPassword] = useState(null)
+    const app = useSelector((state) => state.app)
+    const history = useHistory()
+    const location = useLocation()
 
-    onSubmit = async (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
 
-        const { otp, password, validation } = this.state
-        const {
-            app: { account, client },
-            location: { search }
-        } = this.props
+        const { account, client } = app
+        const { search } = location
 
         // 校验表单
         try {
             const values = { otp, password }
-            await new Validator(RULES).validate(values, { firstFields: true })
+            await validator.validate(values, { firstFields: true })
         } catch ({ errors }) {
             for (const e of errors) validation[e.field] = { text: e.message, error: true }
 
-            return this.setState({ validation: { ...validation } })
+            return setValidation({ ...validation })
         }
 
         const { authorizationCode } = await http.put("auth/reset-password", {
@@ -52,79 +51,73 @@ class ResetPassword extends PureComponent {
         redirectCode(client, search, authorizationCode)
     }
 
-    validateField = async ({ target: { name: key, value } }) => {
-        const { validation } = this.state
+    const validateField = async ({ target: { name: key, value } }) => {
         try {
-            await new Validator({ [key]: RULES[key] }).validate({ [key]: value }, { first: true })
+            await validator.validate({ [key]: value }, { keys: [key], first: true })
             validation[key] = {}
         } catch ({ errors }) {
             validation[key] = { text: errors[0].message, error: true }
         }
-        this.setState({ validation: { ...validation } })
+        setValidation({ ...validation })
     }
 
-    back = () => {
-        const { history } = this.props
+    const back = () => {
         history.goBack()
     }
 
-    onChange = ({ target }) => {
-        this.setState({ [target.name]: target.value })
+    const onChange = ({ target: { name, value } }) => {
+        if (name === "otp") setOtp(value)
+        else if (name === "password") setPassword(value)
     }
 
-    render() {
-        const {
-            app: { account, client }
-        } = this.props
-        const { validation } = this.state
+    const { account, client } = app
 
-        return (
-            <div>
-                <IconAndAvatar />
-                <form onSubmit={this.onSubmit} style={{ marginTop: 30 }} className="form1">
-                    <FormControl variant="outlined" fullWidth disabled>
-                        <InputLabel htmlFor="account-input">账号</InputLabel>
-                        <OutlinedInput id="account-input" label="账号" value={account} />
-                        <FormHelperText />
-                    </FormControl>
-                    <OtpInput
-                        name="otp"
-                        error={validation.otp.error}
-                        onChange={this.onChange}
-                        helperText={validation.otp.text}
-                        recipient={account}
-                        clientId={client.id}
-                        onBlur={this.validateField}
-                    />
-                    <PasswordInput
-                        name="password"
-                        error={validation.password.error}
-                        onChange={this.onChange}
-                        helperText={validation.password.text}
-                        label="新密码"
-                        onBlur={this.validateField}
-                        autoComplete="new-password"
-                    />
-                    <div style={{ marginTop: 20 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            onClick={this.onSubmit}
-                            size="large"
-                        >
-                            重设密码并登录
-                        </Button>
-                    </div>
-                </form>
-                <div className="oneButtonBox" style={{ marginTop: 35 }}>
-                    <Button variant="outlined" onClick={this.back} size="small">
-                        取 消
+    return (
+        <div>
+            <IconAndAvatar />
+            <form onSubmit={onSubmit} style={{ marginTop: 30 }} className="form1">
+                <FormControl variant="outlined" fullWidth disabled>
+                    <InputLabel htmlFor="account-input">账号</InputLabel>
+                    <OutlinedInput id="account-input" label="账号" value={account} />
+                    <FormHelperText />
+                </FormControl>
+                <OtpInput
+                    name="otp"
+                    error={validation.otp.error}
+                    onChange={onChange}
+                    helperText={validation.otp.text}
+                    recipient={account}
+                    clientId={client.id}
+                    onBlur={validateField}
+                />
+                <PasswordInput
+                    name="password"
+                    error={validation.password.error}
+                    onChange={onChange}
+                    helperText={validation.password.text}
+                    label="新密码"
+                    onBlur={validateField}
+                    autoComplete="new-password"
+                />
+                <div style={{ marginTop: 20 }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        onClick={onSubmit}
+                        size="large"
+                    >
+                        重设密码并登录
                     </Button>
                 </div>
+            </form>
+            <div className="oneButtonBox" style={{ marginTop: 35 }}>
+                <Button variant="outlined" onClick={back} size="small">
+                    取 消
+                </Button>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
-export default withLayout(connect(({ app }) => ({ app }))(withRouter(ResetPassword)))
+export default withLayout(ResetPassword)

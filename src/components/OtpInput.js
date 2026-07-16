@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react"
+import { useState } from "react"
 import {
     Button,
     FormControl,
@@ -10,79 +10,78 @@ import {
 import http from "my/http"
 import CaptchaDialog from "./CaptchaDialog"
 
-class OtpInput extends PureComponent {
-    static defaultProps = {
-        label: "验证码"
-    }
+function OtpInput({
+    label = "验证码",
+    recipient,
+    clientId,
+    error,
+    onChange,
+    helperText,
+    ...restProps
+}) {
+    const [countDown, setCountDown] = useState(0)
+    const [captchaOpen, setCaptchaOpen] = useState(false)
 
-    state = {
-        sent: false,
-        countDown: 60,
-        captchaOpen: false
-    }
-
-    sendOtp = async () => {
-        const { recipient, clientId } = this.props
+    const sendOtp = async () => {
         const data = await http.post("send-otp", { recipient, clientId })
 
         if (data && data.requireCaptcha) {
-            this.toggleCaptcha()
+            openCaptcha()
             return
         }
 
-        this.setState({ countDown: 60, sent: true })
+        setCountDown(60)
         const h = setInterval(() => {
-            let { countDown } = this.state
-            countDown--
-            this.setState({ countDown })
-            if (countDown === 0) {
-                clearInterval(h)
-                this.setState({ sent: false })
-            }
+            setCountDown((prev) => {
+                const next = prev - 1
+
+                if (next === 0) clearInterval(h)
+
+                return next
+            })
         }, 1000)
     }
 
-    toggleCaptcha = () => {
-        this.setState(({ captchaOpen }) => ({ captchaOpen: !captchaOpen }))
+    const openCaptcha = () => {
+        setCaptchaOpen(true)
     }
 
-    render() {
-        const { error, onChange, helperText, label, ...restProps } = this.props
-        const { sent, countDown, captchaOpen } = this.state
-
-        delete restProps.recipient
-        delete restProps.clientId
-
-        return (
-            <FormControl variant="outlined" fullWidth error={error}>
-                <InputLabel htmlFor="otp-input">{label}</InputLabel>
-                <OutlinedInput
-                    id="otp-input"
-                    type="tel"
-                    autoComplete="off"
-                    onChange={onChange}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <Button onClick={this.sendOtp} disabled={sent} color="primary">
-                                {sent ? countDown + "秒后重试" : "发送验证码"}
-                            </Button>
-                        </InputAdornment>
-                    }
-                    label={label}
-                    {...restProps}
-                />
-                <FormHelperText>{helperText}</FormHelperText>
-                <CaptchaDialog
-                    open={captchaOpen}
-                    onCancel={this.toggleCaptcha}
-                    onSuccess={() => {
-                        this.toggleCaptcha()
-                        this.sendOtp()
-                    }}
-                />
-            </FormControl>
-        )
+    const closeCaptcha = () => {
+        setCaptchaOpen(false)
     }
+
+    // 正在倒计时，则为已发送状态
+    const sent = countDown > 0
+
+    return (
+        <FormControl variant="outlined" fullWidth error={error}>
+            <InputLabel htmlFor="otp-input">{label}</InputLabel>
+            <OutlinedInput
+                id="otp-input"
+                type="tel"
+                autoComplete="off"
+                onChange={onChange}
+                endAdornment={
+                    <InputAdornment position="end">
+                        <Button onClick={sendOtp} disabled={sent} color="primary">
+                            {sent ? countDown + "秒后重试" : "发送验证码"}
+                        </Button>
+                    </InputAdornment>
+                }
+                label={label}
+                {...restProps}
+            />
+            <FormHelperText>{helperText}</FormHelperText>
+            <CaptchaDialog
+                open={captchaOpen}
+                onCancel={closeCaptcha}
+                onSuccess={() => {
+                    closeCaptcha()
+                    sendOtp()
+                }}
+            />
+        </FormControl>
+    )
 }
 
 export default OtpInput

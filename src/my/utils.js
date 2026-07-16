@@ -41,3 +41,19 @@ export function redirectCode(client, search, code) {
         window.location.assign(url)
     }
 }
+
+/**
+ * 一个英文算1个字，一个中文算2个字（可通过第2个参数配置）
+ */
+export const getLength = (s, chineseWeight = 2) => {
+    let count = 0
+    for (let i = 0; i < s.length; i++) {
+        const c = s.charCodeAt(i)
+        if (c < 128) {
+            count++
+        } else {
+            count += chineseWeight
+        }
+    }
+    return count
+}
