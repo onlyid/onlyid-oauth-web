@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useSelector } from "react-redux"
 import { useLocation, useHistory } from "react-router-dom"
 import { Button } from "@material-ui/core"
-import http from "my/http"
+import request from "my/request"
 import PasswordInput from "components/PasswordInput"
 import OtpInput from "components/OtpInput"
 import Validator from "async-validator"
@@ -39,7 +39,7 @@ function Login() {
 
         if (!(await validateField())) return
 
-        const { authorizationCode, requireCaptcha } = await http.post("auth/login", {
+        const { authorizationCode, requireCaptcha } = await request.post("auth/login", {
             account,
             [loginType]: inputValue,
             clientId: client.id

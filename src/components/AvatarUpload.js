@@ -1,5 +1,5 @@
 import styles from "./AvatarUpload.module.css"
-import http from "my/http"
+import request from "my/request"
 import { IMG_UPLOAD_TIP } from "my/constants"
 import { useSelector, useDispatch } from "react-redux"
 import cn from "classnames"
@@ -24,7 +24,7 @@ function AvatarUpload({ onUpload, requiredVisible }) {
 
         const formData = new FormData()
         formData.append("file", blob)
-        const { filename } = await http.post("image", formData)
+        const { filename } = await request.post("image", formData)
 
         dispatch({ type: "app", avatar: scaledImage.toDataURL(file.type) })
 

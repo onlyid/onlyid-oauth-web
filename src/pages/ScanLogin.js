@@ -6,7 +6,7 @@ import styles from "./ScanLogin.module.css"
 import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core"
 import { Android, Check } from "@material-ui/icons"
 import icon from "assets/ic_launcher.png"
-import http from "my/http"
+import request from "my/request"
 import axios from "axios"
 import DialogClose from "components/DialogClose"
 import withLayout from "components/MyLayout"
@@ -46,7 +46,7 @@ function ScanLogin() {
         while (true) {
             try {
                 source.current = axios.CancelToken.source()
-                const { authorizationCode } = await http.post("auth/scan-login", params, {
+                const { authorizationCode } = await request.post("auth/scan-login", params, {
                     cancelToken: source.current.token
                 })
 

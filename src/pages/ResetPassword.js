@@ -5,7 +5,7 @@ import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "
 import PasswordInput from "components/PasswordInput"
 import OtpInput from "components/OtpInput"
 import Validator from "async-validator"
-import http from "my/http"
+import request from "my/request"
 import IconAndAvatar from "components/IconAndAvatar"
 import { redirectCode } from "my/utils"
 import { NEW_PASSWORD_RULE } from "my/constants"
@@ -41,7 +41,7 @@ function ResetPassword() {
             return setValidation({ ...validation })
         }
 
-        const { authorizationCode } = await http.put("auth/reset-password", {
+        const { authorizationCode } = await request.put("auth/reset-password", {
             account,
             otp,
             password,

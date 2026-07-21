@@ -7,7 +7,7 @@ import {
     InputLabel,
     OutlinedInput
 } from "@material-ui/core"
-import http from "my/http"
+import request from "my/request"
 import CaptchaDialog from "./CaptchaDialog"
 
 function OtpInput({
@@ -23,7 +23,7 @@ function OtpInput({
     const [captchaOpen, setCaptchaOpen] = useState(false)
 
     const sendOtp = async () => {
-        const data = await http.post("send-otp", { recipient, clientId })
+        const data = await request.post("send-otp", { recipient, clientId })
 
         if (data && data.requireCaptcha) {
             openCaptcha()

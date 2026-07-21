@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Dialog, DialogContent, LinearProgress } from "@material-ui/core"
-import http from "../my/http"
+import request from "../my/request"
 import { useSelector } from "react-redux"
 import styles from "./CaptchaDialog.module.css"
 
@@ -16,7 +16,7 @@ function CaptchaDialog({ open, onCancel, onSuccess }) {
     const initData = async () => {
         setLoading(true)
 
-        const data = await http.get("geetest/register")
+        const data = await request.get("geetest/register")
         const params = {
             gt: data.gt,
             challenge: data.challenge,
@@ -36,7 +36,7 @@ function CaptchaDialog({ open, onCancel, onSuccess }) {
             const { account } = app
             const result = captchaObj.getValidate()
 
-            await http.post("geetest/validate", {
+            await request.post("geetest/validate", {
                 challenge: result.geetest_challenge,
                 validate: result.geetest_validate,
                 seccode: result.geetest_seccode,

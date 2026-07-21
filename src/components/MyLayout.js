@@ -3,7 +3,7 @@ import { Divider, Link } from "@material-ui/core"
 import { eventEmitter } from "my/utils"
 import styles from "./MyLayout.module.css"
 import qs from "qs"
-import http from "my/http"
+import request from "my/request"
 import { useSelector, useDispatch } from "react-redux"
 import { Link as RRLink, useHistory, useLocation } from "react-router-dom"
 import logo from "assets/logo.svg"
@@ -28,8 +28,8 @@ function Layout({ children, contentClass }) {
 
         const query = qs.parse(location.search, { ignoreQueryPrefix: true })
         const clientId = query["client-id"]
-        const client = await http.get("clients/" + clientId)
-        const oauthConfig = await http.get("clients/" + clientId + "/oauth-config")
+        const client = await request.get("clients/" + clientId)
+        const oauthConfig = await request.get("clients/" + clientId + "/oauth-config")
         dispatch({ type: "app", client, oauthConfig })
 
         if (client.type === "APP") {
@@ -57,7 +57,7 @@ function Layout({ children, contentClass }) {
                 return disableNext("回调URI参数错误，请检查")
         }
 
-        const users = await http.get("user-sessions")
+        const users = await request.get("user-sessions")
         if (users.length) {
             dispatch({ type: "app", users })
             history.replace("/choose" + location.search)

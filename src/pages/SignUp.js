@@ -7,7 +7,7 @@ import { Alert } from "@material-ui/lab"
 import PasswordInput from "components/PasswordInput"
 import OtpInput from "components/OtpInput"
 import Validator from "async-validator"
-import http from "my/http"
+import request from "my/request"
 import AvatarUpload from "components/AvatarUpload"
 import { redirectCode } from "my/utils"
 import { NEW_PASSWORD_RULE } from "my/constants"
@@ -49,7 +49,7 @@ function SignUp() {
             return setValidation({ ...validation })
         }
 
-        const { authorizationCode } = await http.post("auth/sign-up", {
+        const { authorizationCode } = await request.post("auth/sign-up", {
             filename,
             nickname,
             account,

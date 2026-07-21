@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Button, TextField } from "@material-ui/core"
 import { useLocation, useHistory } from "react-router-dom"
-import http from "my/http"
+import request from "my/request"
 import { useSelector, useDispatch } from "react-redux"
 import Validator from "async-validator"
 import { REG_EXP } from "my/constants"
@@ -49,7 +49,7 @@ function Home() {
         }
 
         const params = { account }
-        const data = await http.get("check-account", { params })
+        const data = await request.get("check-account", { params })
         let route
         if (data) {
             dispatch({ type: "app", ...data })

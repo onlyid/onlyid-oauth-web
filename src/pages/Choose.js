@@ -6,7 +6,7 @@ import { useHistory, useLocation } from "react-router-dom"
 import { Add, MoreVert } from "@material-ui/icons"
 import { IconButton, ListItemText, Menu, MenuItem } from "@material-ui/core"
 import classNames from "classnames"
-import http from "my/http"
+import request from "my/request"
 import ScanLoginButton from "components/ScanLoginButton"
 import withLayout from "components/MyLayout"
 
@@ -74,7 +74,7 @@ function Choose() {
     const onDelete = async ({ id }) => {
         const { users } = app
 
-        await http.delete(`user-sessions/${id}`)
+        await request.delete(`user-sessions/${id}`)
 
         dispatch({ type: "app", users: users.filter((u) => u.id !== id) })
 
