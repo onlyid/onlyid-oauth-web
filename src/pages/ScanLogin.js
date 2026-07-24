@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect } from "react"
 import { eventEmitter, getRandomValue, redirectCode } from "my/utils"
 import { useSelector } from "react-redux"
 import { useLocation, useHistory } from "react-router-dom"
 import styles from "./ScanLogin.module.css"
 import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core"
-import { Android, Check } from "@material-ui/icons"
+import { Android as AndroidIcon, Check as CheckIcon } from "@material-ui/icons"
 import icon from "assets/ic_launcher.png"
 import request from "my/request"
 import axios from "axios"
@@ -132,19 +132,19 @@ function ScanLogin() {
                             <p className={styles.title3}>使用唯ID APP：</p>
                             <ul>
                                 <li>
-                                    <Check />
+                                    <CheckIcon />
                                     管理账号资料
                                 </li>
                                 <li>
-                                    <Check />
+                                    <CheckIcon />
                                     一键扫码登录
                                 </li>
                                 <li>
-                                    <Check />
+                                    <CheckIcon />
                                     管理可信设备
                                 </li>
                                 <li>
-                                    <Check />
+                                    <CheckIcon />
                                     管理授权应用
                                 </li>
                             </ul>
@@ -154,7 +154,7 @@ function ScanLogin() {
                     <div className={styles.dialogContent2}>
                         <div>
                             <p className={styles.title2}>
-                                <Android style={{ color: "#2FD96C" }} />
+                                <AndroidIcon style={{ color: "#2FD96C" }} />
                                 Android
                             </p>
                             <p>用手机浏览器、微信扫码：</p>

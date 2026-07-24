@@ -9,10 +9,6 @@ import { createTheme, CssBaseline } from "@material-ui/core"
 import { StylesProvider, ThemeProvider } from "@material-ui/core/styles"
 import { zhCN } from "@material-ui/core/locale"
 import { BrowserRouter } from "react-router-dom"
-import moment from "moment"
-import "moment/locale/zh-cn"
-
-moment.locale("zh-cn")
 
 const store = createStore(reducers)
 const fontFamily = `Roboto,"Noto Sans SC","Helvetica Neue","PingFang SC","Segoe UI","Microsoft YaHei",sans-serif`

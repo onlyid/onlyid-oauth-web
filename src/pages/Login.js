@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useSelector } from "react-redux"
 import { useLocation, useHistory } from "react-router-dom"
 import { Button } from "@material-ui/core"
@@ -7,7 +7,7 @@ import PasswordInput from "components/PasswordInput"
 import OtpInput from "components/OtpInput"
 import Validator from "async-validator"
 import IconAndAvatar from "components/IconAndAvatar"
-import { Edit } from "@material-ui/icons"
+import { Edit as EditIcon } from "@material-ui/icons"
 import { redirectCode } from "my/utils"
 import CaptchaDialog from "components/CaptchaDialog"
 import withLayout from "components/MyLayout"
@@ -96,7 +96,7 @@ function Login() {
         <div>
             <IconAndAvatar />
             <div className="accountBox">
-                <Button startIcon={<Edit />} size="large" variant="outlined" onClick={back}>
+                <Button startIcon={<EditIcon />} size="large" variant="outlined" onClick={back}>
                     {account}
                 </Button>
             </div>
