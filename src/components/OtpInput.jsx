@@ -7,7 +7,7 @@ import {
     InputLabel,
     OutlinedInput
 } from "@material-ui/core"
-import request from "my/request"
+import request from "@/my/request"
 import CaptchaDialog from "./CaptchaDialog"
 
 function OtpInput({

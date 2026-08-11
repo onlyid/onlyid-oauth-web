@@ -1,6 +1,6 @@
 import styles from "./AvatarUpload.module.css"
-import request from "my/request"
-import { IMG_UPLOAD_TIP } from "my/constants"
+import request from "@/my/request"
+import { IMG_UPLOAD_TIP } from "@/my/constants"
 import { useSelector, useDispatch } from "react-redux"
 import cn from "classnames"
 

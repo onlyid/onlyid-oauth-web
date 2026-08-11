@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core"
 import { KeyboardArrowRight } from "@material-ui/icons"
 import styles from "./RegionInput.module.css"
-import CHINA_CITY_LIST from "my/china-city-list"
+import CHINA_CITY_LIST from "@/my/china-city-list"
 
 class RegionInput extends PureComponent {
     static defaultProps = {

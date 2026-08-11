@@ -1,15 +1,15 @@
 import { useRef, useState, useEffect } from "react"
-import { eventEmitter, getRandomValue, redirectCode } from "my/utils"
+import { eventEmitter, getRandomValue, redirectCode } from "@/my/utils"
 import { useSelector } from "react-redux"
 import { useLocation, useHistory } from "react-router-dom"
 import styles from "./ScanLogin.module.css"
 import { Button, Dialog, DialogContent, DialogTitle } from "@material-ui/core"
 import { Android as AndroidIcon, Check as CheckIcon } from "@material-ui/icons"
-import icon from "assets/ic_launcher.png"
-import request from "my/request"
+import icon from "@/assets/ic_launcher.png"
+import request from "@/my/request"
 import axios from "axios"
-import DialogClose from "components/DialogClose"
-import withLayout from "components/MyLayout"
+import DialogClose from "@/components/DialogClose"
+import withLayout from "@/components/MyLayout"
 
 function ScanLogin() {
     const source = useRef()

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styles from "./Contact.module.css"
-import weChat155 from "assets/wechat-155.jpeg"
+import weChat155 from "@/assets/wechat-155.jpeg"
 import { Hidden, Paper, Popper } from "@material-ui/core"
 import classNames from "classnames"
 

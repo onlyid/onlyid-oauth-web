@@ -3,17 +3,17 @@ import { Redirect, Route, Switch } from "react-router-dom"
 import { CircularProgress } from "@material-ui/core"
 
 // 关键页面不要延迟加载
-import Home from "pages/Home"
-import SignUp from "pages/SignUp"
-import Login from "pages/Login"
-import ResetPassword from "pages/ResetPassword"
-import ScanLogin from "pages/ScanLogin"
-import Choose from "pages/Choose"
-import Hi from "pages/Hi"
-import Toast from "components/Toast"
+import Home from "@/pages/Home"
+import SignUp from "@/pages/SignUp"
+import Login from "@/pages/Login"
+import ResetPassword from "@/pages/ResetPassword"
+import ScanLogin from "@/pages/ScanLogin"
+import Choose from "@/pages/Choose"
+import Hi from "@/pages/Hi"
+import Toast from "@/components/Toast"
 
-const Support = React.lazy(() => import("pages/Support"))
-const DownloadApp = React.lazy(() => import("pages/DownloadApp"))
+const Support = React.lazy(() => import("@/pages/Support"))
+const DownloadApp = React.lazy(() => import("@/pages/DownloadApp"))
 
 function App() {
     const loading = (

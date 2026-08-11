@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react"
 import { Button, TextField } from "@material-ui/core"
 import { useLocation, useHistory } from "react-router-dom"
-import request from "my/request"
+import request from "@/my/request"
 import { useSelector, useDispatch } from "react-redux"
 import Validator from "async-validator"
-import { REG_EXP } from "my/constants"
-import IconAndAvatar from "components/IconAndAvatar"
-import ScanLoginButton from "components/ScanLoginButton"
-import { eventEmitter } from "my/utils"
+import { REG_EXP } from "@/my/constants"
+import IconAndAvatar from "@/components/IconAndAvatar"
+import ScanLoginButton from "@/components/ScanLoginButton"
+import { eventEmitter } from "@/my/utils"
 import TermsCheckbox from "./TermsCheckbox"
-import withLayout from "components/MyLayout"
+import withLayout from "@/components/MyLayout"
 
 const RULES = {
     email: [

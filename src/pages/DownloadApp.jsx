@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import openWithBrowser from "assets/open-with-browser.png"
+import openWithBrowser from "@/assets/open-with-browser.png"
 import styles from "./DownloadApp.module.css"
-import guideArrow from "assets/guide-arrow.png"
+import guideArrow from "@/assets/guide-arrow.png"
 
 function DownloadApp() {
     const [isWeChat, setIsWeChat] = useState(true)

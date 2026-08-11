@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
-import IconAndAvatar from "components/IconAndAvatar"
+import IconAndAvatar from "@/components/IconAndAvatar"
 import { useSelector, useDispatch } from "react-redux"
 import styles from "./Choose.module.css"
 import { useHistory, useLocation } from "react-router-dom"
 import { Add as AddIcon, MoreVert } from "@material-ui/icons"
 import { IconButton, ListItemText, Menu, MenuItem } from "@material-ui/core"
 import classNames from "classnames"
-import request from "my/request"
-import ScanLoginButton from "components/ScanLoginButton"
-import withLayout from "components/MyLayout"
+import request from "@/my/request"
+import ScanLoginButton from "@/components/ScanLoginButton"
+import withLayout from "@/components/MyLayout"
 
 function Item({ user, onDelete, onClick }) {
     const [anchorEl, setAnchorEl] = useState(null)

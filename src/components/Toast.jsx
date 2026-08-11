@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { eventEmitter, getLength } from "my/utils"
+import { eventEmitter, getLength } from "@/my/utils"
 import { Snackbar } from "@material-ui/core"
 import { Alert } from "@material-ui/lab"
 
