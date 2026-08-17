@@ -1,8 +1,10 @@
 import { Checkbox, Link } from "@material-ui/core"
 import styles from "./TermsCheckbox.module.css"
-import { connect } from "react-redux"
+import { useSelector } from "react-redux"
 
-function TermsCheckbox({ checked, onChange, app }) {
+function TermsCheckbox({ checked, onChange }) {
+    const app = useSelector((state) => state.app)
+
     const {
         oauthConfig: { termsUrl, privacyUrl },
         client
@@ -39,4 +41,4 @@ function TermsCheckbox({ checked, onChange, app }) {
     )
 }
 
-export default connect(({ app }) => ({ app }))(TermsCheckbox)
+export default TermsCheckbox

@@ -9,16 +9,6 @@ function Toast() {
     const [severity, setSeverity] = useState("")
     const [timeout, setTimeout] = useState(0)
 
-    useEffect(() => {
-        eventEmitter.on("openToast", show)
-        eventEmitter.on("closeToast", close)
-
-        return () => {
-            eventEmitter.off("openToast", show)
-            eventEmitter.off("closeToast", close)
-        }
-    }, [])
-
     const show = ({ text, severity }) => {
         setOpen(true)
         setText(text)
@@ -31,6 +21,16 @@ function Toast() {
 
         setOpen(false)
     }
+
+    useEffect(() => {
+        eventEmitter.on("openToast", show)
+        eventEmitter.on("closeToast", close)
+
+        return () => {
+            eventEmitter.off("openToast", show)
+            eventEmitter.off("closeToast", close)
+        }
+    }, [])
 
     return (
         <Snackbar

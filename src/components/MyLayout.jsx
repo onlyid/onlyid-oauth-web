@@ -10,6 +10,7 @@ import logo from "@/assets/logo.svg"
 import _ from "lodash"
 import cn from "classnames"
 
+/* eslint-disable react-refresh/only-export-components */
 function Layout({ children, contentClass }) {
     const [loading, setLoading] = useState(true)
     const location = useLocation()
@@ -18,9 +19,12 @@ function Layout({ children, contentClass }) {
     const dispatch = useDispatch()
     const { oauthConfig, client } = app
 
-    useEffect(() => {
-        initData()
-    }, [])
+    const disableNext = (text) => {
+        eventEmitter.emit("openToast", { text, severity: "error" })
+        history.replace("/home" + location.search)
+        setLoading(false)
+        dispatch({ type: "app", nextDisabled: true })
+    }
 
     const initData = async () => {
         // 如果已经初始化 则不再重新初始化
@@ -68,12 +72,9 @@ function Layout({ children, contentClass }) {
         setLoading(false)
     }
 
-    const disableNext = (text) => {
-        eventEmitter.emit("openToast", { text, severity: "error" })
-        history.replace("/home" + location.search)
-        setLoading(false)
-        dispatch({ type: "app", nextDisabled: true })
-    }
+    useEffect(() => {
+        initData()
+    }, [])
 
     const bgStyle = {}
     const bgClass = {}

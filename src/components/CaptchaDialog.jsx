@@ -8,25 +8,6 @@ function CaptchaDialog({ open, onCancel, onSuccess }) {
     const [loading, setLoading] = useState(true)
     const app = useSelector((state) => state.app)
 
-    // 每次打开都init一次
-    useEffect(() => {
-        if (open) initData()
-    }, [open])
-
-    const initData = async () => {
-        setLoading(true)
-
-        const data = await request.get("geetest/register")
-        const params = {
-            gt: data.gt,
-            challenge: data.challenge,
-            new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
-            offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-            width: "100%"
-        }
-        window.initGeetest(params, handleCaptchaObj)
-    }
-
     const handleCaptchaObj = (captchaObj) => {
         captchaObj.appendTo("#captcha")
         captchaObj.onReady(() => {
@@ -46,6 +27,25 @@ function CaptchaDialog({ open, onCancel, onSuccess }) {
             onSuccess()
         })
     }
+
+    const initData = async () => {
+        setLoading(true)
+
+        const data = await request.get("geetest/register")
+        const params = {
+            gt: data.gt,
+            challenge: data.challenge,
+            new_captcha: data.new_captcha, // 用于宕机时表示是新验证码的宕机
+            offline: !data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+            width: "100%"
+        }
+        window.initGeetest(params, handleCaptchaObj)
+    }
+
+    // 每次打开都init一次
+    useEffect(() => {
+        if (open) initData()
+    }, [open])
 
     return (
         <Dialog open={open} onClose={onCancel}>

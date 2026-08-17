@@ -20,24 +20,6 @@ function ScanLogin() {
     const history = useHistory()
     const app = useSelector((state) => state.app)
 
-    useEffect(() => {
-        const { client } = app
-
-        const text = {
-            uid: getRandomValue(),
-            clientId: client.id
-        }
-        new window.QRCode(ref1.current, {
-            text: JSON.stringify(text),
-            width: 256,
-            height: 256
-        })
-
-        startLoop(text)
-
-        return () => source.current.cancel("unmount")
-    }, [])
-
     const startLoop = async (params) => {
         const { client } = app
         const { search } = location
@@ -78,6 +60,24 @@ function ScanLogin() {
 
         redirectCode(client, search, code)
     }
+
+    useEffect(() => {
+        const { client } = app
+
+        const text = {
+            uid: getRandomValue(),
+            clientId: client.id
+        }
+        new window.QRCode(ref1.current, {
+            text: JSON.stringify(text),
+            width: 256,
+            height: 256
+        })
+
+        startLoop(text)
+
+        return () => source.current.cancel("unmount")
+    }, [])
 
     const showDialog = () => {
         setDialogVisible(true)
