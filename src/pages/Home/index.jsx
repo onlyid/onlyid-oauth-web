@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Button, TextField } from "@material-ui/core"
 import { useLocation, useHistory } from "react-router-dom"
 import request from "@/my/request"

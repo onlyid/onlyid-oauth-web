@@ -1,5 +1,4 @@
 import { Checkbox, Link } from "@material-ui/core"
-import React from "react"
 import styles from "./TermsCheckbox.module.css"
 import { connect } from "react-redux"
 

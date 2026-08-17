@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Divider, Link } from "@material-ui/core"
 import { eventEmitter } from "@/my/utils"
 import styles from "./MyLayout.module.css"

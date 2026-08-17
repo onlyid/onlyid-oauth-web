@@ -1,4 +1,3 @@
-import React from "react"
 import styles from "./index.module.css"
 import { Alert } from "@material-ui/lab"
 import { Hidden } from "@material-ui/core"
