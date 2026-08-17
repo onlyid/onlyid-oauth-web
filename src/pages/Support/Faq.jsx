@@ -1,6 +1,14 @@
 import { useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core"
-import { ExpandMore } from "@material-ui/icons"
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material"
+import ExpandMore from "@mui/icons-material/ExpandMore"
+
+export function Summary({ children }) {
+    return (
+        <AccordionSummary expandIcon={<ExpandMore />}>
+            <Typography component="span">{children}</Typography>
+        </AccordionSummary>
+    )
+}
 
 export default function Faq() {
     const [expanded, setExpanded] = useState(false)
@@ -17,9 +25,7 @@ export default function Faq() {
                     expanded={expanded === 1}
                     onChange={(_, expanded1) => onChange(1, expanded1)}
                 >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        使用唯ID是否收费？
-                    </AccordionSummary>
+                    <Summary>使用唯ID是否收费？</Summary>
                     <AccordionDetails>
                         <div>
                             <p style={{ marginTop: 0 }}>
@@ -37,9 +43,7 @@ export default function Faq() {
                     expanded={expanded === 2}
                     onChange={(_, expanded1) => onChange(2, expanded1)}
                 >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        唯ID怎么保护我的隐私？
-                    </AccordionSummary>
+                    <Summary>唯ID怎么保护我的隐私？</Summary>
                     <AccordionDetails>
                         <ul style={{ margin: 0 }}>
                             <li>
@@ -60,9 +64,7 @@ export default function Faq() {
                     expanded={expanded === 3}
                     onChange={(_, expanded1) => onChange(3, expanded1)}
                 >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        唯ID怎么保障我的账号安全？
-                    </AccordionSummary>
+                    <Summary>唯ID怎么保障我的账号安全？</Summary>
                     <AccordionDetails>
                         <div>
                             <p style={{ marginTop: 0 }}>
@@ -93,9 +95,7 @@ export default function Faq() {
                     expanded={expanded === 4}
                     onChange={(_, expanded1) => onChange(4, expanded1)}
                 >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        怎么修改我的账号信息？
-                    </AccordionSummary>
+                    <Summary>怎么修改我的账号信息？</Summary>
                     <AccordionDetails>
                         <div>
                             <p style={{ marginTop: 0 }}>

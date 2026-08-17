@@ -37,7 +37,7 @@
 .divider {
     margin-top: 20px;
     width: 250px;
-    background-color: #e8e8e8;
+    border-color: #e8e8e8;
 }
 
 @media (min-width: 600px) {

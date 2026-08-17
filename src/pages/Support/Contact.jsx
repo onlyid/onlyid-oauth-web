@@ -1,11 +1,15 @@
 import { useState } from "react"
 import styles from "./Contact.module.css"
 import weChat155 from "@/assets/wechat-155.jpeg"
-import { Hidden, Paper, Popper } from "@material-ui/core"
+import { useTheme } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { Paper, Popper } from "@mui/material"
 import classNames from "classnames"
 
 export default function Contact() {
     const [anchorEl, setAnchorEl] = useState(null)
+    const theme = useTheme()
+    const isXsDown = useMediaQuery(theme.breakpoints.down("sm"))
 
     const showWeChat = (e) => {
         setAnchorEl(e.currentTarget)
@@ -23,7 +27,7 @@ export default function Contact() {
                 <ul>
                     <li>
                         <span className="material-icons">phone</span>电话 / 微信
-                        <Hidden xsDown>
+                        {!isXsDown && (
                             <span
                                 className="material-icons"
                                 style={{ margin: 0 }}
@@ -32,7 +36,7 @@ export default function Contact() {
                             >
                                 qr_code
                             </span>
-                        </Hidden>
+                        )}
                         ：15521312099
                     </li>
                     <li>

@@ -10,8 +10,8 @@ import {
     List,
     ListItem,
     ListItemText
-} from "@material-ui/core"
-import { KeyboardArrowRight } from "@material-ui/icons"
+} from "@mui/material"
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight"
 import styles from "./RegionInput.module.css"
 import CHINA_CITY_LIST from "@/my/china-city-list"
 

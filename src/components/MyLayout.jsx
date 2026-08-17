@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Divider, Link } from "@material-ui/core"
+import { Divider, Link } from "@mui/material"
 import { eventEmitter } from "@/my/utils"
 import styles from "./MyLayout.module.css"
 import qs from "qs"
@@ -103,7 +103,8 @@ function Layout({ children, contentClass }) {
                     component={RRLink}
                     to={`/support${location.search}`}
                     target="_blank"
-                    style={{ marginRight: -8 }}
+                    style={{ marginRight: -8, fontSize: 14 }}
+                    underline="hover"
                 >
                     需要帮助？
                 </Link>

@@ -6,7 +6,7 @@ import {
     InputAdornment,
     InputLabel,
     OutlinedInput
-} from "@material-ui/core"
+} from "@mui/material"
 import request from "@/my/request"
 import CaptchaDialog from "./CaptchaDialog"
 

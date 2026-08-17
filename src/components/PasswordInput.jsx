@@ -6,8 +6,9 @@ import {
     InputAdornment,
     InputLabel,
     OutlinedInput
-} from "@material-ui/core"
-import { Visibility, VisibilityOff } from "@material-ui/icons"
+} from "@mui/material"
+import Visibility from "@mui/icons-material/Visibility"
+import VisibilityOff from "@mui/icons-material/VisibilityOff"
 
 function PasswordInput({ label = "密码", error, onChange, helperText, ...restProps }) {
     const [showPassword, setShowPassword] = useState(false)

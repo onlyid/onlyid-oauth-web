@@ -2,8 +2,14 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 import { useHistory, useLocation } from "react-router-dom"
 import styles from "./SignUp.module.css"
-import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core"
-import { Alert } from "@material-ui/lab"
+import {
+    Button,
+    FormControl,
+    FormHelperText,
+    InputLabel,
+    OutlinedInput,
+    Alert
+} from "@mui/material"
 import PasswordInput from "@/components/PasswordInput"
 import OtpInput from "@/components/OtpInput"
 import Validator from "async-validator"

@@ -1,11 +1,15 @@
+import { useTheme } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { Alert } from "@mui/material"
 import styles from "./index.module.css"
-import { Alert } from "@material-ui/lab"
-import { Hidden } from "@material-ui/core"
 import Faq from "./Faq"
 import Security from "./Security"
 import Contact from "./Contact"
 
 export default function Support() {
+    const theme = useTheme()
+    const isXsDown = useMediaQuery(theme.breakpoints.down("sm"))
+
     return (
         <div className={styles.bg}>
             <div className={styles.root}>
@@ -27,9 +31,7 @@ export default function Support() {
                 <footer>
                     &copy; 2021 ~ {new Date().getFullYear()}
                     <span style={{ marginLeft: 25 }}>爱达斯科技 IDaaS Tech</span>
-                    <Hidden xsDown>
-                        <span style={{ marginLeft: 25 }}>粤ICP备16120960号</span>
-                    </Hidden>
+                    {!isXsDown && <span style={{ marginLeft: 25 }}>粤ICP备16120960号</span>}
                 </footer>
             </div>
         </div>

@@ -30,7 +30,7 @@
     font-size: 21px;
 }
 
-.root :global .MuiAccordionSummary-content.Mui-expanded {
+.root :global .MuiAccordionSummary-content.Mui-expanded .MuiTypography-root {
     font-weight: 500;
 }
 

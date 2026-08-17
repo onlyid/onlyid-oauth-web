@@ -1,6 +1,6 @@
 import styles from "./IconAndAvatar.module.css"
 import { useSelector } from "react-redux"
-import { SwapHoriz } from "@material-ui/icons"
+import SwapHoriz from "@mui/icons-material/SwapHoriz"
 
 function IconAndAvatar() {
     const app = useSelector((state) => state.app)

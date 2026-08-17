@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Dialog, DialogContent, LinearProgress } from "@material-ui/core"
+import { Dialog, DialogContent, LinearProgress } from "@mui/material"
 import request from "../my/request"
 import { useSelector } from "react-redux"
 import styles from "./CaptchaDialog.module.css"

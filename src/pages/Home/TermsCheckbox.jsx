@@ -1,4 +1,4 @@
-import { Checkbox, Link } from "@material-ui/core"
+import { Checkbox, Link } from "@mui/material"
 import styles from "./TermsCheckbox.module.css"
 import { useSelector } from "react-redux"
 
@@ -29,11 +29,15 @@ function TermsCheckbox({ checked, onChange }) {
                 )}
                 {(termsUrl || privacyUrl) && <> 以及</>}
                 <>唯ID </>
-                <Link href="https://onlyid.net/static/terms.html" target="_blank">
+                <Link href="https://onlyid.net/static/terms.html" target="_blank" underline="hover">
                     服务协议
                 </Link>
                 、
-                <Link href="https://onlyid.net/static/privacy.html" target="_blank">
+                <Link
+                    href="https://onlyid.net/static/privacy.html"
+                    target="_blank"
+                    underline="hover"
+                >
                     隐私政策
                 </Link>
             </p>

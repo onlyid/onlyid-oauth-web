@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core"
-import { ExpandMore } from "@material-ui/icons"
+import { Accordion, AccordionDetails } from "@mui/material"
+import { Summary } from "./Faq"
 
 export default function Security() {
     const [expanded, setExpanded] = useState(false)
@@ -17,9 +17,7 @@ export default function Security() {
                     expanded={expanded === 1}
                     onChange={(_, expanded1) => onChange(1, expanded1)}
                 >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        设置安全系数高的密码
-                    </AccordionSummary>
+                    <Summary>设置安全系数高的密码</Summary>
                     <AccordionDetails>
                         <div>
                             <p style={{ marginTop: 0 }}>
@@ -58,9 +56,7 @@ export default function Security() {
                     expanded={expanded === 2}
                     onChange={(_, expanded1) => onChange(2, expanded1)}
                 >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        保持手机号和邮箱正确且最新
-                    </AccordionSummary>
+                    <Summary>保持手机号和邮箱正确且最新</Summary>
                     <AccordionDetails>
                         <div>
                             <p style={{ marginTop: 0 }}>
@@ -83,9 +79,7 @@ export default function Security() {
                     expanded={expanded === 3}
                     onChange={(_, expanded1) => onChange(3, expanded1)}
                 >
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                        其他提高帐号安全性的建议
-                    </AccordionSummary>
+                    <Summary>其他提高帐号安全性的建议</Summary>
                     <AccordionDetails>
                         <ul style={{ margin: 0 }}>
                             <li>

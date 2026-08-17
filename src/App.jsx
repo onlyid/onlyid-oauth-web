@@ -1,6 +1,6 @@
 import React, { Suspense } from "react"
 import { Redirect, Route, Switch } from "react-router-dom"
-import { CircularProgress } from "@material-ui/core"
+import { CircularProgress } from "@mui/material"
 
 // 关键页面不要延迟加载
 import Home from "@/pages/Home"

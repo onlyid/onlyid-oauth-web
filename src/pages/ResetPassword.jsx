@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import { useHistory, useLocation } from "react-router-dom"
-import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@material-ui/core"
+import { Button, FormControl, FormHelperText, InputLabel, OutlinedInput } from "@mui/material"
 import PasswordInput from "@/components/PasswordInput"
 import OtpInput from "@/components/OtpInput"
 import Validator from "async-validator"
