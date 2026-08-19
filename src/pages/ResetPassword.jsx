@@ -10,6 +10,7 @@ import IconAndAvatar from "@/components/IconAndAvatar"
 import { redirectCode } from "@/my/utils"
 import { NEW_PASSWORD_RULE } from "@/my/constants"
 import withLayout from "@/components/MyLayout"
+import styles from "./ResetPassword.module.css"
 
 const RULES = {
     otp: [{ required: true, message: "请输入" }],
@@ -111,8 +112,8 @@ function ResetPassword() {
                     </Button>
                 </div>
             </form>
-            <div className="oneButtonBox" style={{ marginTop: 35 }}>
-                <Button variant="outlined" onClick={back} size="small">
+            <div className={styles.oneButtonBox}>
+                <Button variant="outlined" onClick={back} size="small" className="plainButton">
                     取 消
                 </Button>
             </div>

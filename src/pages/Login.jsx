@@ -11,12 +11,35 @@ import EditIcon from "@mui/icons-material/Edit"
 import { redirectCode } from "@/my/utils"
 import CaptchaDialog from "@/components/CaptchaDialog"
 import withLayout from "@/components/MyLayout"
+import styles from "./Login.module.css"
 
 const RULES = {
     otp: [{ required: true, message: "请输入" }],
     password: [{ required: true, message: "请输入" }]
 }
 const validator = new Validator(RULES)
+
+function AccountBox({ account }) {
+    const history = useHistory()
+
+    const back = () => {
+        history.goBack()
+    }
+
+    return (
+        <div className={styles.accountBox}>
+            <Button
+                startIcon={<EditIcon />}
+                size="large"
+                variant="outlined"
+                onClick={back}
+                className="plainButton"
+            >
+                {account}
+            </Button>
+        </div>
+    )
+}
 
 function Login() {
     const [validation, setValidation] = useState({})
@@ -26,10 +49,6 @@ function Login() {
     const history = useHistory()
     const location = useLocation()
     const app = useSelector((state) => state.app)
-
-    const back = () => {
-        history.goBack()
-    }
 
     const onSubmit = async (e) => {
         e && e.preventDefault()
@@ -95,11 +114,7 @@ function Login() {
     return (
         <div>
             <IconAndAvatar />
-            <div className="accountBox">
-                <Button startIcon={<EditIcon />} size="large" variant="outlined" onClick={back}>
-                    {account}
-                </Button>
-            </div>
+            <AccountBox account={account} />
             <form onSubmit={onSubmit} style={{ marginTop: 20 }}>
                 {loginType === "password" ? (
                     <PasswordInput
@@ -130,7 +145,7 @@ function Login() {
                     </Button>
                 </div>
             </form>
-            <div className="twoButtonBox">
+            <div className={styles.twoButtonBox}>
                 <Button variant="outlined" color="primary" onClick={toggleLoginType} size="small">
                     {loginType === "password" ? "验证码登录" : "密码登录"}
                 </Button>
@@ -139,6 +154,7 @@ function Login() {
                     onClick={resetPassword}
                     size="small"
                     style={{ paddingRight: 3 }}
+                    className="plainButton"
                 >
                     忘记密码？
                 </Button>

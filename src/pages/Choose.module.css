@@ -1,6 +1,6 @@
 .root :global .tip {
     margin-left: 10px;
-    margin-top: 1.9rem;
+    margin-top: 30px;
 }
 
 .listBox {
@@ -51,10 +51,11 @@
     margin-top: 4px;
     margin-bottom: 0;
     color: #7f7f7f;
+    font-size: 14px;
 }
 
 .useNew {
-    padding: 16px 10px;
+    padding: 15px 10px;
     font-size: 1.1rem;
     border-bottom: solid 1px #eee;
     text-align: center;

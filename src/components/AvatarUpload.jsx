@@ -49,7 +49,7 @@ function AvatarUpload({ onUpload, requiredVisible }) {
                     <span className="material-icons">person</span>
                 )}
                 <br />
-                <span className={styles.title}>{requiredVisible && "请"}上传头像</span>
+                <span className={styles.text}>{requiredVisible && "请"}上传头像</span>
             </label>
             <p className="tip">{IMG_UPLOAD_TIP}</p>
         </div>

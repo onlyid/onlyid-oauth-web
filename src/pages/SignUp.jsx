@@ -152,8 +152,8 @@ function SignUp() {
                     </Button>
                 </div>
             </form>
-            <div className="oneButtonBox">
-                <Button variant="outlined" onClick={back} size="small">
+            <div className={styles.oneButtonBox}>
+                <Button variant="outlined" onClick={back} size="small" className="plainButton">
                     取 消
                 </Button>
             </div>

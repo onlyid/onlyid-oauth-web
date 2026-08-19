@@ -26,15 +26,16 @@
     border-color: #f44336;
 }
 
-.title {
+.text {
     margin-top: 5px;
     display: inline-block;
+    font-size: 14px;
 }
 
-.root.required .title {
+.root.required .text {
     color: #f44336;
 }
 
 .root :global .tip {
-    margin-top: 1px;
+    margin-top: 0px;
 }

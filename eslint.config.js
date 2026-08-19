@@ -14,6 +14,10 @@ export default defineConfig([
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
     rules: {
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/set-state-in-effect": "off",
@@ -23,11 +27,11 @@ export default defineConfig([
           allowConstantExport: true, // vite默认
           extraHOCs: ["withLayout"]
         }
-      ]
-    },
-    languageOptions: {
-      globals: globals.browser,
-      parserOptions: { ecmaFeatures: { jsx: true } },
+      ],
+      "no-unused-vars": [
+        "warn",
+        { ignoreRestSiblings: true }
+      ],
     },
   },
 ])

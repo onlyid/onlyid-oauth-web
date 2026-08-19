@@ -112,7 +112,7 @@ function Layout({ children, contentClass }) {
                 <Link href="https://onlyid.net/web" target="_blank">
                     <img src={logo} alt="logo" width="100" />
                 </Link>
-                <p className="tip" style={{ marginTop: 10 }}>
+                <p className="tip" style={{ marginTop: 8 }}>
                     用一个账号登录全球互联网
                 </p>
             </footer>
